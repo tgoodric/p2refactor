@@ -1,0 +1,29 @@
+<div class="card-centered">
+    <div class="card border-dark mb-3">
+        <div class="battleImgStack">
+            <img id="baseImg" class="card-img-top" src="../../../assets/battleBackground.jpg" alt="Card image cap">
+            <div class="imgOverlay">
+                <img id="pokemonLCorner" src="../../../assets/pikaBack.png" alt=""> <!--{{playerPokemon}}-->
+                <img id="pokemonRCorner" src="../../../assets/squirtleFront.png" alt=""> <!--{{enemyPokemon}}-->
+            </div> <!--child div end-->
+        </div> <!--parent div end-->
+        <div class="card-body">
+            <h5 class="card-title overflow-auto" >Card title</h5>
+            <p class="card-text overflow-auto" style="height: 65px;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+        </div>
+        <div class="card-body">
+            <div class="btn-group-vertical">
+                <button type="button" class="btn btn-outline-dark">Attack</button>
+                <button type="button" class="btn btn-outline-dark">Special Attack</button>
+                <!--dropdown button-->
+                <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Use Item</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button ngbDropdownItem>Potion1</button>
+                        <button ngbDropdownItem>Potion2</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

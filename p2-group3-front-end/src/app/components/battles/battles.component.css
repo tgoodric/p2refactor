@@ -1,0 +1,27 @@
+#battleImgStack div {
+    position: relative;
+    top: 0;
+    left: 0;
+} 
+
+.imgOverlay {
+    position: absolute;
+    left: 100px;
+    top: 150px;
+}
+
+#pokeLCorner {
+    position: absolute;
+    left: 400px;
+    bottom: 100px;
+    width: 25%;
+    height: auto;
+}
+
+#pokeRCorner {
+    position: absolute;
+    right: 325px;
+    bottom: 40px;
+    width: 25%;
+    height: auto;
+}

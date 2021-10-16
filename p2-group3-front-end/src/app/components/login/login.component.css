@@ -1,0 +1,29 @@
+.page-centered {
+    width: 40%;
+    height: 30%;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    font-family: sans-serif;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+.login-h1 {
+    font-weight: 100;
+    font-size: 1.8em;
+    font-weight: 100;
+    text-align: center;
+    font-family: sans-serif;
+    margin-bottom: 30px;
+}
+
+.logo {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+.img-fluid {
+    border-radius: 50%;
+}

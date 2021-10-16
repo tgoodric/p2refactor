@@ -1,0 +1,16 @@
+.card-centered {
+    width: 40%;
+    height: 30%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    font-family: sans-serif;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+body {
+    background-image: url("../../../assets/background4.jpg");
+    background-size: cover;
+}
