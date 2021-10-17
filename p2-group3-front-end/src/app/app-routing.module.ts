@@ -4,6 +4,7 @@ import { BattlesComponent } from './components/battles/battles.component';
 import { CaveComponent } from './components/cave/cave.component';
 import { ForestComponent } from './components/forest/forest.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
 
@@ -30,7 +31,14 @@ const routes: Routes = [
   {
     path:"battles",
     component:BattlesComponent
+  },
+
+  {
+    path:"register",
+    component:RegisterComponent
   }
+
+  
 
 ];
 

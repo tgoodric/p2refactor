@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ForestComponent } from './components/forest/forest.component';
 import { CaveComponent } from './components/cave/cave.component';
 import { BattlesComponent } from './components/battles/battles.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { BattlesComponent } from './components/battles/battles.component';
     LoginComponent,
     ForestComponent,
     CaveComponent,
-    BattlesComponent
+    BattlesComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
