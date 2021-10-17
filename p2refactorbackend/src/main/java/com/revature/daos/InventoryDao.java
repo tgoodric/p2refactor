@@ -23,13 +23,6 @@ public class InventoryDao implements IInventoryDao {
 	//singleton
 	private static InventoryDao iDao = null;
 	
-	/**
-	 * Empty constructor, only used internally
-	 */
-	private InventoryDao() {
-		// No implementation
-		//class is just a container for instance methods
-	}
 	
 	public InventoryDao getInventoryDao() {
 		if(iDao == null) {

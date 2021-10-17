@@ -40,26 +40,27 @@ public class Launcher {
 				).start(3000);
 		
 		
+		
 		//HTTP Handlers below...
 		
 		
 		//Trainer requests 
-		app.post("/login", tc.something);
+		app.post("/login", tc.login);
 		app.get("/trainers", tc.getTrainersHandler); 
 		app.post("/trainers", tc.addTrainerHandler);
 		
 		
 		//Inventory requests 
-		app.get("/inventory", ic.something);
-		app.patch("/inventory", ic.something);
-		app.patch("/inventory", ic.something);
-		app.patch("/inventory", ic.something);
+		app.get("/inventory/:trainerId", ic.getInventory);
+		app.patch("/inventory/:trainerId:/useItem/:item", ic.useItem);
+		app.patch("/inventory/:trainerId:/addItem/:item", ic.addItem);
+		app.put("/inventory", ic.addInventory);
 		
 		
 		//Pokemon requests
 		app.post("/pokemon", pc.insertPokeHandler);
-        app.get("/pokemon/{trainerId}", pc.getPokemonByTrainerHandler);
-        app.get("/pokemon/{trainerId}/{level}", pc.getPokemonByTrainerWithLevelHandler);
+        app.get("/pokemon/:trainerId", pc.getPokemonByTrainerHandler);
+        app.get("/pokemon/:trainerId/:level", pc.getPokemonByTrainerWithLevelHandler);
 
 	}
 }
