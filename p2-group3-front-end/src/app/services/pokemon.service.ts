@@ -32,17 +32,20 @@ export class PokemonService {
     switch(actionType){                                                                             //Each pass of the loop, the loop
       case BattleActions.ActionType.ATTACK:{                                                        //checks 3 conditions:
         //call attack function                                                                      //1. attacker hp > 0
-      }                                                                                             //2. defender hp > 0
-      case BattleActions.ActionType.ITEM:{                                                          //3. nobody has escaped
-        //call item function                                                                        //To that end, the loop would
-      }                                                                                             //look like this: do{
-      case BattleActions.ActionType.RUN:{                                                           //pokemonBattleTurn()
-        //call run function or something                                                            //} while(conditions);
-        //for now it's a flat 75% chance to escape                                                  //Since we need user input
-        escaped = (Math.random() < .75)                                                             //we can't actually use a 
-      }                                                                                             //proper loop. Instead I think
-      default:{                                                                                     //we can use an *ngIf to dynamically
-        console.log("Error: unknown action selected");                                              //alter the game screen
+        break;                                                                                      //2. defender hp > 0
+      }                                                                                             //3. nobody has escaped
+      case BattleActions.ActionType.ITEM:{                                                          //To that end, the loop would
+        //call item function                                                                        //look like this: do{
+        break;                                                                                      //pokemonBattleTurn()
+      }                                                                                             //} while(conditions);
+      case BattleActions.ActionType.RUN:{                                                           //Since we need user input
+        //call run function or something                                                            //we can't actually use a 
+        //for now it's a flat 75% chance to escape                                                  //proper loop. Instead I think
+        escaped = (Math.random() < .75)                                                             //we can use an *ngIf to dynamically
+        break;                                                                                      //alter the game screen
+      }                                                                                             
+      default:{                                                                                     
+        console.log("Error: unknown action selected");                                              
       }                                                                                             
       return (!escaped && (attacker.hitPoints > 0) && (defender.hitPoints > 0));  //nobody is KO'd or ran away
     }
