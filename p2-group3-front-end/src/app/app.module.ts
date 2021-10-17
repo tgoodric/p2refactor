@@ -10,6 +10,8 @@ import { ForestComponent } from './components/forest/forest.component';
 import { CaveComponent } from './components/cave/cave.component';
 import { BattlesComponent } from './components/battles/battles.component';
 import { RegisterComponent } from './components/register/register.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { RegisterComponent } from './components/register/register.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,35 @@
+<div id="tableCard" class="card">
+    <div class="card border-dark mb-3">
+        <div class="card-header">Select Your Pokemon!</div>
+        <div class="table-responsive">
+            <table class="card-table table">
+                <thead>
+                    <th scope="col">Pokedex</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Level</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <!-- String interpolating the values of the pokemon object 
+                        <td>{{playerPokemon.pokedexNumber}}</td>
+                        <td>{{playerPokemon.name}}</td>
+                        <td>{{playerPokemon.level}}</td>
+                        -->
+                    </tr>
+                </tbody>
+            </table> <!--end table-->
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <input class="col-lg-3" type="number" [(ngModel)]="pokemonSelected" />
+            
+                <button class="btn btn-outline-dark" (click)="getPlayerPokemon()">Battle!</button> <!--use getApi for testing-->
+       
+              </div>
+        </div>
+    </div>    
+</div><!--end tableCard-->
+
 <div class="card-centered">
     <div class="card border-dark mb-3">
         <div class="battleImgStack">
@@ -8,7 +40,7 @@
             </div> <!--child div end-->
         </div> <!--parent div end-->
         <div class="card-body">
-            <h5 class="card-title overflow-auto" >Card title</h5>
+            <h5 class="card-title overflow-auto">Card title</h5>
             <p class="card-text overflow-auto" style="height: 65px;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
         </div>
         <div class="card-body">
