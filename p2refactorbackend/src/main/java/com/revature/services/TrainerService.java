@@ -2,6 +2,9 @@ package com.revature.services;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import java.util.List;
@@ -16,6 +19,8 @@ import com.revature.models.Trainer;
 
 
 public class TrainerService /*implements UserDetailsService*/ {
+	
+	Logger log = LogManager.getLogger(); //Logger object so that we can implement Logging
 
 	//private static PasswordEncoder pe = new BCryptPasswordEncoder(16);
 	private static TrainerDao tDao = TrainerDao.getTrainerDao();
@@ -35,12 +40,11 @@ public class TrainerService /*implements UserDetailsService*/ {
 		//System.out.println(encodedPassword);                                       
 		tDao.addTrainer(t);
 		Trainer result = tDao.getTrainers(t.getUsername()).get(0);
+		log.info("Created a new user");
 		return result.getUserId();
 	} 
 	
 	public Trainer getTrainerByUsername(String username) {
-		
-		
 		return tDao.getTrainers(username).get(0);
 	}
 	

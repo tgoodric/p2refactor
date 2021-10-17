@@ -31,13 +31,16 @@ public class TrainerDao implements ITrainerDao {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Trainer> getTrainers(String username) {
-		String hql = "FROM Trainer t WHERE t.username = username";
-		Session ses = HibernateUtil.getSession();
-		List<Trainer> result = ses.createQuery(hql).list();
-		return result;
-	}
+    public List<Trainer> getTrainers(String username) {
+        String hql = "FROM Trainer t WHERE t.username = :username";
+        Session ses = HibernateUtil.getSession();
+        List<Trainer> result = ses.createQuery(hql)
+                .setParameter("username", username)                
+                .list();
+        return result;
+    }
 	
 	@Override
 	public List<Trainer> getTrainers(int trainerId) {

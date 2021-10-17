@@ -1,0 +1,7 @@
+2021-10-17 11:00:02 INFO  InventoryController:46 - got a users inventory
+2021-10-17 11:00:42 INFO  InventoryController:46 - got a users inventory
+2021-10-17 11:00:45 INFO  InventoryController:46 - got a users inventory
+2021-10-17 11:00:49 INFO  InventoryController:46 - got a users inventory
+2021-10-17 11:00:52 INFO  InventoryController:46 - got a users inventory
+2021-10-17 11:09:00 INFO  InventoryController:46 - got a users inventory
+2021-10-17 11:09:06 INFO  InventoryController:46 - got a users inventory
