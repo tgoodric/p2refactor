@@ -25,7 +25,7 @@ public class TrainerDao implements ITrainerDao {
 	
 	@Override
 	public List<Trainer> getTrainers() {
-		String hql = "FROM Trainers t";
+		String hql = "FROM Trainer t";
 		Session ses = HibernateUtil.getSession();
 		List<Trainer> result = ses.createQuery(hql).list();
 		return result;
@@ -33,8 +33,10 @@ public class TrainerDao implements ITrainerDao {
 
 	@Override
 	public List<Trainer> getTrainers(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM Trainer t WHERE t.username = username";
+		Session ses = HibernateUtil.getSession();
+		List<Trainer> result = ses.createQuery(hql).list();
+		return result;
 	}
 	
 	@Override
