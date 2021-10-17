@@ -32,9 +32,11 @@ public class TrainerService /*implements UserDetailsService*/ {
 		//String encodedPassword = pe.encode(t.getPassword());
 		
 		//t.setPassword(encodedPassword);
-		//System.out.println(encodedPassword);                                       
+		//System.out.println(encodedPassword);
+		System.out.println(t);
 		tDao.addTrainer(t);
 		Trainer result = tDao.getTrainers(t.getUsername()).get(0);
+		System.out.println("trainer fetched: " + result);
 		return result.getUserId();
 	} 
 	

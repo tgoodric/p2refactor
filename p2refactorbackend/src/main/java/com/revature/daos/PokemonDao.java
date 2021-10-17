@@ -65,7 +65,7 @@ public class PokemonDao implements IPokemonDao {
 		pokemon.setTrainerIdFk(trainer);
 		
 		ses.save(pokemon);
-		
+		System.out.println(pokemon);
 		HibernateUtil.closeSession();
 		return true;
 		

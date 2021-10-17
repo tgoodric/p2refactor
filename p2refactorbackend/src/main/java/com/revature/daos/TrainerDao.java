@@ -33,9 +33,11 @@ public class TrainerDao implements ITrainerDao {
 
 	@Override
 	public List<Trainer> getTrainers(String username) {
-		String hql = "FROM Trainer t WHERE t.username = username";
+		String hql = "FROM Trainer t WHERE t.username = :username";
 		Session ses = HibernateUtil.getSession();
-		List<Trainer> result = ses.createQuery(hql).list();
+		List<Trainer> result = ses.createQuery(hql)
+				.setParameter("username", username)				
+				.list();
 		return result;
 	}
 	
@@ -52,7 +54,7 @@ public class TrainerDao implements ITrainerDao {
 		//Word to the wise: Don't use criteria API. Ever.
 		Session ses = HibernateUtil.getSession();
 		
-		String hql = "FROM Trainer T WHERE T.id = :username AND T.password = :password";
+		String hql = "FROM Trainer T WHERE T.username = :username AND T.password = :password";
 		List<Trainer> result = ses.createQuery(hql)
 			.setParameter("username", username)
 			.setParameter("password", password)
