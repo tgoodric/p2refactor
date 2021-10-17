@@ -42,36 +42,25 @@ public class Launcher {
 		
 		//HTTP Handlers below...
 		
-		//Login requests 
-		//send a POST request to validate employee login credentials
-		app.post("/", lc.login);
-		//add (POST) a new reimbursement request
-		app.post("/newReimb", lc.addRequest);
-		
-		
 		
 		//Trainer requests 
-		//
-		app.post("/mlogin", tc.);
-		//
-		app.get("/reimbursements", tc.);
-		//
-		app.patch("/reimbursements", tc.);
+		app.post("/login", tc.something);
+		app.get("/trainers", tc.getTrainersHandler); 
+		app.post("/trainers", tc.addTrainerHandler);
 		
 		
 		//Inventory requests 
-		//send a POST request to validate employee login credentials
-		app.post("/elogin", ic.);
-		//add (POST) a new reimbursement request
-		app.post("/newReimb", ic.);
+		app.get("/inventory", ic.something);
+		app.patch("/inventory", ic.something);
+		app.patch("/inventory", ic.something);
+		app.patch("/inventory", ic.something);
 		
 		
 		//Pokemon requests
-		//send a POST request to validate employee login credentials
-		app.post("/elogin", pc.);
-		//add (POST) a new reimbursement request
-		app.post("/newReimb", pc.);
+		app.post("/pokemon", pc.insertPokeHandler);
+        app.get("/pokemon/{trainerId}", pc.getPokemonByTrainerHandler);
+        app.get("/pokemon/{trainerId}/{level}", pc.getPokemonByTrainerWithLevelHandler);
 
 	}
-
 }
+

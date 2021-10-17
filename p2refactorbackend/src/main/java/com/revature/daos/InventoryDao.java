@@ -9,14 +9,12 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.springframework.stereotype.Repository;
 
 import com.revature.models.Inventory;
 import com.revature.models.Trainer;
 import com.revature.utils.HibernateUtil;
 
 /**
- * @author T. D. Goodrich
  * @author C. Funaki
  */
 
