@@ -45,7 +45,7 @@ public class Launcher {
 		
 		
 		//Trainer requests 
-//		app.post("/login", tc.login);
+		app.post("/login", lc.loginHandler);
 		app.get("/trainers", tc.getTrainersHandler); 
 		app.post("/trainers", tc.addTrainerHandler);
 		

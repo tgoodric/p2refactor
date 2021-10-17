@@ -28,12 +28,14 @@ public class TrainerService /*implements UserDetailsService*/ {
 						new UsernameNotFoundException(String.format("Username %s not found", username)));
 	}
 	*/
-	public void addTrainer(Trainer t) {
+	public int addTrainer(Trainer t) {
 		//String encodedPassword = pe.encode(t.getPassword());
 		
 		//t.setPassword(encodedPassword);
 		//System.out.println(encodedPassword);                                       
-		tDao.addTrainer(t);		
+		tDao.addTrainer(t);
+		Trainer result = tDao.getTrainers(t.getUsername()).get(0);
+		return result.getUserId();
 	} 
 	
 	public Trainer getTrainerByUsername(String username) {
@@ -43,6 +45,10 @@ public class TrainerService /*implements UserDetailsService*/ {
 	}
 	
 	public List<Trainer> getTrainers(){
+		return tDao.getTrainers();
+	}
+	
+	public List<Trainer> getTrainers(int id){
 		return tDao.getTrainers();
 	}
 }
