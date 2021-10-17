@@ -34,6 +34,7 @@ public class InventoryDao implements IInventoryDao {
 	//method to get a particular trainers inventory
 	@Override
 	public List<Inventory> getOneInventory(int trainerId) {
+		System.out.println("in the inventory dao");
 		Session ses = HibernateUtil.getSession();
 		
 		

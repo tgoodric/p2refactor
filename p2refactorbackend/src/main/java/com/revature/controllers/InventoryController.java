@@ -8,16 +8,18 @@ import org.hibernate.internal.build.AllowSysOut;
 import com.google.gson.Gson;
 import com.revature.daos.InventoryDao;
 import com.revature.models.Inventory;
+import com.revature.services.InventoryService;
 
 import io.javalin.http.Handler;
 
 
 public class InventoryController {
 	
-	private InventoryDao iDao = new InventoryDao();
+	private InventoryService is = new InventoryService();
+	
 	
 	public Handler getInventory = (ctx) -> {
-		System.out.println("In the get inventory handler");
+		System.out.println("In the get inventory handler in controller layer");
 		
 //		if(ctx.req.getSession(false) != null){ //if a session exists
 			
@@ -25,7 +27,7 @@ public class InventoryController {
 			int id = Integer.parseInt(ctx.pathParam("trainerId"));
 				
 			//we create an Array with reimbursements data (using the service to talk to the dao)
-			List<Inventory> i = iDao.getOneInventory(id);
+			List<Inventory> i = is.getOneInventory(id);
 			
 			//instantiate a GSON object to make JSON <-> POJO conversions (Plain ol java object)
 			Gson gson =new Gson();
@@ -54,7 +56,7 @@ public class InventoryController {
 			String item = ctx.pathParam("item");
 			
 			//we create an Array with reimbursements data (using the service to talk to the dao)
-			boolean i = iDao.useItem(id, item);
+			boolean i = is.useItem(id, item);
 			
 			//instantiate a GSON object to make JSON <-> POJO conversions (Plain ol java object)
 			Gson gson =new Gson();
@@ -81,7 +83,7 @@ public class InventoryController {
 				String item = ctx.pathParam("item");
 				
 				//we create an Array with reimbursements data (using the service to talk to the dao)
-				boolean i = iDao.addItem(id, item);
+				boolean i = is.addItem(id, item);
 				
 				//instantiate a GSON object to make JSON <-> POJO conversions (Plain ol java object)
 				Gson gson =new Gson();
@@ -111,7 +113,7 @@ public class InventoryController {
 				Inventory i = gson.fromJson(body, Inventory.class); //turn that JSON String into a LoginDTO object
 				
 				//we create an Array with reimbursements data (using the service to talk to the dao)
-				boolean newI = iDao.addInventory(i);
+				boolean newI = is.addInventory(i);
 				
 				ctx.result(body); //return our reimbursements
 				
