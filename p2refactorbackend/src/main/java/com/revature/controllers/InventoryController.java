@@ -14,12 +14,12 @@ import io.javalin.http.Handler;
 
 public class InventoryController {
 	
-	private InventoryDao iDao;
+	private InventoryDao iDao = new InventoryDao();
 	
 	public Handler getInventory = (ctx) -> {
 		System.out.println("In the get inventory handler");
 		
-		if(ctx.req.getSession(false) != null){ //if a session exists
+//		if(ctx.req.getSession(false) != null){ //if a session exists
 			
 			//get the trainer id from the path parameter
 			int id = Integer.parseInt(ctx.pathParam("trainerId"));
@@ -36,16 +36,18 @@ public class InventoryController {
 			
 			ctx.status(200); //200 = OK (success)
 		
-		}else {
-			ctx.status(403); //forbidden status code
-		}
+//		}else {
+//			ctx.status(403); //forbidden status code
+//		}
 	};
 		
 	
 	public Handler useItem = (ctx) -> {
 		System.out.println("In the use item handler");
+		System.out.println(ctx.pathParam("trainerId"));
+		System.out.println(ctx.pathParam("item"));
 		
-		if(ctx.req.getSession(false) != null){ //if a session exists
+//		if(ctx.req.getSession(false) != null){ //if a session exists
 			
 			//get the trainer id from the path parameter
 			int id = Integer.parseInt(ctx.pathParam("trainerId"));
@@ -63,16 +65,16 @@ public class InventoryController {
 			
 			ctx.status(200); //200 = OK (success)
 		
-		}else {
-			ctx.status(403); //forbidden status code
-		}
+//		}else {
+//			ctx.status(403); //forbidden status code
+//		}
 	};
 			
 			
 	public Handler addItem = (ctx) -> {
 			System.out.println("In the add item handler");
 			
-			if(ctx.req.getSession(false) != null){ //if a session exists
+//			if(ctx.req.getSession(false) != null){ //if a session exists
 				
 				//get the trainer id from the path parameter
 				int id = Integer.parseInt(ctx.pathParam("trainerId"));
@@ -90,16 +92,16 @@ public class InventoryController {
 				
 				ctx.status(200); //200 = OK (success)
 			
-			}else {
-				ctx.status(403); //forbidden status code
-			}
+//			}else {
+//				ctx.status(403); //forbidden status code
+//			}
 	};
 			
 				
 	public Handler addInventory = (ctx) -> {
 			System.out.println("In the get inventory handler");
 			
-			if(ctx.req.getSession(false) != null){ //if a session exists
+//			if(ctx.req.getSession(false) != null){ //if a session exists
 				
 				String body = ctx.body();
 				
@@ -115,9 +117,9 @@ public class InventoryController {
 				
 				ctx.status(200); //200 = OK (success)
 			
-			}else {
-				ctx.status(403); //forbidden status code
-			}
+//			}else {
+//				ctx.status(403); //forbidden status code
+//			}
 		};
 
 }
