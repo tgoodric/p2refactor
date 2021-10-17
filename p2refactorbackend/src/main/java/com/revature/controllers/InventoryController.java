@@ -12,8 +12,13 @@ import com.revature.services.InventoryService;
 
 import io.javalin.http.Handler;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class InventoryController {
+	
+	Logger log = LogManager.getLogger(); //Logger object so that we can implement Logging
 	
 	private InventoryService is = new InventoryService();
 	
@@ -37,6 +42,9 @@ public class InventoryController {
 			ctx.result(JSONinventory); //return our reimbursements
 			
 			ctx.status(200); //200 = OK (success)
+			
+			log.info("got a users inventory");
+			
 		
 //		}else {
 //			ctx.status(403); //forbidden status code
