@@ -51,7 +51,7 @@ public class PokemonDao implements IPokemonDao {
 	
 	@Override
 	public boolean insertPokemon(int trainerId, Pokemon pokemon) {
-		/*
+		
 		Session ses = HibernateUtil.getSession();
 		
 		//First we need to match trainerId from Trainer Model in Hibernate
@@ -66,7 +66,7 @@ public class PokemonDao implements IPokemonDao {
 		
 		ses.save(pokemon);
 		
-		HibernateUtil.closeSession();*/
+		HibernateUtil.closeSession();
 		return true;
 		
 	}
