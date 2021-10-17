@@ -1,0 +1,23 @@
+2021-10-17 14:55:28 INFO  InventoryService:43 - Trainer added an item
+2021-10-17 14:55:28 INFO  InventoryService:30 - Trainer used an item
+2021-10-17 14:57:35 INFO  InventoryService:43 - Trainer added an item
+2021-10-17 14:57:35 INFO  InventoryService:30 - Trainer used an item
+2021-10-17 14:57:36 INFO  PokemonService:19 - Trainer caught (and inserted) a Pokemon
+2021-10-17 15:03:11 INFO  InventoryService:43 - Trainer added an item
+2021-10-17 15:03:11 INFO  InventoryService:30 - Trainer used an item
+2021-10-17 15:03:11 INFO  PokemonService:19 - Trainer caught (and inserted) a Pokemon
+2021-10-17 15:11:53 INFO  InventoryService:43 - Trainer added an item
+2021-10-17 15:11:53 INFO  InventoryService:30 - Trainer used an item
+2021-10-17 15:11:53 INFO  PokemonService:19 - Trainer caught (and inserted) a Pokemon
+2021-10-17 15:14:37 INFO  InventoryService:43 - Trainer added an item
+2021-10-17 15:14:37 INFO  InventoryService:30 - Trainer used an item
+2021-10-17 15:14:37 INFO  PokemonService:19 - Trainer caught (and inserted) a Pokemon
+2021-10-17 15:16:04 INFO  InventoryService:43 - Trainer added an item
+2021-10-17 15:16:04 INFO  InventoryService:30 - Trainer used an item
+2021-10-17 15:16:04 INFO  PokemonService:19 - Trainer caught (and inserted) a Pokemon
+2021-10-17 15:17:38 INFO  InventoryService:43 - Trainer added an item
+2021-10-17 15:17:38 INFO  InventoryService:30 - Trainer used an item
+2021-10-17 15:17:38 INFO  PokemonService:19 - Trainer caught (and inserted) a Pokemon
+2021-10-17 15:18:17 INFO  InventoryService:43 - Trainer added an item
+2021-10-17 15:18:17 INFO  InventoryService:30 - Trainer used an item
+2021-10-17 15:18:17 INFO  PokemonService:19 - Trainer caught (and inserted) a Pokemon
