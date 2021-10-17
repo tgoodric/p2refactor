@@ -29,8 +29,8 @@ public class PokemonDao implements IPokemonDao {
 		Session ses = HibernateUtil.getSession();
 		String Hql = "FROM Pokemon WHERE trainer_id=:tID and level=:lvl ";
 		List<Pokemon> listPokeLevel = ses.createQuery(Hql)
-				.setParameter(":tId", trainerId)
-				.setParameter(":lvl", level)
+				.setParameter("tID", trainerId)
+				.setParameter("lvl", level)
 				.list();
 		HibernateUtil.closeSession();
 		return listPokeLevel;
