@@ -1,31 +1,16 @@
 package com.revature.controllers;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.revature.models.LoginDto;
 import com.revature.services.LoginService;
 
-@RestController
-@RequestMapping("/login")
-@CrossOrigin
+import io.javalin.http.Handler;
+
+
 public class LoginController {
 	
-	
-	
-	@PostMapping
-	public void login(LoginDto ldto){
-		LoginService ls = LoginService.getLoginService();
-		if(ls.login(ldto.getUsername(), ldto.getPassword())) {
-			System.out.println("in login function, ");
-			//stuff happens
-		}
+	public Handler loginHandler = (ctx) -> {
 		
-	}
-	
-	public void logout() {
-		//logout
-	}
+		
+		
+	};
 }

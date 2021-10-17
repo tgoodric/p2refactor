@@ -9,7 +9,7 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.springframework.stereotype.Repository;
+
 
 import com.revature.models.Inventory;
 import com.revature.models.Trainer;
@@ -28,7 +28,7 @@ public class InventoryDao implements IInventoryDao {
 	/**
 	 * Empty constructor, only used internally
 	 */
-	private InventoryDao() {
+	public InventoryDao() {
 		// No implementation
 		//class is just a container for instance methods
 	}
