@@ -25,7 +25,7 @@ public class Launcher {
 		TrainerController tc = new TrainerController();
 		PokemonController pc = new PokemonController();
 		InventoryController ic = new InventoryController();
-		LoginController elc = new LoginController();
+//		LoginController lc = new LoginController();
 		
 
 		
