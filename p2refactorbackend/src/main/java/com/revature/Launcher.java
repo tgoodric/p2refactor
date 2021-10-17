@@ -25,7 +25,7 @@ public class Launcher {
 		TrainerController tc = new TrainerController();
 		PokemonController pc = new PokemonController();
 		InventoryController ic = new InventoryController();
-//		LoginController lc = new LoginController();
+		LoginController lc = new LoginController();
 		
 
 		
@@ -37,7 +37,7 @@ public class Launcher {
 				config -> {
 					config.enableCorsForAllOrigins(); //allows the server 
 				}
-				).start(3000);
+				).start(8090);
 		
 		
 		
@@ -52,8 +52,8 @@ public class Launcher {
 		
 		//Inventory requests 
 		app.get("/inventory/:trainerId", ic.getInventory);
-		app.patch("/inventory/:trainerId:/useItem/:item", ic.useItem);
-		app.patch("/inventory/:trainerId:/addItem/:item", ic.addItem);
+		app.patch("/inventory/:trainerId/useItem/:item", ic.useItem);
+		app.patch("/inventory/:trainerId/addItem/:item", ic.addItem);
 		app.put("/inventory", ic.addInventory);
 		
 		
