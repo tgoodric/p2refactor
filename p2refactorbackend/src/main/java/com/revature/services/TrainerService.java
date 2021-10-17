@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;*/
-import org.springframework.stereotype.Service;
+//import org.springframework.stereotype.Service;
 
 import com.revature.daos.TrainerDao;
 import com.revature.models.Trainer;
