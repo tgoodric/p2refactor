@@ -50,6 +50,7 @@ export class BattlesComponent implements OnInit {
     this.pokemonService.getPokemonFromDatabase(this.pokemonSelected).subscribe( 
       (data:any) => {
         this.playerPokemon = data;
+        
         console.log(this.playerPokemon);
         console.log("Data: " + data);
       },
