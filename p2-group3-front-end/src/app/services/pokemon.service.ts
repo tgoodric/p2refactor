@@ -11,7 +11,7 @@ import { Pokemon } from '../models/pokemon';
 //We inject services into components, thus giving the component the service's data/functions 
 export class PokemonService {
 
-  private url:string = "localhost:8090/"
+  private url:string = "http://localhost:8090/"
   
   //we dependency inject HttpClient in order to make HTTP requests in this service class 
   constructor(private http:HttpClient) { }
@@ -31,7 +31,7 @@ export class PokemonService {
     let escaped:boolean = false                                                                     //in the game loop.
     switch(actionType){                                                                             //Each pass of the loop, the loop
       case BattleActions.ActionType.ATTACK:{                                                        //checks 3 conditions:
-        //call attack function
+        this.attackFunc(attacker, defender, action);
         break;                                                                                      //1. attacker hp > 0
       }                                                                                             //2. defender hp > 0
       case BattleActions.ActionType.ITEM:{                                                          //3. nobody has escaped
@@ -48,6 +48,8 @@ export class PokemonService {
         console.log("Error: unknown action selected");                                              //alter the game screen
       }
     }
+    console.log("attacker: " + attacker);
+    console.log("Defender: " + defender);
     return (!escaped && (attacker.hitPoints > 0) && (defender.hitPoints > 0)); 
 
   } //end of pokemonBattleTurn
@@ -68,6 +70,8 @@ export class PokemonService {
                                                  NORMAL_ATTACK_POWER)
     }
   }
+
+  
 
   calculateDamage(attack:number, defense:number, level:number, power:number){
     return (((((2 * level)/5) + 2) * power * (attack/defense)) / 50) + 2;
