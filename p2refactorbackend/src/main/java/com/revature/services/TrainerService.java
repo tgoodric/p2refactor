@@ -20,7 +20,7 @@ import com.revature.models.Trainer;
 
 
 public class TrainerService /*implements UserDetailsService*/ {
-	
+
 	Logger log = LogManager.getLogger(); //Logger object so that we can implement Logging
 
 	//private static PasswordEncoder pe = new BCryptPasswordEncoder(16);
@@ -28,37 +28,37 @@ public class TrainerService /*implements UserDetailsService*/ {
 	/*
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		return tDao.getByUsername(username)
 				.orElseThrow(()-> 
 						new UsernameNotFoundException(String.format("Username %s not found", username)));
 	}
-	*/
+	 */
 	public int addTrainer(Trainer t) {
 		//String encodedPassword = pe.encode(t.getPassword());
-		
+
 		//t.setPassword(encodedPassword);
 		//System.out.println(encodedPassword);                                       
 		try {
-		tDao.addTrainer(t);
-		Trainer result = tDao.getTrainers(t.getUsername()).get(0);
-		log.info("Created a new user");
-		return result.getUserId();
+			tDao.addTrainer(t);
+			Trainer result = tDao.getTrainers(t.getUsername()).get(0);
+			log.info("Created a new user");
+			return result.getUserId();
 		}
 		catch (ConstraintViolationException e) {
 			log.warn("User attempted to create a duplicate account");
 			return -1; //error code
 		}
 	} 
-	
+
 	public Trainer getTrainerByUsername(String username) {
 		return tDao.getTrainers(username).get(0);
 	}
-	
+
 	public List<Trainer> getTrainers(){
 		return tDao.getTrainers();
 	}
-	
+
 	public List<Trainer> getTrainers(int id){
 		return tDao.getTrainers();
 	}
