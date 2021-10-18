@@ -18,7 +18,7 @@
 		<property name="hibernate.default_schema">project2</property>
 		
 		<!-- Hibernate console output -->
-		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.show_sql">false</property>
 		<property name="hibernate.format_sql">true</property>
 		
 		<!-- DDL -->

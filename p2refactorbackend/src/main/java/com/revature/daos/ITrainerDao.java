@@ -12,7 +12,7 @@ public interface ITrainerDao {
 	public List<Trainer> getTrainers();
 	public List<Trainer> getTrainers(String username);
 	public List<Trainer> getTrainers(int trainerId);
-	public List<Trainer> getForLogin(String username, String password);
+	public List<Trainer> getForLogin(int id,String username, String password);
 	
 	public void addTrainer(Trainer t);
 	

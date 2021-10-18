@@ -14,13 +14,15 @@
         <h1 class="login-h1">Login To Your Account</h1>
         <form id="loginForm" class="col text-center">
             <div class="input-group-prepend w-50 mx-auto">
-                <input id="username" type="text" placeholder="Username" required class="form-control form-input">
+                <input id="username" type="text" placeholder="Username" required class="form-control form-input" [(ngModel)] = "username" 
+                name="usernameField">
             </div>
             <div class="input-group-prepend w-50 mx-auto">
-                <input id="password" type="password" placeholder="Password" required class="form-control form-input">
+                <input id="password" type="password" placeholder="Password" required class="form-control form-input" [(ngModel)] = "password"
+                name="passwordField">
             </div>
             <br>
-            <button id="loginButton" type="button" class="btn btn-dark" >Log In</button>
+            <button id="loginButton" type="button" class="btn btn-dark" (click) = "login()">Log In</button>
         </form>
     </div>
 
