@@ -55,7 +55,7 @@ public class TrainerController {
 		//System.out.println("Trainer Id : " + trainerId);
 		PokemonService ps = new PokemonService();
 		InventoryService is = new InventoryService();
-		ps.insertAllPokemon(trainerId, new Pokemon(1,1,45,45,49,65,49,65,0,
+		ps.insertAllPokemon(trainerId, new Pokemon("nabin",1,1,45,45,49,65,49,65,0,
 									ts.getTrainerByUsername(t.getUsername())));
 		is.addInventory(new Inventory(5,5,5,ts.getTrainerByUsername(t.getUsername())));
 		ctx.status(201);
