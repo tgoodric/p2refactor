@@ -9,12 +9,12 @@
                     <th scope="col">Level</th>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let d of playerPokemon">
                         <!-- String interpolating the values of the pokemon object   -->
-                        <td>{{playerPokemon.id}}</td>
-                        <td>{{playerPokemon.name}}</td>
-                        <td>{{playerPokemon.level}}</td>
-                      
+                        <td>{{d.pokedexNumber}}</td>
+                        <td>Name</td>
+                        <td>{{d.level}}</td>
+
                     </tr>
                 </tbody>
             </table> <!--end table-->

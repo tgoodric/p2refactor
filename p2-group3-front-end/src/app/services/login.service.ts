@@ -8,7 +8,7 @@ import { User } from '../models/user';
 })
 export class LoginService {
 
-  private url:string = "localhost:8090/project2/"
+  private url:string = "localhost:8090/"
 
   constructor(private http:HttpClient) { }
 
