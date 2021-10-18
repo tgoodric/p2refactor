@@ -1,8 +1,8 @@
 <div id="tableCard" class="card">
     <div class="card border-dark mb-3">
         <div class="card-header">Select Your Pokemon!</div>
-        <div class="table-responsive">
-            <table class="card-table table">
+    
+            <table class="table" *ngIf="playerPokemon">
                 <thead>
                     <th scope="col">Pokedex</th>
                     <th scope="col">Name</th>
@@ -10,15 +10,15 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <!-- String interpolating the values of the pokemon object 
-                        <td>{{playerPokemon.pokedexNumber}}</td>
+                        <!-- String interpolating the values of the pokemon object   -->
+                        <td>{{playerPokemon.id}}</td>
                         <td>{{playerPokemon.name}}</td>
                         <td>{{playerPokemon.level}}</td>
-                        -->
+                      
                     </tr>
                 </tbody>
             </table> <!--end table-->
-        </div>
+   
         <div class="card-body">
             <div class="row">
                 <input class="col-lg-3" type="number" [(ngModel)]="pokemonSelected" />
@@ -26,6 +26,7 @@
                 <button class="btn btn-outline-dark" (click)="getPlayerPokemon()">Battle!</button> <!--use getApi for testing-->
        
               </div>
+
         </div>
     </div>    
 </div><!--end tableCard-->
@@ -45,8 +46,8 @@
         </div>
         <div class="card-body">
             <div class="btn-group-vertical">
-                <button type="button" class="btn btn-outline-dark">Attack</button>
-                <button type="button" class="btn btn-outline-dark">Special Attack</button>
+                <button class="btn btn-outline-dark" (click) = "battleWrapperFunc()">Attack</button>
+                <button class="btn btn-outline-dark">Special Attack</button>
                 <!--dropdown button-->
                 <div ngbDropdown class="d-inline-block">
                         <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Use Item</button>

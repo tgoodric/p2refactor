@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.exception.ConstraintViolationException;
 
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,10 +39,16 @@ public class TrainerService /*implements UserDetailsService*/ {
 		
 		//t.setPassword(encodedPassword);
 		//System.out.println(encodedPassword);                                       
+		try {
 		tDao.addTrainer(t);
 		Trainer result = tDao.getTrainers(t.getUsername()).get(0);
 		log.info("Created a new user");
 		return result.getUserId();
+		}
+		catch (ConstraintViolationException e) {
+			log.warn("User attempted to create a duplicate account");
+			return -1; //error code
+		}
 	} 
 	
 	public Trainer getTrainerByUsername(String username) {
