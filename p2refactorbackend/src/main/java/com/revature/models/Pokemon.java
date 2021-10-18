@@ -19,6 +19,8 @@ public class Pokemon {
 	@Column(name = "pokemon_id")
 	private int pokemonId; //serial primary key
 	
+	@Column(name="poke_name")
+	private String pokeName;
 	@Column(name = "pokedex_number")
 	private int pokedexNumber; //species etc. can be pulled from the PokeAPI from this
 	@Column(name = "level")
@@ -48,12 +50,11 @@ public class Pokemon {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
-	public Pokemon(int pokemonId, int pokedexNumber, int level, int maxHitPoints, int hitPoints, int attack,
-			int specialAttack, int defense, int specialDefense, int experience, Trainer trainerIdFk) {
+	public Pokemon(int pokemonId, String pokeName, int pokedexNumber, int level, int maxHitPoints, int hitPoints,
+			int attack, int specialAttack, int defense, int specialDefense, int experience, Trainer trainerIdFk) {
 		super();
 		this.pokemonId = pokemonId;
+		this.pokeName = pokeName;
 		this.pokedexNumber = pokedexNumber;
 		this.level = level;
 		this.maxHitPoints = maxHitPoints;
@@ -66,12 +67,10 @@ public class Pokemon {
 		this.trainerIdFk = trainerIdFk;
 	}
 
-	
-
-
-	public Pokemon(int pokedexNumber, int level, int maxHitPoints, int hitPoints, int attack, int specialAttack,
-			int defense, int specialDefense, int experience, Trainer trainerIdFk) {
+	public Pokemon(String pokeName, int pokedexNumber, int level, int maxHitPoints, int hitPoints, int attack,
+			int specialAttack, int defense, int specialDefense, int experience, Trainer trainerIdFk) {
 		super();
+		this.pokeName = pokeName;
 		this.pokedexNumber = pokedexNumber;
 		this.level = level;
 		this.maxHitPoints = maxHitPoints;
@@ -83,8 +82,105 @@ public class Pokemon {
 		this.experience = experience;
 		this.trainerIdFk = trainerIdFk;
 	}
+	
+	
+	
+	
+	public int getPokemonId() {
+		return pokemonId;
+	}
 
+	public void setPokemonId(int pokemonId) {
+		this.pokemonId = pokemonId;
+	}
 
+	public String getPokeName() {
+		return pokeName;
+	}
+
+	public void setPokeName(String pokeName) {
+		this.pokeName = pokeName;
+	}
+
+	public int getPokedexNumber() {
+		return pokedexNumber;
+	}
+
+	public void setPokedexNumber(int pokedexNumber) {
+		this.pokedexNumber = pokedexNumber;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public int getMaxHitPoints() {
+		return maxHitPoints;
+	}
+
+	public void setMaxHitPoints(int maxHitPoints) {
+		this.maxHitPoints = maxHitPoints;
+	}
+
+	public int getHitPoints() {
+		return hitPoints;
+	}
+
+	public void setHitPoints(int hitPoints) {
+		this.hitPoints = hitPoints;
+	}
+
+	public int getAttack() {
+		return attack;
+	}
+
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
+
+	public int getSpecialAttack() {
+		return specialAttack;
+	}
+
+	public void setSpecialAttack(int specialAttack) {
+		this.specialAttack = specialAttack;
+	}
+
+	public int getDefense() {
+		return defense;
+	}
+
+	public void setDefense(int defense) {
+		this.defense = defense;
+	}
+
+	public int getSpecialDefense() {
+		return specialDefense;
+	}
+
+	public void setSpecialDefense(int specialDefense) {
+		this.specialDefense = specialDefense;
+	}
+
+	public int getExperience() {
+		return experience;
+	}
+
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+
+	public Trainer getTrainerIdFk() {
+		return trainerIdFk;
+	}
+
+	public void setTrainerIdFk(Trainer trainerIdFk) {
+		this.trainerIdFk = trainerIdFk;
+	}
 
 	@Override
 	public int hashCode() {
@@ -96,6 +192,7 @@ public class Pokemon {
 		result = prime * result + hitPoints;
 		result = prime * result + level;
 		result = prime * result + maxHitPoints;
+		result = prime * result + ((pokeName == null) ? 0 : pokeName.hashCode());
 		result = prime * result + pokedexNumber;
 		result = prime * result + pokemonId;
 		result = prime * result + specialAttack;
@@ -125,6 +222,11 @@ public class Pokemon {
 			return false;
 		if (maxHitPoints != other.maxHitPoints)
 			return false;
+		if (pokeName == null) {
+			if (other.pokeName != null)
+				return false;
+		} else if (!pokeName.equals(other.pokeName))
+			return false;
 		if (pokedexNumber != other.pokedexNumber)
 			return false;
 		if (pokemonId != other.pokemonId)
@@ -143,83 +245,14 @@ public class Pokemon {
 
 	@Override
 	public String toString() {
-		return "Pokemon [pokemonId=" + pokemonId + ", pokedexNumber=" + pokedexNumber + ", level=" + level
-				+ ", maxHitPoints=" + maxHitPoints + ", hitPoints=" + hitPoints + ", attack=" + attack
-				+ ", specialAttack=" + specialAttack + ", defense=" + defense + ", specialDefense=" + specialDefense
-				+ ", experience=" + experience + ", trainerIdFk=" + trainerIdFk + "]";
+		return "Pokemon [pokemonId=" + pokemonId + ", pokeName=" + pokeName + ", pokedexNumber=" + pokedexNumber
+				+ ", level=" + level + ", maxHitPoints=" + maxHitPoints + ", hitPoints=" + hitPoints + ", attack="
+				+ attack + ", specialAttack=" + specialAttack + ", defense=" + defense + ", specialDefense="
+				+ specialDefense + ", experience=" + experience + ", trainerIdFk=" + trainerIdFk + "]";
 	}
 
-	public int getPokemonId() {
-		return pokemonId;
-	}
+	
 
-	public void setPokemonId(int pokemonId) {
-		this.pokemonId = pokemonId;
-	}
-
-	public int getPokedexNumber() {
-		return pokedexNumber;
-	}
-
-	public void setPokedexNumber(int pokedexNumber) {
-		this.pokedexNumber = pokedexNumber;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-	public int getHitPoints() {
-		return hitPoints;
-	}
-
-	public void setHitPoints(int hitPoints) {
-		this.hitPoints = hitPoints;
-	}
-
-	public int getAttack() {
-		return attack;
-	}
-
-	public void setAttack(int attack) {
-		this.attack = attack;
-	}
-
-	public int getSpecialAttack() {
-		return specialAttack;
-	}
-
-	public void setSpecialAttack(int specialAttack) {
-		this.specialAttack = specialAttack;
-	}
-
-	public Trainer getTrainerIdFk() {
-		return trainerIdFk;
-	}
-
-	public void setTrainerIdFk(Trainer trainerIdFk) {
-		this.trainerIdFk = trainerIdFk;
-	}
-
-	public int getDefense() {
-		return defense;
-	}
-
-	public void setDefense(int defense) {
-		this.defense = defense;
-	}
-
-	public int getSpecialDefense() {
-		return specialDefense;
-	}
-
-	public void setSpecialDefense(int specialDefense) {
-		this.specialDefense = specialDefense;
-	}
-
+	
 	
 }

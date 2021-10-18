@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import com.google.gson.Gson;
 import com.revature.models.LoginDto;
+import com.revature.models.Trainer;
 import com.revature.services.LoginService;
 
 import io.javalin.http.Handler;
@@ -27,8 +28,18 @@ public class LoginController {
     public Handler loginHandler = (ctx) ->{
         String body = ctx.body();
         LoginDto ldto = gson.fromJson(body, LoginDto.class);
-        if(ls.login(ldto.getUsername(), ldto.getPassword())) {
-            //get the JWT and but it in the body
+        System.out.println(body);
+        Trainer result = ls.login(ldto.getUsername(), ldto.getPassword());
+        
+        if(result != null) {
+            //get the JWT and put it in the header
+        	
+        	//
+        	//System.out.println("login fetch successful");
+        	String resultJson = gson.toJson(result, Trainer.class);
+        	//System.out.println("json serialized");
+        	ctx.result(resultJson);
+        	//System.out.println(resultJson);
             ctx.status(200);
         }
         else {

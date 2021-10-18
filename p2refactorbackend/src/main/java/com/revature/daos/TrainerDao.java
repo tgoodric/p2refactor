@@ -49,17 +49,18 @@ public class TrainerDao implements ITrainerDao {
 	}
 
 	@Override
-	public List<Trainer> getForLogin(String username, String password) {
-		
+	public List<Trainer> getForLogin(int id, String username, String password) {
+		System.out.println("in dao");
 		//Session is our EntityManager
 		//Word to the wise: Don't use criteria API. Ever.
 		Session ses = HibernateUtil.getSession();
-		
+		System.out.println("session open");
 		String hql = "FROM Trainer T WHERE T.id = :username AND T.password = :password";
 		List<Trainer> result = ses.createQuery(hql)
 			.setParameter("username", username)
 			.setParameter("password", password)
 			.list(); 
+		System.out.println("query successful-ish");
 		return result;
 	}
 
