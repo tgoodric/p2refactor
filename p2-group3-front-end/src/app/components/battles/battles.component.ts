@@ -45,7 +45,7 @@ export class BattlesComponent implements OnInit {
 
   getPlayerPokemon():Pokemon {
     //need some input from player for pokemon id, use temp int for test
-    this.pokemonSelected = 1; // test getting the initial pokemon a new player gets when register
+    this.pokemonSelected = this.pokemonSelected; // test getting the initial pokemon a new player gets when register
     console.log();
     this.pokemonService.getPokemonFromDatabase(this.pokemonSelected).subscribe( 
       (data:any) => {
