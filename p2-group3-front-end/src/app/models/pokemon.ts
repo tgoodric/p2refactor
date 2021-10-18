@@ -3,8 +3,9 @@ export class Pokemon {
     //this constructor will initialize the Pokemon's variables when we create one
     constructor(
         public id:number,
-        //public pokedexNumber:number,
+        public pokedexNumber:number,
         public name:string,
+        public types:any[],
         public level:number,
         public maxHitPoints:number,
         public hitPoints: number,

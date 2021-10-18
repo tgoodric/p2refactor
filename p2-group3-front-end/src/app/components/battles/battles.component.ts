@@ -18,6 +18,7 @@ export class BattlesComponent implements OnInit {
   public randNum:number = 0;
   public pokemonSelected:number = 0;
   public testPoke:any = null;
+  public pokedexNum = 0;
 
 
   constructor(private pokemonService:PokemonService) { }
@@ -30,7 +31,7 @@ export class BattlesComponent implements OnInit {
     this.randNum = Math.floor(Math.random() * 898) + 1;  //generate random number between 1-898 to get random api pokemon
     console.log(this.randNum);
     
-    this.pokemonService.getPokemonFromApi(this.randNum).subscribe( 
+    this.pokemonService.getPokemonFromApi(this.pokedexNum).subscribe( 
       (data:any) => {
         this.apiPokemon = data;
         console.log(this.apiPokemon);
@@ -115,6 +116,20 @@ export class BattlesComponent implements OnInit {
   battleWrapperFunc(){
     this.battle(this.getPlayerPokemon(), this.getApiPokemon(), 0,0);
   }
+
+
+
+  //set stage for battle
+  prepareBattle(pokeId:number, hitPoints: number, pokedex:number){
+    console.log("in prepare battle function")
+    console.log(pokeId, hitPoints, pokedex)
+    this.pokedexNum = pokedex
+    console.log(this.getApiPokemon())
+    // console.log(this.apiPokemon.types[0].type.name)
+
+  }
+
+
  
 } //end component export
 
