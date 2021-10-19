@@ -19,6 +19,8 @@ export class BattlesComponent implements OnInit {
   public pokemonSelected:number = 0;
   public testPoke:any = null;
   public pokedexNum = 0;
+  public apiPoke:any = null;
+
 
   constructor(private pokemonService:PokemonService) { }
 
@@ -26,20 +28,26 @@ export class BattlesComponent implements OnInit {
   }
 
   //Battle logic
-  getApiPokemon():Pokemon {
+  getApiPokemon(p:Pokemon):Pokemon {
     this.randNum = Math.floor(Math.random() * 898) + 1;  //generate random number between 1-898 to get random api pokemon
-    console.log(this.randNum);
+    // console.log(this.randNum);
     
-    this.pokemonService.getPokemonFromApi(this.randNum).subscribe( 
+    this.pokedexNum = p.pokedexNumber
+    this.apiPokemon = null
+    this.pokemonService.getPokemonFromApi(this.pokedexNum).subscribe( 
       (data:any) => {
         this.apiPokemon = data;
         console.log(this.apiPokemon);
+        // this.apiPoke = data
+        // console.log(this.apiPoke)
+        // return this.apiPokemon
       },
       () => { //set pokemon to null incase of error
         this.apiPokemon = null;
         console.log("Error fetching api pokemon");
       }
     )
+    console.log(this.apiPokemon)
     return this.apiPokemon;
   } //end getApiPokemon
 
@@ -112,23 +120,28 @@ export class BattlesComponent implements OnInit {
     console.log(apiPokemon);
   }
 
-  battleWrapperFunc(){
-    this.battle(this.getPlayerPokemon(), this.getApiPokemon(), 0,0);
-  }
-
-   //set stage for battle
-   prepareBattle(pokeId:number, hitPoints: number, pokedex:number){
+  //set stage for battle
+  prepareBattle(d:Pokemon){
     console.log("in prepare battle function")
-    console.log("PokeId "+pokeId, " hitpoints: "+ hitPoints, " Pokedex  "+ pokedex)
-    this.pokedexNum = pokedex
-    console.log(this.getApiPokemon())
+
+    //change card header to display selected pokemon name and HP
+    let cardheader = document.getElementById("cardheader") as HTMLInputElement;
+    cardheader.innerHTML="Pokemon: " + d.pokeName + "&nbsp&nbsp&nbsp&nbsp&nbsp HP: " + d.hitPoints
+    let pokeTable = document.getElementById("poketable") as HTMLInputElement;
+    pokeTable.innerHTML=""
+
+    //logs for debug
+    console.log(d.pokedexNumber)
+    var apiPoke = this.getApiPokemon(d)
+    console.log(apiPoke)
     // console.log(this.apiPokemon.types[0].type.name)
 
+    //fill in body of pokemon card
+    let pokeInfo = document.getElementById("pokeinfo") as HTMLInputElement
+    pokeInfo.innerHTML =  "<br> Level: " + d.level + "<br> Attack: " + d.attack + "<br> Special Attack: "  + d.specialAttack
   }
+
+
  
 } //end component export
-
-
-
-
 
