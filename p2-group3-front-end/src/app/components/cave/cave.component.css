@@ -9,3 +9,9 @@
     -webkit-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
 }
+
+::ng-deep body{
+    background-image: url("../../../assets/pokebattle.jpg");
+    background-size: cover;
+    
+  }

@@ -48,3 +48,7 @@ tr:hover{
     display: inline-block;
     float: right;
 }
+::ng-deep body{
+    background-image: url("../../../assets/pokeWar.jpg");
+    background-size: cover;
+}
