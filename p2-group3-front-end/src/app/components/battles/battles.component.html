@@ -7,29 +7,31 @@
                 <th scope="col">Pokedex</th>
                 <th scope="col">Name</th>
                 <th scope="col">Level</th>
-                <!-- <th scope="col">I choose..</th> -->
             </thead>
             <tbody>
-                <tr *ngFor="let d of playerPokemon" (click)="prepareBattle(d)">
+                <tr *ngFor="let d of playerPokemon" (click)="prepareBattle(d); getApiPokemon(); getPlayerPokemon()">
                     <!-- String interpolating the values of the pokemon object   -->
                     <td>{{d.pokedexNumber}}</td>
                     <td>{{d.pokeName}}</td>
                     <td>{{d.level}}</td>
-                    <!-- <td><button (click)="prepareBattle(d.pokemonId, d.pokeName, d.level, d.hitPoints, d.pokedexNumber)">You!</button></td> -->
                 </tr>
             </tbody>
         </table> <!--end table-->
 
    
         <div class="card-body" id="pokeinfo">
-            <div class="row">
+            <div class="row" id="selectButtons">
                 <input class="col-lg-3" type="number" [(ngModel)]="pokemonSelected" />
-
                 <button class="btn btn-outline-dark" (click)="getPlayerPokemon()">Battle!</button> <!--use getApi for testing-->
-       
               </div>
-
-
+              <div *ngIf="apiPokemon">
+                <img src={{apiPokemon.sprites.front_shiny}}>
+            </div>
+            <div *ngIf="playerPokemon">
+                <p> Level: {{playerPokemon.level}}</p>
+                <p> Attack: {{playerPokemon.attack}}</p>
+                <p> Special Attack {{playerPokemon.specialAttack}}</p>
+            </div>
         </div>
     </div>    
 </div><!--end tableCard-->
@@ -38,9 +40,9 @@
     <div class="card border-dark mb-3">
         <div class="battleImgStack">
             <img id="baseImg" class="card-img-top" src="../../../assets/battleBackground.jpg" alt="Card image cap">
-            <div class="imgOverlay">
-                <img id="pokemonLCorner" src="../../../assets/pikaBack.png" alt=""> <!--{{playerPokemon}}-->
-                <img id="pokemonRCorner" src="../../../assets/squirtleFront.png" alt=""> <!--{{enemyPokemon}}-->
+            <div class="imgOverlay" *ngIf="apiPokemon && enemyPokemon">
+                <img id="pokemonLCorner" src="{{apiPokemon.sprites.back_shiny}}" alt=""> <!--{{playerPokemon}}-->
+                <img id="pokemonRCorner" src="{{enemyPokemon.sprites.front_shiny}}" alt=""> <!--{{enemyPokemon}}-->
             </div> <!--child div end-->
         </div> <!--parent div end-->
         <div class="card-body">

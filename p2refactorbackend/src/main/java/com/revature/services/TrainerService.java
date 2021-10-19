@@ -18,10 +18,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;*
 import com.revature.daos.TrainerDao;
 import com.revature.models.Trainer;
 
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
+
 
 public class TrainerService /*implements UserDetailsService*/ {
 
 	Logger log = LogManager.getLogger(); //Logger object so that we can implement Logging
+	private Argon2 ar2 = Argon2Factory.create();
+	
 
 	//private static PasswordEncoder pe = new BCryptPasswordEncoder(16);
 	private static TrainerDao tDao = TrainerDao.getTrainerDao();
