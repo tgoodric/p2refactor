@@ -32,7 +32,7 @@ public class LoginController {
         Trainer result = ls.login(ldto.getUsername(), ldto.getPassword());
         
         if(result != null) {
-            //get the JWT and put it in the header
+            //TODO: get the JWT and put it in the header
         	
         	//
         	//System.out.println("login fetch successful");
@@ -46,6 +46,6 @@ public class LoginController {
             ctx.status(401);
         }
     };
-
+    
 
 }

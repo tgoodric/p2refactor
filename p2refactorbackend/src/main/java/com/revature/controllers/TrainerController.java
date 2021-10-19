@@ -45,6 +45,7 @@ public class TrainerController {
 	public Handler addTrainerHandler = (ctx) -> {
 		System.out.println("in handler");
 		String tBody = ctx.body();
+		//try {
 		Trainer t = gson.fromJson(tBody, Trainer.class);
 		System.out.println(t);
 		int trainerId = ts.addTrainer(t);
@@ -58,6 +59,8 @@ public class TrainerController {
 		ps.insertAllPokemon(trainerId, new Pokemon("nabin",1,1,45,45,49,65,49,65,0,
 									ts.getTrainerByUsername(t.getUsername())));
 		is.addInventory(new Inventory(5,5,5,ts.getTrainerByUsername(t.getUsername())));
+		//TODO: create jwt and add to header
+		
 		ctx.status(201);
 	};
 	
