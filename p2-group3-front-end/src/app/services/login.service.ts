@@ -28,6 +28,12 @@ export class LoginService {
       body: JSON.stringify(udto),
       credentials:"include"
     })
-
+    if (response.status == 200){
+      console.log("login successful");
+      //redirect to the landing page
+    }
+    else{
+      console.log("Username or password not found");
+    }
   }
 }

@@ -1,33 +1,34 @@
 <div id="tableCard" class="card">
-    <div class="card border-dark mb-3">
-        <div class="card-header">Select Your Pokemon!</div>
+    <div class="card border-dark mb-4">
+        <div class="card-header" id="cardheader">Select Your Pokemon!</div>
     
-            <table class="table" *ngIf="playerPokemon">
-                <thead>
-                    <th scope="col">Pokedex</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Level</th>
-                    <th scope="col">I choose..</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let d of playerPokemon">
-                        <!-- String interpolating the values of the pokemon object   -->
-                        <td>{{d.pokedexNumber}}</td>
-                        <td>{{d.pokeName}}</td>
-                        <td>{{d.level}}</td>
-                        <td><button (click)="prepareBattle(d.pokemonId, d.hitPoints, d.pokedexNumber)">You!</button></td>
+        <table id="poketable" class="table" *ngIf="playerPokemon">
+            <thead>
+                <th scope="col">Pokedex</th>
+                <th scope="col">Name</th>
+                <th scope="col">Level</th>
+                <!-- <th scope="col">I choose..</th> -->
+            </thead>
+            <tbody>
+                <tr *ngFor="let d of playerPokemon" (click)="prepareBattle(d)">
+                    <!-- String interpolating the values of the pokemon object   -->
+                    <td>{{d.pokedexNumber}}</td>
+                    <td>{{d.pokeName}}</td>
+                    <td>{{d.level}}</td>
+                    <!-- <td><button (click)="prepareBattle(d.pokemonId, d.pokeName, d.level, d.hitPoints, d.pokedexNumber)">You!</button></td> -->
+                </tr>
+            </tbody>
+        </table> <!--end table-->
 
-                    </tr>
-                </tbody>
-            </table> <!--end table-->
    
-        <div class="card-body">
+        <div class="card-body" id="pokeinfo">
             <div class="row">
                 <input class="col-lg-3" type="number" [(ngModel)]="pokemonSelected" />
-            
+
                 <button class="btn btn-outline-dark" (click)="getPlayerPokemon()">Battle!</button> <!--use getApi for testing-->
        
               </div>
+
 
         </div>
     </div>    
@@ -47,7 +48,7 @@
             <p class="card-text overflow-auto" style="height: 65px;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
         </div>
         <div class="card-body">
-            <div class="btn-group-vertical">
+            <div class="btn-group-vertical" id="leftElement">
                 <button class="btn btn-outline-dark">Attack</button>
                 <button class="btn btn-outline-dark">Special Attack</button>
                 <!--dropdown button-->

@@ -2,12 +2,14 @@
     <h1 class="login-h1">Register Your Account</h1>
     <form id="loginForm" class="col text-center">
         <div class="input-group-prepend w-50 mx-auto">
-            <input id="username" type="text" placeholder="Username" required class="form-control form-input">
+            <input id="username" type="text" placeholder="Username" required class="form-control form-input"
+            [(ngModel)] = "username" name = "regUsernameField">
         </div>
         <div class="input-group-prepend w-50 mx-auto">
-            <input id="password" type="password" placeholder="Password" required class="form-control form-input">
+            <input id="password" type="password" placeholder="Password" required class="form-control form-input" 
+            [(ngModel)] = "password" name = "regRasswordField">
         </div>
         <br>
-        <button id="loginButton" type="button" class="btn btn-dark" >Register</button>
+        <button id="loginButton" type="button" class="btn btn-dark" (click) = "register()">Register</button>
     </form>
 </div>
