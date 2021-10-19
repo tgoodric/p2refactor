@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { UserDto } from '../models/user-dto';
@@ -13,7 +14,7 @@ export class LoginService {
   private url:string = "http://localhost:8090/"
 
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private router:Router) { }
 
   getUser() {
     return this.http.get(this.url + "login") as Observable<User>;
@@ -30,7 +31,7 @@ export class LoginService {
     })
     if (response.status == 200){
       console.log("login successful");
-      //redirect to the landing page
+      this.router.navigate(['/battles'])
     }
     else{
       console.log("Username or password not found");
