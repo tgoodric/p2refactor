@@ -13,13 +13,13 @@ export class BattlesComponent implements OnInit {
   //create class variables
   public apiPokemon:any = null;
   public enemyPokemonSprite:any = null;
+  public enemyPokemon:any = null;
   public playerPokemon:any = null;
   public pokemonSprite:any = null;
   public randNum:number = 0;
   public pokemonSelected:number = 0;
   public testPoke:any = null;
   public pokedexNum = 0;
-  public apiPoke:any = null;
 
 
   constructor(private pokemonService:PokemonService) { }
@@ -27,20 +27,26 @@ export class BattlesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  //Battle logic
-  getApiPokemon(p:Pokemon):Pokemon {
+
+  //Get your selected pokemon API infor as well as a random enemy pokemon
+  getApiPokemon():Pokemon {
     this.randNum = Math.floor(Math.random() * 898) + 1;  //generate random number between 1-898 to get random api pokemon
-    // console.log(this.randNum);
+    console.log(this.randNum);
     
-    this.pokedexNum = p.pokedexNumber
-    this.apiPokemon = null
     this.pokemonService.getPokemonFromApi(this.pokedexNum).subscribe( 
       (data:any) => {
         this.apiPokemon = data;
         console.log(this.apiPokemon);
-        // this.apiPoke = data
-        // console.log(this.apiPoke)
-        // return this.apiPokemon
+      },
+      () => { //set pokemon to null incase of error
+        this.apiPokemon = null;
+        console.log("Error fetching api pokemon");
+      }
+    )
+    this.pokemonService.getPokemonFromApi(this.randNum).subscribe( 
+      (data:any) => {
+        this.enemyPokemon = data;
+        console.log(this.enemyPokemon);
       },
       () => { //set pokemon to null incase of error
         this.apiPokemon = null;
@@ -51,6 +57,8 @@ export class BattlesComponent implements OnInit {
     return this.apiPokemon;
   } //end getApiPokemon
 
+
+  //get the player's pokemon database info
   getPlayerPokemon():Pokemon {
     //need some input from player for pokemon id, use temp int for test
     this.pokemonSelected = this.pokemonSelected; // test getting the initial pokemon a new player gets when register
@@ -70,40 +78,14 @@ export class BattlesComponent implements OnInit {
     return this.playerPokemon;
   } //end getPlayerPokemon
 
-  getPlayerSprite():void{
-    this.pokemonService.getPokemonFromApi(this.playerPokemon.id).subscribe(
-      //get the data out of the observable we subscribed to and put it in a pokemonSprite object
-      (data:any) => {
-         //assign it to our pokemonSprite variable
-         this.pokemonSprite.sprite = data.sprites.back_default;
-         console.log(this.pokemonSprite);
-      },
-      () => {
-        this.pokemonSprite = null;
-        console.log("Error fetching player pokemon sprite");
-      }
-    )
-  } //end of getPlayerSprite
 
-  getEnemySprite():void{
-    this.pokemonService.getPokemonFromApi(this.apiPokemon.id).subscribe(
-      //get the data out of the observable we subscribed to and put it in a pokemonSprite object
-      (data:any) => {
-         //assign it to our pokemonSprite variable
-         this.enemyPokemonSprite.sprite = data.sprites.front_default;
-         console.log(this.enemyPokemonSprite);
-      },
-      () => {
-        this.enemyPokemonSprite = null;
-        console.log("Error fetching enemy pokemon sprite");
-      }
-    )
-  } //end of getEnemySprite
-
+  //coin flip to decide who goes first
   coinFlip () {
     return Math.random() <= .5; 
   } //let's say true is we go first
 
+
+  //battle functionality
   battle(playerPokemon:Pokemon, apiPokemon:Pokemon, actionType: number, action: number){
     let attacker:Pokemon = apiPokemon;
     let defender:Pokemon = playerPokemon;
@@ -120,6 +102,7 @@ export class BattlesComponent implements OnInit {
     console.log(apiPokemon);
   }
 
+  
   //set stage for battle
   prepareBattle(d:Pokemon){
     console.log("in prepare battle function")
@@ -130,18 +113,20 @@ export class BattlesComponent implements OnInit {
     let pokeTable = document.getElementById("poketable") as HTMLInputElement;
     pokeTable.innerHTML=""
 
+    //set pokedex num and pokemon for user selected pokemon
+    this.pokedexNum = d.pokedexNumber;
+    this.playerPokemon = d;
+
     //logs for debug
+    console.log(d)
     console.log(d.pokedexNumber)
-    var apiPoke = this.getApiPokemon(d)
-    console.log(apiPoke)
-    // console.log(this.apiPokemon.types[0].type.name)
 
     //fill in body of pokemon card
-    let pokeInfo = document.getElementById("pokeinfo") as HTMLInputElement
-    pokeInfo.innerHTML =  "<br> Level: " + d.level + "<br> Attack: " + d.attack + "<br> Special Attack: "  + d.specialAttack
+    // let pokeInfo = document.getElementById("selectButtons") as HTMLInputElement
+    // pokeInfo.innerHTML =  "<br> Level: " + d.level + "<br> Attack: " + d.attack + "<br> Special Attack: "  + d.specialAttack
   }
-
-
  
 } //end component export
+
+
 
