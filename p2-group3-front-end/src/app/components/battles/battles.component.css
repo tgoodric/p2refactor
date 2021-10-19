@@ -34,3 +34,7 @@
     width: 25%;
     height: auto;
 }
+tr:hover {
+    background: linear-gradient(
+45deg, #007bff, transparent);
+}

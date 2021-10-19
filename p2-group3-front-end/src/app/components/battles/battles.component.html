@@ -14,7 +14,7 @@
                         <td>{{d.pokedexNumber}}</td>
                         <td>{{d.pokeName}}</td>
                         <td>{{d.level}}</td>
-
+                        <td><button (click)="prepareBattle(d.pokemonId, d.hitPoints, d.pokedexNumber)">You!</button></td>
                     </tr>
                 </tbody>
             </table> <!--end table-->
@@ -22,7 +22,7 @@
         <div class="card-body">
             <div class="row">
                 <input class="col-lg-3" type="number" [(ngModel)]="pokemonSelected" />
-            
+                
                 <button class="btn btn-outline-dark" (click)="getPlayerPokemon()">Battle!</button> <!--use getApi for testing-->
        
               </div>
