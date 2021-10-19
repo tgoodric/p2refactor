@@ -13,7 +13,7 @@ export class Pokemon {
         public defense:number,
         public specialDefense:number,
         public experience:number,            //every 3-4 battles-ish this gets set to 0; level++
-        public types:object[],
-        public sprites:object
+        // public types:object[],
+        // public sprites:object
     ) { }
 }
