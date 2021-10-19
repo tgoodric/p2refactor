@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon } from 'src/app/models/pokemon';
 import { PokemonSprite } from 'src/app/models/pokemon-sprite';
 import { PokemonService } from 'src/app/services/pokemon.service';
 
@@ -17,8 +16,6 @@ export class BattlesComponent implements OnInit {
   public pokemonSprite:any = null;
   public randNum:number = 0;
   public pokemonSelected:number = 0;
-  public testPoke:any = null;
-
 
   constructor(private pokemonService:PokemonService) { }
 
@@ -26,10 +23,9 @@ export class BattlesComponent implements OnInit {
   }
 
   //Battle logic
-  getApiPokemon():Pokemon {
+  getApiPokemon():void {
     this.randNum = Math.floor(Math.random() * 898) + 1;  //generate random number between 1-898 to get random api pokemon
     console.log(this.randNum);
-    
     this.pokemonService.getPokemonFromApi(this.randNum).subscribe( 
       (data:any) => {
         this.apiPokemon = data;
@@ -40,26 +36,24 @@ export class BattlesComponent implements OnInit {
         console.log("Error fetching api pokemon");
       }
     )
-    return this.apiPokemon;
   } //end getApiPokemon
 
-  getPlayerPokemon():Pokemon {
+  getPlayerPokemon():void {
     //need some input from player for pokemon id, use temp int for test
-    this.pokemonSelected = this.pokemonSelected; // test getting the initial pokemon a new player gets when register
+    this.pokemonSelected = 9; // test getting the initial pokemon a new player gets when register
     console.log();
     this.pokemonService.getPokemonFromDatabase(this.pokemonSelected).subscribe( 
       (data:any) => {
         this.playerPokemon = data;
-        
+        this.playerPokemon.level = data.level;
         console.log(this.playerPokemon);
-        console.log("Data: " + data);
+        
       },
       () => { //set pokemon to null incase of error
         this.playerPokemon = null;
         console.log("Error fetching player pokemon");
       }
     )
-    return this.playerPokemon;
   } //end getPlayerPokemon
 
   getPlayerSprite():void{
@@ -88,37 +82,12 @@ export class BattlesComponent implements OnInit {
       () => {
         this.enemyPokemonSprite = null;
         console.log("Error fetching enemy pokemon sprite");
+        
       }
     )
   } //end of getEnemySprite
 
-  coinFlip () {
-    return Math.random() <= .5; 
-  } //let's say true is we go first
+  
 
-  battle(playerPokemon:Pokemon, apiPokemon:Pokemon, actionType: number, action: number){
-    let attacker:Pokemon = apiPokemon;
-    let defender:Pokemon = playerPokemon;
-    if(this.coinFlip()){
-      attacker = playerPokemon;
-      defender = apiPokemon;
-    } //during an enemy turn, we call battleturn()
-    console.log("playerPokemon: " + playerPokemon);
-    console.log("apippokemon: " + apiPokemon);
-    do{
-      this.pokemonService.pokemonBattleTurn(attacker, defender, actionType, action);
-    }while((attacker.hitPoints > 0) && (defender.hitPoints > 0));
-    console.log(playerPokemon);
-    console.log(apiPokemon);
-  }
-
-  battleWrapperFunc(){
-    this.battle(this.getPlayerPokemon(), this.getApiPokemon(), 0,0);
-  }
- 
 } //end component export
-
-
-
-
 
