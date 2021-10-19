@@ -17,6 +17,7 @@ export class BattlesComponent implements OnInit {
   public randNum:number = 0;
   public pokemonSelected:number = 0;
 
+
   constructor(private pokemonService:PokemonService) { }
 
   ngOnInit(): void {
@@ -26,7 +27,11 @@ export class BattlesComponent implements OnInit {
   getApiPokemon():void {
     this.randNum = Math.floor(Math.random() * 898) + 1;  //generate random number between 1-898 to get random api pokemon
     console.log(this.randNum);
+
     this.pokemonService.getPokemonFromApi(this.randNum).subscribe( 
+
+    
+
       (data:any) => {
         this.apiPokemon = data;
         console.log(this.apiPokemon);
@@ -88,6 +93,7 @@ export class BattlesComponent implements OnInit {
   } //end of getEnemySprite
 
   
+
 
 } //end component export
 

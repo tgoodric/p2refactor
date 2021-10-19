@@ -19,8 +19,8 @@ export class PokemonService {
   
 
 
-  getPokemonFromApi(id:number):Observable<Pokemon>{
-    return this.http.get("https://pokeapi.co/api/v2/pokemon/" + id + "/") as Observable<Pokemon>
+  getPokemonFromApi(pokedex:number):Observable<Pokemon>{
+    return this.http.get("https://pokeapi.co/api/v2/pokemon/" + pokedex + "/") as Observable<Pokemon>
   } 
   
   getPokemonFromDatabase(id:number):Observable<Pokemon>{ //maybe fetch as a Pokemon object from DB
