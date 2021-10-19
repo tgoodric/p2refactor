@@ -46,8 +46,12 @@ public class TrainerService /*implements UserDetailsService*/ {
 			return result.getUserId();
 		}
 		catch (ConstraintViolationException e) {
-			log.warn("User attempted to create a duplicate account");
+			log.warn("User entered duplicate username");
 			return -1; //error code
+		}
+		catch (IllegalArgumentException e) {
+			log.warn("User attempted to use null or empty username or password");
+			return -1;
 		}
 	} 
 
