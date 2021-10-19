@@ -1,3 +1,7 @@
+html, body{
+    background-color: red;
+}
+
 .page-centered {
     width: 40%;
     height: 30%;
@@ -27,3 +31,4 @@
 .img-fluid {
     border-radius: 50%;
 }
+
