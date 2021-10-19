@@ -4,8 +4,7 @@ export class Pokemon {
     constructor(
         public id:number,
         public pokedexNumber:number,
-        public name:string,
-        public types:any[],
+        public pokeName:string,
         public level:number,
         public maxHitPoints:number,
         public hitPoints: number,
@@ -13,6 +12,8 @@ export class Pokemon {
         public specialAttack:number,
         public defense:number,
         public specialDefense:number,
-        public experience:number            //every 3-4 battles-ish this gets set to 0; level++
+        public experience:number,            //every 3-4 battles-ish this gets set to 0; level++
+        public types:object[],
+        public sprite:object
     ) { }
 }

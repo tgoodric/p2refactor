@@ -34,3 +34,17 @@
     width: 25%;
     height: auto;
 }
+
+tr:hover{
+    background-color: lightgreen;
+}
+
+#leftElement {
+    display: inline-block;
+    float: left;
+}
+
+#rightElement {
+    display: inline-block;
+    float: right;
+}
