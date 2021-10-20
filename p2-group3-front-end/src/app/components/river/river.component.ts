@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-river',
@@ -10,8 +11,13 @@ export class RiverComponent implements OnInit {
 
   public actionText:String = ""
   public randNum:number = 0;
+  public cookieValue:string;
+  constructor(private router: Router,
+    private cookieService: CookieService  
+  ) { 
 
-  constructor(private router: Router) { }
+    this.cookieValue = this.cookieService.get('userId');
+  }
 
   ngOnInit(): void {
   }
