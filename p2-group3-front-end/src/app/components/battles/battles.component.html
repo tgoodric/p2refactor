@@ -19,7 +19,7 @@
             </tbody>
         </table> <!--end table-->
 
-   
+        
         <div class="card-body" id="pokeinfo">
             <div class="row" id="selectButtons">
                 <!-- <input class="col-lg-3" type="number" [(ngModel)]="trainerId" /> -->
@@ -36,8 +36,8 @@
 
                 <!-- attack and inventory options -->
                 <div *ngIf="gameStart && !gameOver" class="btn-group-vertical" id="leftElement">
-                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "somefunc()">Attack</button>
-                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "somefunc()">Special Attack</button>
+                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "attackFunc()">Attack</button><br><br>
+                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "specialAttackFunc()">Special Attack</button><br><br>
                     <!--dropdown button-->
                     <div *ngIf="apiPokemon" ngbDropdown class="d-inline-block">
                             <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Use Item</button>
@@ -67,7 +67,10 @@
                 <p *ngIf="enemyPokemon">You encountered a {{enemyPokemon.name}}!</p>
                 <p *ngIf="apiPokemon">You chose {{apiPokemon.name}}!</p>
                 <p *ngIf="turn">Your turn...</p>
-                <p *ngIf="!turn">Opponent's turn...</p>
+                <p *ngIf="!turn && gameStart">Opponent's turn...</p>
+                <!-- <div *ngIf="gameStart && !gameOver">
+                </div> -->
+
             </div>
         </div>
         <div class="card-body">
