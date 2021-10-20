@@ -6,6 +6,7 @@ import { ForestComponent } from './components/forest/forest.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { RiverComponent } from './components/river/river.component';
 
 const routes: Routes = [
 
@@ -17,6 +18,11 @@ const routes: Routes = [
   {
     path:"login",
     component:LoginComponent
+  },
+
+  {
+    path:"register",
+    component:RegisterComponent
   },
 
   {
@@ -40,8 +46,8 @@ const routes: Routes = [
   },
 
   {
-    path:"register",
-    component:RegisterComponent
+    path:"river",
+    component:RiverComponent
   }
 
   

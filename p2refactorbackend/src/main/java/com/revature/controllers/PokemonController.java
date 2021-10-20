@@ -37,8 +37,10 @@ public class PokemonController {
 		}
 		catch(Exception e) {
 			
-			ctx.status(401);
+
+			ctx.status(400);
 			log.info("Pokemon inserted Failed");
+
 		}
 		
 		
@@ -97,6 +99,24 @@ public class PokemonController {
 			ctx.result("Failed to retreive Pokemon "+ e);
 			log.info("Pokemon Failed to retreive from database, Error: " + e);
 		}
+		
+	};
+
+
+	public Handler updatePokemonHandler = (ctx) -> {
+		String body = ctx.body();
+		
+		Gson gson = new Gson();
+		
+		Pokemon pokemon = gson.fromJson(body, Pokemon.class);
+		
+		if(ps.updatePokemon(pokemon)) {
+			ctx.status(200);
+		}
+		else {
+			ctx.status(400);
+		}
+		
 		
 	};
 	

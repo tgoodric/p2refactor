@@ -47,6 +47,7 @@ public class TrainerService /*implements UserDetailsService*/ {
 		try {
 			tDao.addTrainer(t);
 			Trainer result = tDao.getTrainers(t.getUsername()).get(0);
+			System.out.println("Hi i am at serive now "+ result.getUserId());
 			log.info("Created a new user");
 			return result.getUserId();
 		}

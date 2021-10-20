@@ -60,14 +60,18 @@ public class TrainerController {
 			return; //exit if error occurs without creating inventory/starter pokemon
 		}
 		//System.out.println("Trainer Id : " + trainerId);
-		PokemonService ps = new PokemonService();
-		InventoryService is = new InventoryService();
-		ps.insertAllPokemon(trainerId, new Pokemon("nabin",1,1,45,45,49,65,49,65,0,
-									ts.getTrainerByUsername(t.getUsername())));
-		is.addInventory(new Inventory(5,5,5,ts.getTrainerByUsername(t.getUsername())));
+		System.out.println("Hi");
+//		PokemonService ps = new PokemonService();
+//		InventoryService is = new InventoryService();
+//		ps.insertAllPokemon(trainerId, new Pokemon("nabin",1,1,45,45,49,65,49,65,0,
+//									ts.getTrainerByUsername(t.getUsername())));
+//		is.addInventory(new Inventory(5,5,5,ts.getTrainerByUsername(t.getUsername())));
 		String jwt = JwtUtil.generate(t.getUsername(), t.getPassword());
+		System.out.println("Hi contorller Mid");
+		ctx.cookie("userId", Integer.toString(trainerId));
 		ctx.header("JWT", jwt);
 		ctx.status(201);
+		System.out.println("Hi contorller end");
 	};
 	
 	

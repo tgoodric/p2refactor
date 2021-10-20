@@ -1,22 +1,23 @@
 <div class="card-centered">
     <div class="card border-dark mb-3" style="border: solid; border-width: 1px;">
-    <img class="card-img-top" src="../../../assets/cave.jpg" alt="Card image cap">
+    <img class="card-img-top" src="../../../assets/ForestBackground.png" alt="Card image cap">
     <div class="card-body" style="border: solid; border-width: 1px;">
-      <h5 class="card-title overflow-auto">Caves of Despair</h5>
+      <h5 class="card-title overflow-auto">River</h5>
+      <!-- Will update narration text to be static later, will need string interpolation-->
       <p class="card-text overflow-auto" style="height: 80px;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
       <p class="card-text overflow-auto" style="height: 30px;">{{actionText}}</p>
     </div>
     <div class="card-body" style="border: solid; border-width: 1px;">
         <div class="btn-group-vertical" style="width: 200px;">
-          <button class="btn btn-outline-dark" (click)="rockHandler()">Look under strange rock</button> 
-          <button class="btn btn-outline-dark" (click)="mineHandler()">Mine for gold</button> 
-          <button class="btn btn-outline-dark" (click)="startBattleHandler()">Search for Pokemon</button> 
+            <button class="btn btn-outline-dark" (click)="fishHandler()">Fish by River</button> 
+            <button class="btn btn-outline-dark" (click)="swimHandler()">Go Swimming</button> 
+            <button class="btn btn-outline-dark" (click)="startBattleHandler()">Search for Pokemon</button> 
         </div>
     </div>
     <div class="card-body" style="border: solid; border-width: 1px;">
       <a href="/home" class="card-link">Go Back Home</a>
+      <a href="/cave" class="card-link">Travel to Caves of Despair</a>
       <a href="/forest" class="card-link">Travel to Haunted Forest</a>
-      <a href="/river" class="card-link">Travel to the River</a>
     </div>
   </div>
-</div> 
+</div>  

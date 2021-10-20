@@ -90,17 +90,19 @@ public class TrainerDao implements ITrainerDao {
 
 	@Override
 	public void addTrainer(Trainer t) {
-			if ((t.getUsername() == null || t.getUsername().isEmpty()) 			//Java needs String.isNullOrEmpty()
-					|| t.getPassword() == null || t.getPassword().isEmpty()) {	//C# has it, and it's useful
-				throw new IllegalArgumentException("Username or password was null or empty");
-			}
+		if ((t.getUsername() == null || t.getUsername().isEmpty()) 			//Java needs String.isNullOrEmpty()
+				|| t.getPassword() == null || t.getPassword().isEmpty()) {	//C# has it, and it's useful
+			throw new IllegalArgumentException("Username or password was null or empty");
+		}
 		try(Session ses = HibernateUtil.getSession()) {
 			System.out.println("session open");
 			ses.save(t);
 			HibernateUtil.closeSession();
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
+		System.out.println("session end here");
+		//HibernateUtil.closeSession();
 		
 	}
 	

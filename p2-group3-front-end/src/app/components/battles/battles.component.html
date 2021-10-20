@@ -43,8 +43,8 @@
                     <div *ngIf="apiPokemon" ngbDropdown class="d-inline-block">
                             <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Use Item</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem (click) = "somefunc()">Potion1</button>
-                            <button ngbDropdownItem (click) = "somefunc()">Potion2</button>
+                            <!-- <button ngbDropdownItem (click) = "somefunc()">Potion1</button>
+                            <button ngbDropdownItem (click) = "somefunc()">Potion2</button> -->
                         </div>
                     </div>
                 </div>
@@ -70,6 +70,7 @@
                 <div *ngIf="!firstMove">
                 <p *ngIf="enemyPokemon">You encountered a wild {{enemyPokemon.name}}!</p>
                 <p *ngIf="apiPokemon">You chose {{apiPokemon.name}}!</p>
+
                 <p *ngIf="!myTurn && pokemonSelected">Opponent's move...</p>
                 </div>
 
@@ -87,6 +88,9 @@
                 <div *ngIf="gameStart && gameOver">
                     {{gameOverNar}}
                 </div>
+          
+                 <p >{{cookieValue}}</p>
+
 
             </div>
         </div>

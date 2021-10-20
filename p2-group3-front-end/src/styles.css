@@ -1,9 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 .card-centered {
-    width: 40%;
-    height: 30%;
+    width: 35%;
+    height: 25%;
     position: absolute;
-    top: 30%;
+    top: 25%;
+    bottom: 10%;
     left: 50%;
     font-family: sans-serif;
     -ms-transform: translateX(-50%) translateY(-50%);
