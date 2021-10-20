@@ -32,7 +32,9 @@ public class PokemonService {
 		
 		return pd.getPokemonUpToLevel(trainerId, level);
 	}
-	
-	
 
+	public boolean updatePokemon(Pokemon pokemon) {
+		return pd.updatePokemon(pokemon);		
+	}
+	
 }

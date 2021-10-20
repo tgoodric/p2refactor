@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-forest',
@@ -16,7 +17,13 @@ export class ForestComponent implements OnInit {
   public actionText:String = ""
   public randNum:number = 0;
   public backgroundUrl:any = "../assets/"
-  constructor(private router: Router) { }
+  public cookieValue:string;
+
+  constructor(private router: Router,
+    private cookieService: CookieService
+    ) { 
+      this.cookieValue = this.cookieService.get('userId');
+    }
 
   ngOnInit(): void {
   }

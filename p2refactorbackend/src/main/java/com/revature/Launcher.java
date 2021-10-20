@@ -7,6 +7,9 @@ import com.revature.controllers.TrainerController;
 import com.revature.daos.InventoryDao;
 import com.revature.daos.PokemonDao;
 import com.revature.daos.TrainerDao;
+import com.revature.models.Pokemon;
+import com.revature.models.Trainer;
+import com.revature.services.PokemonService;
 
 import io.javalin.Javalin;
 
@@ -27,7 +30,6 @@ public class Launcher {
 		InventoryController ic = new InventoryController();
 		LoginController lc = new LoginController();
 		
-
 		
 		///////////////////////////////////////
 		
@@ -61,6 +63,8 @@ public class Launcher {
 		app.post("/pokemon", pc.insertPokeHandler);
         app.get("/pokemon/:trainerId", pc.getPokemonByTrainerHandler);
         app.get("/pokemon/:trainerId/:level", pc.getPokemonByTrainerWithLevelHandler);
+        app.put("/pokemon/update", pc.updatePokemonHandler);
+        app.patch("/pokemon/update", pc.updatePokemonHandler);
 
 	}
 }
