@@ -11,16 +11,25 @@ import { PokemonService } from 'src/app/services/pokemon.service';
 export class BattlesComponent implements OnInit {
 
   //create class variables
+
+  //Trainer and pokemon related variables
   public apiPokemon:any = null;
   public enemyPokemon:any = null;
   public playerPokemon:any = null;
-  public randNum:number = 0;
   public pokemonSelected:any = null;
   public trainerId:number = 1;
   public pokedexNum = 0;
+  public myHP:number = 0;
+  public enemyHP:number = 0;
+
+
+  //game control variables
   public turn:boolean = false;
   public gameStart:boolean = false;
   public gameOver:boolean = false;
+  public randNum:number = 0;
+
+
 
 
   constructor(private pokemonService:PokemonService) { }
@@ -94,8 +103,6 @@ export class BattlesComponent implements OnInit {
     //logs for debug
     console.log(d)
     console.log(d.pokedexNumber)
-
-
   }
 
   //battle functionality
@@ -103,10 +110,11 @@ export class BattlesComponent implements OnInit {
     console.log("in battle func")
     
     //decide who goes first
-    if(Math.random() <= .5){
+    this.randNum = Math.random()
+    if(this.randNum <= .5){
       console.log("our turn")
       this.turn=true
-    }else{
+    }else {
       console.log("their turn")
       this.turn=false
     }
@@ -114,8 +122,7 @@ export class BattlesComponent implements OnInit {
     //change the start game boolean to true
     this.gameStart=true;
 
-  
-
+    
     }
 
 
@@ -136,9 +143,21 @@ export class BattlesComponent implements OnInit {
     // }
 
 
-  somefunc(){
-    console.log("running some func")
+  attackFunc(){
+    console.log("in attackFunc")
+
+
+    // this.pokemonService.attackFunc(this.pokemonSelected, this.enemyPokemon, this.pokemonSelected.myHP)
+
+    // this.pokemonService.attackFunc(this.enemyPokemon, this.pokemonSelected, this.enemyPokemon.enemyHP)
+
   }
+
+  specialAttackFunc(){
+    console.log("in specialAttackFunc")
+
+  }
+
  
 } //end component export
 
