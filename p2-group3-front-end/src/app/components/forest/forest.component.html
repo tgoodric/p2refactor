@@ -1,12 +1,3 @@
-
-
-
-<nav class="navbar fixed-top navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
-    <img src="../../../assets/pokemonLogo.png" width="160" height="30" class="" alt="d-inline-block align-top">
-    </a> 
-  </nav>
-
 <div class="card-centered">
     <div class="card border-dark mb-3" style="border: solid; border-width: 1px;">
     <img class="card-img-top" src="../../../assets/ForestBackground.png" alt="Card image cap">
@@ -18,14 +9,15 @@
     </div>
     <div class="card-body" style="border: solid; border-width: 1px;">
         <div class="btn-group-vertical" style="width: 200px;">
-            <button class="btn btn-outline-dark" (click)="pickBerriesHandler()">Pick Berries</button> <!--use button to add an item to players inventory (potion/special potion)-->
-            <button class="btn btn-outline-dark" (click)="collectFirewoodHandler()">Collect Firewood</button> <!-- need to think of another action, maybe just flavor text-->
-            <button class="btn btn-outline-dark" (click)="startBattleHandler()">Search for Pokemon</button> <!--use this button to start a battle and navigate to battles component-->
+            <button class="btn btn-outline-dark" (click)="pickBerriesHandler()">Pick Berries</button> 
+            <button class="btn btn-outline-dark" (click)="collectFirewoodHandler()">Collect Firewood</button> 
+            <button class="btn btn-outline-dark" (click)="startBattleHandler()">Search for Pokemon</button> 
         </div>
     </div>
     <div class="card-body" style="border: solid; border-width: 1px;">
       <a href="/home" class="card-link">Go Back Home</a>
       <a href="/cave" class="card-link">Travel to Caves of Despair</a>
+      <a href="/river" class="card-link">Travel to the River</a>
     </div>
   </div>
 </div>  

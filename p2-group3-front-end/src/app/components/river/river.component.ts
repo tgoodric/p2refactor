@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-forest',
-  templateUrl: './forest.component.html',
-  styleUrls: ['./forest.component.css']
+  selector: 'app-river',
+  templateUrl: './river.component.html',
+  styleUrls: ['./river.component.css']
 })
-export class ForestComponent implements OnInit {
+export class RiverComponent implements OnInit {
 
-  //component variables
   public actionText:String = ""
   public randNum:number = 0;
 
@@ -17,7 +16,7 @@ export class ForestComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  pickBerriesHandler(){   
+  fishHandler(){   
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
       this.actionText = "You Picked berries"; // test text for now can update later
@@ -28,11 +27,12 @@ export class ForestComponent implements OnInit {
      
 
     } else {
+      this.actionText = "You Picked berries3"; // test text for now can update later
       this.router.navigate(['/battles']);
     }
   }
 
-  collectFirewoodHandler(){
+  swimHandler(){
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
       this.actionText = "chopping down tree" //will update text later
@@ -53,5 +53,4 @@ export class ForestComponent implements OnInit {
       this.router.navigate(['/battles']);
     }
   }
-
 }
