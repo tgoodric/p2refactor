@@ -14,21 +14,34 @@ export class BattlesComponent implements OnInit {
 
   //Trainer and pokemon related variables
   public apiPokemon:any = null;
-  public enemyPokemon:any = null;
   public playerPokemon:any = null;
   public pokemonSelected:any = null;
-  public trainerId:number = 1;
+  public trainerId:number = 1; //this needs to be changed to whatever user is logged in
   public pokedexNum = 0;
   public myHP:number = 0;
+
+  // opponent pokemon variables
+  public randPokeDex:number =  Math.floor(Math.random() * 898) + 1; //random pokedex
+  public enemyPokemon:any = null;
   public enemyHP:number = 0;
+  public enemyLevel:number = Math.floor(Math.random() * 100) + 1; //randomly assign enemy pokemon level
+  public enemyAttack:number = 0;
+  public enemyDefense:number = 0;
+  public enemySpecialAttack:number = 0;
 
 
   //game control variables
-  public turn:boolean = false;
   public gameStart:boolean = false;
   public gameOver:boolean = false;
-  public randNum:number = 0;
+  public firstMove:string = "";
+  public secondMove:string = "";
+  public gameOverNar:string = "";
+  public coinFlip:number = Math.random();
+  public myTurn:boolean = false;
+
+  //cookie
   public cookieValue:string;
+
 
 
 
@@ -61,13 +74,21 @@ export class BattlesComponent implements OnInit {
     return this.apiPokemon;
   } //end getApiPokemon
 
+  //randomly select an enemy pokemon from the poke API
   getEnemyPokemon():Pokemon{
-    this.randNum = Math.floor(Math.random() * 898) + 1;  //generate random number between 1-898 to get random api pokemon
-    console.log(this.randNum);
-    this.pokemonService.getPokemonFromApi(this.randNum).subscribe( 
+    
+    this.pokemonService.getPokemonFromApi(this.randPokeDex).subscribe( 
       (data:any) => {
         this.enemyPokemon = data;
         console.log(this.enemyPokemon);
+
+        //set the enemy HP, attack, defense and special attack values from the base API values
+        this.enemyHP = this.enemyPokemon.stats[0].base_stat
+        this.enemyAttack = this.enemyPokemon.stats[1].base_stat
+        this.enemyDefense = this.enemyPokemon.stats[2].base_stat
+        this.enemySpecialAttack = this.enemyPokemon.stats[3].base_stat
+        console.log(this.enemySpecialAttack)
+
       },
       () => { //set pokemon to null incase of error
         this.enemyPokemon = null;
@@ -98,7 +119,7 @@ export class BattlesComponent implements OnInit {
   } //end getPlayerPokemon
 
   
-  //set stage for battle
+  //set stage for battle and set values of user selected pokemon
   prepareBattle(d:Pokemon){
     console.log("in prepare battle function")
 
@@ -106,61 +127,137 @@ export class BattlesComponent implements OnInit {
     this.pokedexNum = d.pokedexNumber;
     this.pokemonSelected = d
 
-    //logs for debug
-    console.log(d)
-    console.log(d.pokedexNumber)
+    //decide who goes first
+    this.coinFlip = Math.random()
+    console.log(this.coinFlip)
+    if(this.coinFlip >= .5){
+      console.log("our turn")
+      this.myTurn=true
+    }else {
+      console.log("their turn")
+      this.myTurn=false
+    }
+
   }
 
   //battle functionality
   battle(){
     console.log("in battle func")
-    
-    //decide who goes first
-    this.randNum = Math.random()
-    if(this.randNum <= .5){
-      console.log("our turn")
-      this.turn=true
-    }else {
-      console.log("their turn")
-      this.turn=false
-    }
 
     //change the start game boolean to true
     this.gameStart=true;
 
-    
+    //if the opponenent wins the coin flip then run their attack
+    if(this.myTurn==false){
+      this.attackFunc();
+      console.log("hiiii")
+    }
     }
 
 
-    // battle(playerPokemon:Pokemon, apiPokemon:Pokemon, actionType: number, action: number){
-    //   let attacker:Pokemon = apiPokemon;
-    //   let defender:Pokemon = playerPokemon;
-    //   if(this.coinFlip()){
-    //     attacker = playerPokemon;
-    //     defender = apiPokemon;
-    //   } //during an enemy turn, we call battleturn()
-    //   console.log("playerPokemon: " + playerPokemon);
-    //   console.log("apippokemon: " + apiPokemon);
-    //   do{
-    //     this.pokemonService.pokemonBattleTurn(attacker, defender, actionType, action);
-    //   }while((attacker.hitPoints > 0) && (defender.hitPoints > 0));
-    //   console.log(playerPokemon);
-    //   console.log(apiPokemon);
-    // }
-
-
   attackFunc(){
-    console.log("in attackFunc")
+
+    //this code runs when its the user's turn
+    if(this.myTurn){
+
+        //user attacks
+        let damage = this.pokemonService. userAttackFunc(this.pokemonSelected, this.enemyDefense, this.enemyHP, 1) //last parameter is attack type, attack type 1 is a normal attack
+        this.enemyHP = this.enemyHP - damage
+
+        if(this.enemyHP<0){ //if the hp is less than 0, make it 0
+          this.enemyHP=0
+        }
+
+        //narrate the result of the user move
+        this.firstMove = this.pokemonSelected.pokeName + " used attack (" + damage + " damage done)... " 
+          + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
+
+        //if the oponent's hp is 0, end the battle
+        if(this.enemyHP==0){
+          this.gameOver = true;
+          this.gameOverNar = this.enemyPokemon.name + " has fainted!"
+        }
 
 
-    // this.pokemonService.attackFunc(this.pokemonSelected, this.enemyPokemon, this.pokemonSelected.myHP)
+        //opponent goes if not already fainted
+        if(this.gameOver==false){
+          
+          damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, 1)
+          this.pokemonSelected.hitPoints = this.pokemonSelected.hitPoints - damage
 
-    // this.pokemonService.attackFunc(this.enemyPokemon, this.pokemonSelected, this.enemyPokemon.enemyHP)
+          if(this.pokemonSelected.hitPoints<0){ //if the hp is less than 0, make it 0
+            this.pokemonSelected.hitPoints=0
+          }
+        
+          //narrate the result of the opponenet's move
+          this.secondMove=this.enemyPokemon.name + " used attack (" + this.enemyPokemon.stats[1].base_stat + " damage done)... " 
+            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+        }
+
+        //if the user's hp is 0, end the battle
+        if(this.pokemonSelected.hitPoints==0){
+          this.gameOver = true;
+          this.gameOverNar = this.pokemonSelected.pokeName + " has fainted!"
+        }
+      
+    }
+    
+    //this code run if opponenet gets to go first
+    else{
+
+        //opponent goes
+        if(!this.gameOver){
+          
+          let damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, 1)
+          this.pokemonSelected.hitPoints = this.pokemonSelected.hitPoints - damage
+          console.log(this.enemyHP)
+          if(this.pokemonSelected.hitPoints<0){ //if the hp is less than 0, make it 0
+            this.pokemonSelected.hitPoints=0
+          }
+        
+          //narrate the result of the opponenet's move
+          this.firstMove=this.enemyPokemon.name + " used attack (" + this.enemyPokemon.stats[1].base_stat + " damage done)... " 
+            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+        }
+
+        //if the user's hp is 0, end the battle
+        if(this.pokemonSelected.hitPoints==0){
+          this.gameOver = true;
+          this.gameOverNar = this.pokemonSelected.name + " has fainted!"
+        }
+
+        this.myTurn=true;
+        // //user goes if not already fainted
+        // let damage = this.pokemonService. userAttackFunc(this.pokemonSelected, this.enemyDefense, this.enemyHP, 1) //last parameter is attack type, attack type 1 is a normal attack
+        // this.enemyHP = this.enemyHP - damage
+        // console.log(this.enemyHP)
+        // if(this.enemyHP<0){ //if the hp is less than 0, make it 0
+        //   this.enemyHP=0
+        // }
+
+        // //narrate the result of the user move
+        // this.firstMove = this.pokemonSelected.pokeName + " used attack (" + damage + " damage done)... " 
+        //   + this.enemyPokemon.name + "'s HP is now " + this.enemyHP;
+
+        // //if the oponent's hp is 0, end the battle
+        // if(this.enemyHP==0){
+        //   this.gameOver = true;
+        //   this.gameOverNar = this.enemyPokemon.name + " has fainted!"
+        // }
+        
+    }
 
   }
 
+
+
+
   specialAttackFunc(){
     console.log("in specialAttackFunc")
+
+  }
+
+  somefunc(){
 
   }
 

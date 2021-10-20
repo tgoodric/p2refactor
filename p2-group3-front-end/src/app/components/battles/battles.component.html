@@ -1,9 +1,10 @@
 <div id="tableCard">
+
     <div class="card border-dark mb-4">
         <!-- <div class="card-header" id="cardheader">Select Your Pokemon!</div> -->
         <div *ngIf="pokemonSelected" class="card-header" id="cardheader">Pokemon:{{pokemonSelected.pokeName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{pokemonSelected.hitPoints}} HP</div>
 
-        <table id="poketable" class="table" *ngIf="playerPokemon && !pokemonSelected">
+        <table id="poketable" class="table table-light" *ngIf="playerPokemon && !pokemonSelected">
             <thead>
                 <th scope="col">Pokedex</th>
                 <th scope="col">Name</th>
@@ -21,9 +22,9 @@
 
         
         <div class="card-body" id="pokeinfo">
-            <div class="row" id="selectButtons">
+            <div *ngIf="!pokemonSelected && !playerPokemon" class="row" id="selectButtons">
                 <!-- <input class="col-lg-3" type="number" [(ngModel)]="trainerId" /> -->
-                <button *ngIf="!pokemonSelected" class="btn btn-outline-dark" (click)="getPlayerPokemon()">View My Pokemon</button> <!--use getApi for testing-->
+                <button class="btn btn-outline-dark" (click)="getPlayerPokemon()">View My Pokemon</button> <!--use getApi for testing-->
               </div>
               <div *ngIf="apiPokemon">
                 <img src={{apiPokemon.sprites.front_shiny}}>
@@ -36,8 +37,8 @@
 
                 <!-- attack and inventory options -->
                 <div *ngIf="gameStart && !gameOver" class="btn-group-vertical" id="leftElement">
-                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "attackFunc()">Attack</button><br><br>
-                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "specialAttackFunc()">Special Attack</button><br><br>
+                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "attackFunc()">Attack</button>
+                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "specialAttackFunc()">Special Attack</button>
                     <!--dropdown button-->
                     <div *ngIf="apiPokemon" ngbDropdown class="d-inline-block">
                             <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Use Item</button>
@@ -63,14 +64,33 @@
         </div> <!--parent div end-->
         <div class="card-body">
             <h5 class="card-text overflow-auto">Battle!</h5>
-            <div *ngIf="!gameOver" class="card-text overflow-auto" style="height: 100px;">
-                <p *ngIf="enemyPokemon">You encountered a {{enemyPokemon.name}}!</p>
+            <div class="card-text overflow-auto" style="height: 180px;">
+
+                <!-- this text only displays before either player makes a move-->
+                <div *ngIf="!firstMove">
+                <p *ngIf="enemyPokemon">You encountered a wild {{enemyPokemon.name}}!</p>
                 <p *ngIf="apiPokemon">You chose {{apiPokemon.name}}!</p>
-                <p *ngIf="turn">Your turn...</p>
-                <p *ngIf="!turn && gameStart">Opponent's turn...</p>
-                <p >{{cookieValue}}</p>
-                <!-- <div *ngIf="gameStart && !gameOver">
-                </div> -->
+
+                <p *ngIf="!myTurn && pokemonSelected">Opponent's move...</p>
+                </div>
+
+                <!-- this text displays once the battle starts -->
+                <div *ngIf="firstMove">
+                    {{firstMove}} <br><br>
+                    {{secondMove}}<br><br>
+                </div>
+
+                <div *ngIf="myTurn && gameStart && !gameOver">
+                    Your move...
+                </div>
+
+                <!-- display this text when the game is over -->
+                <div *ngIf="gameStart && gameOver">
+                    {{gameOverNar}}
+                </div>
+          
+                 <p >{{cookieValue}}</p>
+
 
             </div>
         </div>
