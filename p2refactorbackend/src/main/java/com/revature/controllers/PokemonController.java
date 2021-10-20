@@ -2,6 +2,9 @@ package com.revature.controllers;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.revature.models.Pokemon;
 import com.revature.services.PokemonService;
@@ -11,7 +14,7 @@ import io.javalin.http.Handler;
 public class PokemonController {
 	
 	PokemonService ps = new PokemonService();
-	
+	Logger log = LogManager.getLogger(); //Logger object so that we can implement Logging
 	
 	public Handler insertPokeHandler = (ctx)->{
 		
@@ -24,14 +27,20 @@ public class PokemonController {
 		Pokemon pokemon = gson.fromJson(body, Pokemon.class);
 		
 		int trainerId = pokemon.getTrainerIdFk().getUserId();
-		
-		if(ps.insertAllPokemon(trainerId, pokemon)) {
-			
+		String username = pokemon.getTrainerIdFk().getUsername();
+		try {
+			if(ps.insertAllPokemon(trainerId, pokemon)) {
+				
 				ctx.status(200);
-		}else {
+				log.info("Pokemon inserted By Trainer: " + username);
+			}
+		}
+		catch(Exception e) {
 			
 			ctx.status(401);
+			log.info("Pokemon inserted Failed");
 		}
+		
 		
 		
 		
@@ -44,18 +53,24 @@ public class PokemonController {
 		int trainerId = Integer.parseInt(ctx.pathParam("trainerId"));
 		
 		Gson gson = new Gson();
-		if(ps.findAllPokemonByTrainer(trainerId) != null) {
+		
+		try {
+			if(ps.findAllPokemonByTrainer(trainerId) != null) {
 				
-			List<Pokemon> pokeList = ps.findAllPokemonByTrainer(trainerId);
-			String JsonPokeList = gson.toJson(pokeList);
+				List<Pokemon> pokeList = ps.findAllPokemonByTrainer(trainerId);
+				String JsonPokeList = gson.toJson(pokeList);
+				
+				ctx.result(JsonPokeList);
+				ctx.status(200);
+				log.info("Pokemon is Successfully retrieved from database by " + trainerId);
+				
+			}
 			
-			ctx.result(JsonPokeList);
-			ctx.status(200);
-			
-		}else {
+		}catch(Exception e) {
 			
 			ctx.status(403);
-			ctx.result("Failed to retreive info");
+			ctx.result("Failed to retreive info" + e);
+			log.info("Pokemon cannot be retrieved from database ");
 		}
 	};
 
@@ -66,13 +81,23 @@ public class PokemonController {
 		int level  = Integer.parseInt(ctx.pathParam("level"));
 		
 		Gson gson = new Gson();
-		if(ps.getAllPokemonWithTrainerAndLevel(trainerId, level)!=null) {
+		try {
 			
-			List<Pokemon> pokeList = ps.getAllPokemonWithTrainerAndLevel(trainerId, level);
-			String JSONListOfPoke = gson.toJson(pokeList);
-			ctx.result(JSONListOfPoke);
-			ctx.status(200);
+			if(ps.getAllPokemonWithTrainerAndLevel(trainerId, level)!=null) {
+				
+				List<Pokemon> pokeList = ps.getAllPokemonWithTrainerAndLevel(trainerId, level);
+				String JSONListOfPoke = gson.toJson(pokeList);
+				ctx.result(JSONListOfPoke);
+				ctx.status(200);
+				log.info("Pokemon Successfully retrieved from database with level by " + trainerId);
+			}
+		}catch(Exception e) {
+			
+			ctx.status(401);
+			ctx.result("Failed to retreive Pokemon "+ e);
+			log.info("Pokemon Failed to retreive from database, Error: " + e);
 		}
+		
 	};
 	
 	
