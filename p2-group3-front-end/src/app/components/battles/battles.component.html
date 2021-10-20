@@ -57,9 +57,11 @@
     <div class="card border-dark mb-3">
         <div class="battleImgStack">
             <img id="baseImg" class="card-img-top" src="../../../assets/battleBackground.jpg" alt="Card image cap">
-            <div class="imgOverlay">
-                <img *ngIf="apiPokemon" id="pokemonLCorner" src="{{apiPokemon.sprites.back_shiny}}" alt=""> <!--{{playerPokemon}}-->
-                <img *ngIf="enemyPokemon" id="pokemonRCorner" src="{{enemyPokemon.sprites.front_shiny}}" alt=""> <!--{{enemyPokemon}}-->
+            <div id="pokemon" class="imgOverlay" *ngIf="apiPokemon">
+                <img id="pokemonLCorner" class="img-fluid" src="{{apiPokemon.sprites.back_shiny}}" alt=""> <!--{{playerPokemon}}-->
+            </div> <!--child div end-->
+            <div id="enemy" class="imgOverlay" *ngIf="enemyPokemon">
+                <img id="pokemonRCorner" class="img-fluid" src="{{enemyPokemon.sprites.front_shiny}}" alt=""> <!--{{enemyPokemon}}-->
             </div> <!--child div end-->
         </div> <!--parent div end-->
         <div class="card-body">
