@@ -20,6 +20,8 @@ export class RegistrationService {
       credentials:"include"
     })
     if (response.status == 201){
+      let data = response.headers;
+      console.log(data);
       console.log("account successfully created");
       //redirect to the landing page or login page
     }
