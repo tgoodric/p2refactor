@@ -2,6 +2,7 @@ package com.revature.daos;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import com.revature.models.Trainer;
@@ -25,21 +26,36 @@ public class TrainerDao implements ITrainerDao {
 	
 	@Override
 	public List<Trainer> getTrainers() {
-		String hql = "FROM Trainer t";
-		Session ses = HibernateUtil.getSession();
-		List<Trainer> result = ses.createQuery(hql).list();
-		return result;
+		try(Session ses = HibernateUtil.getSession()){
+			String hql = "FROM Trainer t";
+			
+			List<Trainer> result = ses.createQuery(hql).list();
+			HibernateUtil.closeSession();
+			return result;
+			
+		}catch(HibernateException e) {
+			
+			e.printStackTrace();
+			
+		}
+		return null;
+		
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
     public List<Trainer> getTrainers(String username) {
-        String hql = "FROM Trainer t WHERE t.username = :username";
-        Session ses = HibernateUtil.getSession();
-        List<Trainer> result = ses.createQuery(hql)
-                .setParameter("username", username)                
-                .list();
-        return result;
+        try(Session ses = HibernateUtil.getSession()) {
+			String hql = "FROM Trainer t WHERE t.username = :username";
+			List<Trainer> result = ses.createQuery(hql)
+			        .setParameter("username", username)                
+			        .list();
+			return result;
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+        return null;
     }
 	
 	@Override
@@ -49,32 +65,43 @@ public class TrainerDao implements ITrainerDao {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Trainer> getForLogin(int id, String username, String password) {
-		System.out.println("in dao");
+		//System.out.println("in dao");
 		//Session is our EntityManager
 		//Word to the wise: Don't use criteria API. Ever.
-		Session ses = HibernateUtil.getSession();
-		System.out.println("session open");
-		String hql = "FROM Trainer T WHERE T.id = :username AND T.password = :password";
-		List<Trainer> result = ses.createQuery(hql)
-			.setParameter("username", username)
-			.setParameter("password", password)
-			.list(); 
-		System.out.println("query successful-ish");
-		return result;
+		try(Session ses = HibernateUtil.getSession()) {
+			
+			System.out.println("session open");
+			String hql = "FROM Trainer T WHERE T.id = :username AND T.password = :password";
+			List<Trainer> result = ses.createQuery(hql)
+				.setParameter("username", username)
+				.setParameter("password", password)
+				.list(); 
+			System.out.println("query successful-ish");
+			return result;
+		} catch (HibernateException e) {
+			
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 
 	@Override
 	public void addTrainer(Trainer t) {
-		if ((t.getUsername() == null || t.getUsername().isEmpty()) 			//Java needs String.isNullOrEmpty()
-				|| t.getPassword() == null || t.getPassword().isEmpty()) {	//C# has it, and it's useful
-			throw new IllegalArgumentException("Username or password was null or empty");
+			if ((t.getUsername() == null || t.getUsername().isEmpty()) 			//Java needs String.isNullOrEmpty()
+					|| t.getPassword() == null || t.getPassword().isEmpty()) {	//C# has it, and it's useful
+				throw new IllegalArgumentException("Username or password was null or empty");
+			}
+		try(Session ses = HibernateUtil.getSession()) {
+			System.out.println("session open");
+			ses.save(t);
+			HibernateUtil.closeSession();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		Session ses = HibernateUtil.getSession();
-		System.out.println("session open");
-		ses.save(t);
-		HibernateUtil.closeSession();
+		
 	}
 	
 	
