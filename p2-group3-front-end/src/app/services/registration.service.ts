@@ -21,6 +21,8 @@ export class RegistrationService {
       credentials:"include"
     })
     if (response.status == 201){
+      let data = response.headers;
+      console.log(data);
       console.log("account successfully created");
       this.router.navigate(['/home']);
     }

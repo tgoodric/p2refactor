@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Pokemon } from 'src/app/models/pokemon';
 import { PokemonSprite } from 'src/app/models/pokemon-sprite';
 import { PokemonService } from 'src/app/services/pokemon.service';
-
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-battles',
   templateUrl: './battles.component.html',
@@ -28,11 +28,17 @@ export class BattlesComponent implements OnInit {
   public gameStart:boolean = false;
   public gameOver:boolean = false;
   public randNum:number = 0;
+  public cookieValue:string;
 
 
 
 
-  constructor(private pokemonService:PokemonService) { }
+  constructor(private pokemonService:PokemonService,
+    private cookieService: CookieService
+    ) { 
+
+      this.cookieValue = this.cookieService.get('userId');
+    }
 
   ngOnInit(): void {
     this.getEnemyPokemon()
