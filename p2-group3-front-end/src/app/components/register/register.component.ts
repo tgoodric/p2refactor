@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
     else{
       console.log(this.username + this.password);
       this.rs.register(this.username, this.password);
+      
     }
   }
 

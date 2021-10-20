@@ -1,0 +1,4 @@
+::ng-deep body{
+    background-image: url("../../../assets/city.jpg");
+    background-size: cover;
+}
