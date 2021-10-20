@@ -11,64 +11,77 @@ import { PokemonService } from 'src/app/services/pokemon.service';
 export class BattlesComponent implements OnInit {
 
   //create class variables
+
+  //Trainer and pokemon related variables
   public apiPokemon:any = null;
-  public enemyPokemonSprite:any = null;
   public enemyPokemon:any = null;
   public playerPokemon:any = null;
-  public pokemonSprite:any = null;
-  public randNum:number = 0;
-  public pokemonSelected:number = 0;
-  public testPoke:any = null;
+  public pokemonSelected:any = null;
+  public trainerId:number = 1;
   public pokedexNum = 0;
+  public myHP:number = 0;
+  public enemyHP:number = 0;
+
+
+  //game control variables
+  public turn:boolean = false;
+  public gameStart:boolean = false;
+  public gameOver:boolean = false;
+  public randNum:number = 0;
+
+
 
 
   constructor(private pokemonService:PokemonService) { }
 
   ngOnInit(): void {
+    this.getEnemyPokemon()
   }
 
+  
 
   //Get your selected pokemon API infor as well as a random enemy pokemon
   getApiPokemon():Pokemon {
-    this.randNum = Math.floor(Math.random() * 898) + 1;  //generate random number between 1-898 to get random api pokemon
-    console.log(this.randNum);
     
     this.pokemonService.getPokemonFromApi(this.pokedexNum).subscribe( 
       (data:any) => {
         this.apiPokemon = data;
-        console.log(this.apiPokemon);
       },
       () => { //set pokemon to null incase of error
         this.apiPokemon = null;
         console.log("Error fetching api pokemon");
       }
     )
+    return this.apiPokemon;
+  } //end getApiPokemon
+
+  getEnemyPokemon():Pokemon{
+    this.randNum = Math.floor(Math.random() * 898) + 1;  //generate random number between 1-898 to get random api pokemon
+    console.log(this.randNum);
     this.pokemonService.getPokemonFromApi(this.randNum).subscribe( 
       (data:any) => {
         this.enemyPokemon = data;
         console.log(this.enemyPokemon);
       },
       () => { //set pokemon to null incase of error
-        this.apiPokemon = null;
+        this.enemyPokemon = null;
         console.log("Error fetching api pokemon");
       }
     )
-    console.log(this.apiPokemon)
-    return this.apiPokemon;
-  } //end getApiPokemon
+    return this.enemyPokemon;
+  }
 
 
   //get the player's pokemon database info
   getPlayerPokemon():Pokemon {
     //need some input from player for pokemon id, use temp int for test
-    this.pokemonSelected = this.pokemonSelected; // test getting the initial pokemon a new player gets when register
-    console.log();
-    this.pokemonService.getPokemonFromDatabase(this.pokemonSelected).subscribe( 
+    this.trainerId = this.trainerId; // test getting the initial pokemon a new player gets when register
+    console.log(this.trainerId);
+    this.pokemonService.getPokemonFromDatabase(this.trainerId).subscribe( 
       (data:any) => {
         this.playerPokemon = data;
-        
         console.log(this.playerPokemon);
-        console.log("Data: " + data);
+        console.log(this.playerPokemon.name)
       },
       () => { //set pokemon to null incase of error
         this.playerPokemon = null;
@@ -78,53 +91,73 @@ export class BattlesComponent implements OnInit {
     return this.playerPokemon;
   } //end getPlayerPokemon
 
-
-  //coin flip to decide who goes first
-  coinFlip () {
-    return Math.random() <= .5; 
-  } //let's say true is we go first
-
-
-  //battle functionality
-  battle(playerPokemon:Pokemon, apiPokemon:Pokemon, actionType: number, action: number){
-    let attacker:Pokemon = apiPokemon;
-    let defender:Pokemon = playerPokemon;
-    if(this.coinFlip()){
-      attacker = playerPokemon;
-      defender = apiPokemon;
-    } //during an enemy turn, we call battleturn()
-    console.log("playerPokemon: " + playerPokemon);
-    console.log("apippokemon: " + apiPokemon);
-    do{
-      this.pokemonService.pokemonBattleTurn(attacker, defender, actionType, action);
-    }while((attacker.hitPoints > 0) && (defender.hitPoints > 0));
-    console.log(playerPokemon);
-    console.log(apiPokemon);
-  }
-
   
   //set stage for battle
   prepareBattle(d:Pokemon){
     console.log("in prepare battle function")
 
-    //change card header to display selected pokemon name and HP
-    let cardheader = document.getElementById("cardheader") as HTMLInputElement;
-    cardheader.innerHTML="Pokemon: " + d.pokeName + "&nbsp&nbsp&nbsp&nbsp&nbsp HP: " + d.hitPoints
-    let pokeTable = document.getElementById("poketable") as HTMLInputElement;
-    pokeTable.innerHTML=""
-
-    //set pokedex num and pokemon for user selected pokemon
+    //set pokedex num and pokemon id for user selected pokemon
     this.pokedexNum = d.pokedexNumber;
-    this.playerPokemon = d;
+    this.pokemonSelected = d
 
     //logs for debug
     console.log(d)
     console.log(d.pokedexNumber)
-
-    //fill in body of pokemon card
-    // let pokeInfo = document.getElementById("selectButtons") as HTMLInputElement
-    // pokeInfo.innerHTML =  "<br> Level: " + d.level + "<br> Attack: " + d.attack + "<br> Special Attack: "  + d.specialAttack
   }
+
+  //battle functionality
+  battle(){
+    console.log("in battle func")
+    
+    //decide who goes first
+    this.randNum = Math.random()
+    if(this.randNum <= .5){
+      console.log("our turn")
+      this.turn=true
+    }else {
+      console.log("their turn")
+      this.turn=false
+    }
+
+    //change the start game boolean to true
+    this.gameStart=true;
+
+    
+    }
+
+
+    // battle(playerPokemon:Pokemon, apiPokemon:Pokemon, actionType: number, action: number){
+    //   let attacker:Pokemon = apiPokemon;
+    //   let defender:Pokemon = playerPokemon;
+    //   if(this.coinFlip()){
+    //     attacker = playerPokemon;
+    //     defender = apiPokemon;
+    //   } //during an enemy turn, we call battleturn()
+    //   console.log("playerPokemon: " + playerPokemon);
+    //   console.log("apippokemon: " + apiPokemon);
+    //   do{
+    //     this.pokemonService.pokemonBattleTurn(attacker, defender, actionType, action);
+    //   }while((attacker.hitPoints > 0) && (defender.hitPoints > 0));
+    //   console.log(playerPokemon);
+    //   console.log(apiPokemon);
+    // }
+
+
+  attackFunc(){
+    console.log("in attackFunc")
+
+
+    // this.pokemonService.attackFunc(this.pokemonSelected, this.enemyPokemon, this.pokemonSelected.myHP)
+
+    // this.pokemonService.attackFunc(this.enemyPokemon, this.pokemonSelected, this.enemyPokemon.enemyHP)
+
+  }
+
+  specialAttackFunc(){
+    console.log("in specialAttackFunc")
+
+  }
+
  
 } //end component export
 

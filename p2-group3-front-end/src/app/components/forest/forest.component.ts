@@ -15,7 +15,7 @@ export class ForestComponent implements OnInit {
 
   public actionText:String = ""
   public randNum:number = 0;
-
+  public backgroundUrl:any = "../assets/"
   constructor(private router: Router) { }
 
   ngOnInit(): void {

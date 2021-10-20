@@ -1,15 +1,16 @@
-<div id="tableCard" class="card">
+<div id="tableCard">
     <div class="card border-dark mb-4">
-        <div class="card-header" id="cardheader">Select Your Pokemon!</div>
-    
-        <table id="poketable" class="table" *ngIf="playerPokemon">
+        <!-- <div class="card-header" id="cardheader">Select Your Pokemon!</div> -->
+        <div *ngIf="pokemonSelected" class="card-header" id="cardheader">Pokemon:{{pokemonSelected.pokeName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{pokemonSelected.hitPoints}} HP</div>
+
+        <table id="poketable" class="table" *ngIf="playerPokemon && !pokemonSelected">
             <thead>
                 <th scope="col">Pokedex</th>
                 <th scope="col">Name</th>
                 <th scope="col">Level</th>
             </thead>
             <tbody>
-                <tr *ngFor="let d of playerPokemon" (click)="prepareBattle(d); getApiPokemon(); getPlayerPokemon()">
+                <tr *ngFor="let d of playerPokemon" (click)="prepareBattle(d); getApiPokemon(); getPlayerPokemon();">
                     <!-- String interpolating the values of the pokemon object   -->
                     <td>{{d.pokedexNumber}}</td>
                     <td>{{d.pokeName}}</td>
@@ -18,19 +19,34 @@
             </tbody>
         </table> <!--end table-->
 
-   
+        
         <div class="card-body" id="pokeinfo">
             <div class="row" id="selectButtons">
-                <input class="col-lg-3" type="number" [(ngModel)]="pokemonSelected" />
-                <button class="btn btn-outline-dark" (click)="getPlayerPokemon()">Battle!</button> <!--use getApi for testing-->
+                <!-- <input class="col-lg-3" type="number" [(ngModel)]="trainerId" /> -->
+                <button *ngIf="!pokemonSelected" class="btn btn-outline-dark" (click)="getPlayerPokemon()">View My Pokemon</button> <!--use getApi for testing-->
               </div>
               <div *ngIf="apiPokemon">
                 <img src={{apiPokemon.sprites.front_shiny}}>
             </div>
-            <div *ngIf="playerPokemon">
-                <p> Level: {{playerPokemon.level}}</p>
-                <p> Attack: {{playerPokemon.attack}}</p>
-                <p> Special Attack {{playerPokemon.specialAttack}}</p>
+            <div *ngIf="pokemonSelected">
+                <p> Level: {{pokemonSelected.level}}</p>
+                <p> Attack: {{pokemonSelected.attack}} damage</p>
+                <p> Special Attack: {{pokemonSelected.specialAttack}} damage</p>
+                <button *ngIf="!gameStart" class = "btn btn-outline-dark" (click)="battle()">Start Battle!</button>
+
+                <!-- attack and inventory options -->
+                <div *ngIf="gameStart && !gameOver" class="btn-group-vertical" id="leftElement">
+                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "attackFunc()">Attack</button><br><br>
+                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "specialAttackFunc()">Special Attack</button><br><br>
+                    <!--dropdown button-->
+                    <div *ngIf="apiPokemon" ngbDropdown class="d-inline-block">
+                            <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Use Item</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button ngbDropdownItem (click) = "somefunc()">Potion1</button>
+                            <button ngbDropdownItem (click) = "somefunc()">Potion2</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>    
@@ -40,28 +56,24 @@
     <div class="card border-dark mb-3">
         <div class="battleImgStack">
             <img id="baseImg" class="card-img-top" src="../../../assets/battleBackground.jpg" alt="Card image cap">
-            <div class="imgOverlay" *ngIf="apiPokemon && enemyPokemon">
-                <img id="pokemonLCorner" src="{{apiPokemon.sprites.back_shiny}}" alt=""> <!--{{playerPokemon}}-->
-                <img id="pokemonRCorner" src="{{enemyPokemon.sprites.front_shiny}}" alt=""> <!--{{enemyPokemon}}-->
+            <div class="imgOverlay">
+                <img *ngIf="apiPokemon" id="pokemonLCorner" src="{{apiPokemon.sprites.back_shiny}}" alt=""> <!--{{playerPokemon}}-->
+                <img *ngIf="enemyPokemon" id="pokemonRCorner" src="{{enemyPokemon.sprites.front_shiny}}" alt=""> <!--{{enemyPokemon}}-->
             </div> <!--child div end-->
         </div> <!--parent div end-->
         <div class="card-body">
-            <h5 class="card-title overflow-auto">Card title</h5>
-            <p class="card-text overflow-auto" style="height: 65px;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+            <h5 class="card-text overflow-auto">Battle!</h5>
+            <div *ngIf="!gameOver" class="card-text overflow-auto" style="height: 100px;">
+                <p *ngIf="enemyPokemon">You encountered a {{enemyPokemon.name}}!</p>
+                <p *ngIf="apiPokemon">You chose {{apiPokemon.name}}!</p>
+                <p *ngIf="turn">Your turn...</p>
+                <p *ngIf="!turn && gameStart">Opponent's turn...</p>
+                <!-- <div *ngIf="gameStart && !gameOver">
+                </div> -->
+
+            </div>
         </div>
         <div class="card-body">
-            <div class="btn-group-vertical" id="leftElement">
-                <button class="btn btn-outline-dark">Attack</button>
-                <button class="btn btn-outline-dark">Special Attack</button>
-                <!--dropdown button-->
-                <div ngbDropdown class="d-inline-block">
-                        <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Use Item</button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem>Potion1</button>
-                        <button ngbDropdownItem>Potion2</button>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="card-body" style="border: solid; border-width: 1px;">
             <a href="/forest" class="card-link">Travel to Haunted Forest</a>

@@ -11,6 +11,7 @@ import com.revature.models.Trainer;
 import com.revature.services.InventoryService;
 import com.revature.services.PokemonService;
 import com.revature.services.TrainerService;
+import com.revature.utils.JwtUtil;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
@@ -50,7 +51,7 @@ public class TrainerController {
 		String tBody = ctx.body();
 		//try {
 		Trainer t = gson.fromJson(tBody, Trainer.class);
-		System.out.println(t);
+		//System.out.println(t);
 		String hashedPassword = ar2.hash(4, 1024*1024, 8, t.getPassword());
 		t.setPassword(hashedPassword);
 		int trainerId = ts.addTrainer(t);
@@ -64,8 +65,8 @@ public class TrainerController {
 		ps.insertAllPokemon(trainerId, new Pokemon("nabin",1,1,45,45,49,65,49,65,0,
 									ts.getTrainerByUsername(t.getUsername())));
 		is.addInventory(new Inventory(5,5,5,ts.getTrainerByUsername(t.getUsername())));
-		//TODO: create jwt and add to header
-		
+		String jwt = JwtUtil.generate(t.getUsername(), t.getPassword());
+		ctx.header("JWT", jwt);
 		ctx.status(201);
 	};
 	

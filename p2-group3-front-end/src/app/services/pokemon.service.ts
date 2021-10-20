@@ -17,8 +17,6 @@ export class PokemonService {
   constructor(private http:HttpClient) { }
 
   
-
-
   getPokemonFromApi(pokedex:number):Observable<Pokemon>{
     return this.http.get("https://pokeapi.co/api/v2/pokemon/" + pokedex + "/") as Observable<Pokemon>
   } 
@@ -71,11 +69,11 @@ export class PokemonService {
     }
   }
 
-  
-
+  //formula for calculating move damage
   calculateDamage(attack:number, defense:number, level:number, power:number){
     return (((((2 * level)/5) + 2) * power * (attack/defense)) / 50) + 2;
   }
+
 
   capturePokemon(pokemon:Pokemon, catchModifier:number):boolean {
     let probability:number = 1 - (pokemon.hitPoints/pokemon.maxHitPoints);

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -34,17 +35,22 @@ public class InventoryDao implements IInventoryDao {
 	//method to get a particular trainers inventory
 	@Override
 	public List<Inventory> getOneInventory(int trainerId) {
-		System.out.println("in the inventory dao");
-		Session ses = HibernateUtil.getSession();
+//		System.out.println("in the inventory dao");
 		
-		
-		String hql = "FROM Inventory where trainerIdFk = " + trainerId;
-		List<Inventory> i = ses.createQuery(hql).list();
-		
-		HibernateUtil.closeSession();
-		
-	
-		return i;
+		try(Session ses = HibernateUtil.getSession()) {
+			
+			String hql = "FROM Inventory where trainerIdFk = " + trainerId;
+			List<Inventory> i = ses.createQuery(hql).list();
+			
+			HibernateUtil.closeSession();
+
+			return i;
+
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 
@@ -53,66 +59,74 @@ public class InventoryDao implements IInventoryDao {
 	@Override
 	public boolean useItem(int trainerId, String itemType) {
 		
-		System.out.println("in inventory dao use item method");
-		Session ses = HibernateUtil.getSession();
-		Transaction tran = ses.beginTransaction(); //update and delete must happen within a transaction
+//		System.out.println("in inventory dao use item method");
 		
-		System.out.println(itemType);
-		if(itemType.equals("pokeballs")) {
-			  
-			System.out.println("made it inside use pokeballs if");
-			//get the current amount of pokeballs
-		    Query query = ses.createQuery("SELECT pokeballs FROM Inventory where trainerIdFk=" + trainerId);
-		    int pokeballs = (int) query.getSingleResult();
-		    System.out.println(pokeballs);
+		try(Session ses = HibernateUtil.getSession()) {
+			Transaction tran = ses.beginTransaction(); //update and delete must happen within a transaction
 			
-		    //add one pokeball to the respective trainers inventory of pokeballs
-			String hql = "UPDATE Inventory SET pokeballs = " +  (pokeballs-1) + " WHERE trainerIdFk = " + trainerId;
-			Query q = ses.createQuery(hql);
-			q.executeUpdate();
+			System.out.println(itemType);
+			if(itemType.equals("pokeballs")) {
+				  
+				System.out.println("made it inside use pokeballs if");
+				//get the current amount of pokeballs
+			    Query query = ses.createQuery("SELECT pokeballs FROM Inventory where trainerIdFk=" + trainerId);
+			    int pokeballs = (int) query.getSingleResult();
+			    System.out.println(pokeballs);
 				
-			//close transaction and session to prevent memory leak
-			tran.commit();
-			HibernateUtil.closeSession();
-			return true;
-		    
-		}else if(itemType.equals("potions")) {
-			//get the current amount of potions
-		    Query query2 = ses.createQuery("SELECT potions FROM Inventory where trainerIdFk=" + trainerId);
-		    int potions = (int) query2.getSingleResult();
-		    System.out.println(potions);
+			    //add one pokeball to the respective trainers inventory of pokeballs
+				String hql = "UPDATE Inventory SET pokeballs = " +  (pokeballs-1) + " WHERE trainerIdFk = " + trainerId;
+				Query q = ses.createQuery(hql);
+				q.executeUpdate();
+					
+				//close transaction and session to prevent memory leak
+				tran.commit();
+				HibernateUtil.closeSession();
+				return true;
+			    
+			}else if(itemType.equals("potions")) {
+				//get the current amount of potions
+			    Query query2 = ses.createQuery("SELECT potions FROM Inventory where trainerIdFk=" + trainerId);
+			    int potions = (int) query2.getSingleResult();
+			    System.out.println(potions);
+				
+			    //add one pokeball to the respective trainers inventory of potions
+				String hql2 = "UPDATE Inventory SET potions = " +  (potions-1) + " WHERE trainerIdFk = " + trainerId;
+				Query q2 = ses.createQuery(hql2);
+				q2.executeUpdate();
+					
+				//close transaction and session to prevent memory leak
+				tran.commit();
+				HibernateUtil.closeSession();
+				return true;
+			    
+			    
+			}else if(itemType.equals("superpotions")) {
+				//get the current amount of super potions
+			    Query query3 = ses.createQuery("SELECT superPotions FROM Inventory where trainerIdFk=" + trainerId);
+			    int spotions = (int) query3.getSingleResult();
+				
+			    //add one pokeball to the respective trainers inventory of super potions
+				String hql3 = "UPDATE Inventory SET superPotions = " +  (spotions-1) + " WHERE trainerIdFk = " + trainerId;
+				Query q3 = ses.createQuery(hql3);
+				q3.executeUpdate();
+					
+				//close transaction and session to prevent memory leak
+				tran.commit();
+				HibernateUtil.closeSession();
+				return true;
+			}else {
+				System.out.println("in the final else statement");
+				tran.commit();
+				HibernateUtil.closeSession();
+				return false;
+			}
 			
-		    //add one pokeball to the respective trainers inventory of potions
-			String hql2 = "UPDATE Inventory SET potions = " +  (potions-1) + " WHERE trainerIdFk = " + trainerId;
-			Query q2 = ses.createQuery(hql2);
-			q2.executeUpdate();
-				
-			//close transaction and session to prevent memory leak
-			tran.commit();
-			HibernateUtil.closeSession();
-			return true;
-		    
-		    
-		}else if(itemType.equals("superpotions")) {
-			//get the current amount of super potions
-		    Query query3 = ses.createQuery("SELECT superPotions FROM Inventory where trainerIdFk=" + trainerId);
-		    int spotions = (int) query3.getSingleResult();
-			
-		    //add one pokeball to the respective trainers inventory of super potions
-			String hql3 = "UPDATE Inventory SET superPotions = " +  (spotions-1) + " WHERE trainerIdFk = " + trainerId;
-			Query q3 = ses.createQuery(hql3);
-			q3.executeUpdate();
-				
-			//close transaction and session to prevent memory leak
-			tran.commit();
-			HibernateUtil.closeSession();
-			return true;
-		}else {
-			System.out.println("in the final else statement");
-			tran.commit();
-			HibernateUtil.closeSession();
+		}catch(HibernateException e) {
+			e.printStackTrace();
 			return false;
 		}
+	
+		
 		
 	}
 	
@@ -120,58 +134,64 @@ public class InventoryDao implements IInventoryDao {
 	//add one to whatever item the user selects
 	@Override
 	public boolean addItem(int trainerId, String itemType) {
-		Session ses = HibernateUtil.getSession();
-		Transaction tran = ses.beginTransaction(); //update and delete must happen within a transaction
-		
-		if(itemType.equals("pokeballs")) {
-			  
-			//get the current amount of pokeballs
-		    Query query = ses.createQuery("SELECT pokeballs FROM Inventory where trainerIdFk=" + trainerId);
-		    int pokeballs = (int) query.getSingleResult();
+		try(Session ses = HibernateUtil.getSession()) {
 			
-		    //add one pokeball to the respective trainers inventory of pokeballs
-			String hql = "UPDATE Inventory SET pokeballs = " +  (pokeballs+1) + " WHERE trainerIdFk = " + trainerId;
-			Query q = ses.createQuery(hql);
-			q.executeUpdate();
-				
-			//close transaction and session to prevent memory leak
-			tran.commit();
-			HibernateUtil.closeSession();
-			return true;
-		    
-		}else if(itemType.equals("potions")) {
-			//get the current amount of potions
-		    Query query2 = ses.createQuery("SELECT potions FROM Inventory where trainerIdFk=" + trainerId);
-		    int potions = (int) query2.getSingleResult();
+			Transaction tran = ses.beginTransaction(); //update and delete must happen within a transaction
 			
-		    //add one pokeball to the respective trainers inventory of potions
-			String hql2 = "UPDATE Inventory SET potions = " +  (potions-1) + " WHERE trainerIdFk = " + trainerId;
-			Query q2 = ses.createQuery(hql2);
-			q2.executeUpdate();
+			if(itemType.equals("pokeballs")) {
+				  
+				//get the current amount of pokeballs
+			    Query query = ses.createQuery("SELECT pokeballs FROM Inventory where trainerIdFk=" + trainerId);
+			    int pokeballs = (int) query.getSingleResult();
 				
-			//close transaction and session to prevent memory leak
-			tran.commit();
-			HibernateUtil.closeSession();
-			return true;
-		    
-		    
-		}else if(itemType.equals("superpotions")) {
-			//get the current amount of super potions
-		    Query query3 = ses.createQuery("SELECT superPotions FROM Inventory where trainerIdFk=" + trainerId);
-		    int spotions = (int) query3.getSingleResult();
-			
-		    //add one pokeball to the respective trainers inventory of super potions
-			String hql3 = "UPDATE Inventory SET superPotions = " +  (spotions-1) + " WHERE trainerIdFk = " + trainerId;
-			Query q3 = ses.createQuery(hql3);
-			q3.executeUpdate();
+			    //add one pokeball to the respective trainers inventory of pokeballs
+				String hql = "UPDATE Inventory SET pokeballs = " +  (pokeballs+1) + " WHERE trainerIdFk = " + trainerId;
+				Query q = ses.createQuery(hql);
+				q.executeUpdate();
+					
+				//close transaction and session to prevent memory leak
+				tran.commit();
+				HibernateUtil.closeSession();
+				return true;
+			    
+			}else if(itemType.equals("potions")) {
+				//get the current amount of potions
+			    Query query2 = ses.createQuery("SELECT potions FROM Inventory where trainerIdFk=" + trainerId);
+			    int potions = (int) query2.getSingleResult();
 				
-			//close transaction and session to prevent memory leak
-			tran.commit();
-			HibernateUtil.closeSession();
-			return true;
-		}else {
-			tran.commit();
-			HibernateUtil.closeSession();
+			    //add one pokeball to the respective trainers inventory of potions
+				String hql2 = "UPDATE Inventory SET potions = " +  (potions-1) + " WHERE trainerIdFk = " + trainerId;
+				Query q2 = ses.createQuery(hql2);
+				q2.executeUpdate();
+					
+				//close transaction and session to prevent memory leak
+				tran.commit();
+				HibernateUtil.closeSession();
+				return true;
+			    
+			    
+			}else if(itemType.equals("superpotions")) {
+				//get the current amount of super potions
+			    Query query3 = ses.createQuery("SELECT superPotions FROM Inventory where trainerIdFk=" + trainerId);
+			    int spotions = (int) query3.getSingleResult();
+				
+			    //add one pokeball to the respective trainers inventory of super potions
+				String hql3 = "UPDATE Inventory SET superPotions = " +  (spotions-1) + " WHERE trainerIdFk = " + trainerId;
+				Query q3 = ses.createQuery(hql3);
+				q3.executeUpdate();
+					
+				//close transaction and session to prevent memory leak
+				tran.commit();
+				HibernateUtil.closeSession();
+				return true;
+			}else {
+				tran.commit();
+				HibernateUtil.closeSession();
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return false;
 		}
 		
@@ -180,19 +200,25 @@ public class InventoryDao implements IInventoryDao {
 	//add an entire inventory for a new user
 	@Override
 	public boolean addInventory(Inventory inventory) {
-		Session ses = HibernateUtil.getSession();
-		String hql = "FROM Trainer where trainer_id=:tID";
-		Trainer trainer = (Trainer) ses.createQuery(hql)
-				.setParameter("tID", inventory.getTrainerIdFk().getUserId())
-				.uniqueResult();
-		
-		if(trainer != null) {
-			inventory.setTrainerIdFk(trainer);
+		try(Session ses = HibernateUtil.getSession()) {
 			
-			ses.save(inventory);
-			HibernateUtil.closeSession();
-			return true;
+			String hql = "FROM Trainer where trainer_id=:tID";
+			Trainer trainer = (Trainer) ses.createQuery(hql)
+					.setParameter("tID", inventory.getTrainerIdFk().getUserId())
+					.uniqueResult();
 			
+			if(trainer != null) {
+				inventory.setTrainerIdFk(trainer);
+				
+				ses.save(inventory);
+				HibernateUtil.closeSession();
+				return true;
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 		return false;
 	}
