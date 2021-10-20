@@ -3,7 +3,11 @@ package com.revature.daos;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import javax.persistence.Query;
+
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.revature.models.Pokemon;
 import com.revature.models.Trainer;
@@ -94,6 +98,54 @@ public class PokemonDao implements IPokemonDao {
 		
 		
 		
+	}
+	
+	public boolean updatePokemon(Pokemon p) { //set all fields except trainer and ID with new values
+		String hql = "UPDATE Pokemon set attack = :newAttack, " + 
+					 					"defense = :newDefense, " + 
+					 					"experience = :newExperience, " +
+					 					"hit_points = :newHitPoints, " + 
+					 					"level = :newLevel, " + 
+					 					"max_hit_points = :newMaxHitPoints, " +
+					 					"special_attack = :newSpecialAttack, " + 
+					 					"special_defense = :newSpecialDefense " +
+					 "WHERE pokemon_id = :pokemonId";
+		Transaction txn = null;
+		
+		try {
+			Session ses = HibernateUtil.getSession();
+		
+			txn = ses.beginTransaction();
+			
+			Query q = ses.createQuery(hql);
+			
+			q.setParameter("newAttack", p.getAttack());
+			q.setParameter("newDefense", p.getDefense());
+			q.setParameter("newExperience", p.getExperience());
+			q.setParameter("newHitPoints", p.getHitPoints());
+			q.setParameter("newLevel", p.getLevel());
+			q.setParameter("newMaxHitPoints", p.getMaxHitPoints());
+			q.setParameter("newSpecialAttack", p.getSpecialAttack());
+			q.setParameter("newSpecialDefense", p.getSpecialDefense());
+			q.setParameter("pokemonId", p.getPokemonId());
+			
+			q.executeUpdate();
+			
+			txn.commit();
+		}
+		catch(ConstraintViolationException e) {
+			txn.rollback();
+			return false;
+		}	// may add other exceptions as needed
+		catch(Exception e) {
+			e.printStackTrace();
+			txn.rollback();
+			return false;
+		}
+		finally {
+			HibernateUtil.closeSession();
+		}
+		return true;
 	}
 
 }

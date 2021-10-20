@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserDto } from '../models/user-dto';
 
 @Injectable({
@@ -7,8 +8,8 @@ import { UserDto } from '../models/user-dto';
 export class RegistrationService {
 
   private url:string = "http://localhost:8090/"
-
-  constructor() { }
+  
+  constructor(private router:Router) { }
 
   async register(username:string, password:string) {
     console.log(username + password + "in service");
@@ -21,7 +22,7 @@ export class RegistrationService {
     })
     if (response.status == 201){
       console.log("account successfully created");
-      //redirect to the landing page or login page
+      this.router.navigate(['/home']);
     }
     else{
       console.log("Invalid username or password entered");
