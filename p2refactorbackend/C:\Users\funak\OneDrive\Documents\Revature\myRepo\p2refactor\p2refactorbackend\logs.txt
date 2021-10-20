@@ -1,4 +1,0 @@
-2021-10-19 21:13:54 INFO  InventoryController:46 - got a users inventory
-2021-10-19 21:14:35 INFO  InventoryController:46 - got a users inventory
-2021-10-19 21:14:39 INFO  InventoryController:46 - got a users inventory
-2021-10-19 21:22:29 INFO  InventoryService:30 - Trainer used an item
