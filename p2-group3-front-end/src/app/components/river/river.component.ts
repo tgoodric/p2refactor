@@ -19,15 +19,14 @@ export class RiverComponent implements OnInit {
   fishHandler(){   
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "You Picked berries"; // test text for now can update later
+      this.actionText = "You fished"; // test text for now can update later
       
     } else if (this.randNum <= 4) {
-      this.actionText = "You Picked berries2"; // test text for now can update later
+      this.actionText = "You fished2"; // test text for now can update later
       //add potions to database below 
      
 
     } else {
-      this.actionText = "You Picked berries3"; // test text for now can update later
       this.router.navigate(['/battles']);
     }
   }
@@ -35,9 +34,9 @@ export class RiverComponent implements OnInit {
   swimHandler(){
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "chopping down tree" //will update text later
+      this.actionText = "swimming" //will update text later
     } else if (this.randNum <= 4){
-      this.actionText = "chopping down tree2"
+      this.actionText = "swimming2"
     } else {
       this.router.navigate(['/battles']);
     }
