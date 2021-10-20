@@ -33,7 +33,9 @@ public class LoginController {
         	ctx.result(resultJson);
         	ctx.header("JWT", jwt); //stores JWT in the header.
         	//System.out.println(resultJson);
-            ctx.status(200);
+        	ctx.cookie("userId", Integer.toString(result.getUserId())); //not sure why Java won't automatically 
+            ctx.status(200);											//convert ints to strings, but whatevs
+            
         }
         else {
             ctx.status(401);

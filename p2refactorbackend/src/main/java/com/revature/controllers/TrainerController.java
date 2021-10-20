@@ -66,6 +66,7 @@ public class TrainerController {
 									ts.getTrainerByUsername(t.getUsername())));
 		is.addInventory(new Inventory(5,5,5,ts.getTrainerByUsername(t.getUsername())));
 		String jwt = JwtUtil.generate(t.getUsername(), t.getPassword());
+		ctx.cookie("userId", Integer.toString(trainerId));
 		ctx.header("JWT", jwt);
 		ctx.status(201);
 	};
