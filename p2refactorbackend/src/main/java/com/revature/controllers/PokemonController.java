@@ -30,7 +30,7 @@ public class PokemonController {
 				ctx.status(200);
 		}else {
 			
-			ctx.status(401);
+			ctx.status(400);
 		}
 		
 		
@@ -73,6 +73,24 @@ public class PokemonController {
 			ctx.result(JSONListOfPoke);
 			ctx.status(200);
 		}
+	};
+
+
+	public Handler updatePokemonHandler = (ctx) -> {
+		String body = ctx.body();
+		
+		Gson gson = new Gson();
+		
+		Pokemon pokemon = gson.fromJson(body, Pokemon.class);
+		
+		if(ps.updatePokemon(pokemon)) {
+			ctx.status(200);
+		}
+		else {
+			ctx.status(400);
+		}
+		
+		
 	};
 	
 	
