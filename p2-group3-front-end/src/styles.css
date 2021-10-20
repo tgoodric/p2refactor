@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 .card-centered {
     width: 35%;
+    min-width: 600px;
     height: 25%;
     position: absolute;
     top: 25%;
