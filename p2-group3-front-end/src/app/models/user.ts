@@ -1,7 +1,7 @@
 export class User {
-    constructor(
-        public userId:number,
-        public username:string,
-        public password:string,
-    ) { }
+    trainer_id:number;
+    
+    constructor(trainer_id:number) { 
+        this.trainer_id = trainer_id;
+    }
 }
