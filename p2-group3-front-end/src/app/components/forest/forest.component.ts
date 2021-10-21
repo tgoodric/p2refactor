@@ -1,3 +1,4 @@
+import { ɵparseCookieValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -10,14 +11,17 @@ import { CookieService } from 'ngx-cookie-service';
 export class ForestComponent implements OnInit {
 
   //component variables
-  public narratorText:String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et" +
-                               "dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex" +
-                               "ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+  public narratorText:String = "As you enter the forest canopy, a sense of dread overcomes you. " +
+                               "The eyes of many Pokémon peer at you from the distant bushes. " +
+                               "The trees creak eerily as the wind whips through the branches above. Fallen leaves at your feet swirl as you move deep into the forest as if blown by some unknown force. " +
+                               "Far off, you can see many of the coveted Enigma berries ripe for picking. Professor Oak also requested you collect firewood to help the townspeople. " +
+                               "You also see the tracks of a rare Pokémon leading deeper into the woods.";
 
   public actionText:String = ""
   public randNum:number = 0;
   public backgroundUrl:any = "../assets/"
   public cookieValue:string;
+  public trainer_id:number = 0;
 
   constructor(private router: Router,
     private cookieService: CookieService
@@ -31,13 +35,20 @@ export class ForestComponent implements OnInit {
   pickBerriesHandler(){   
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "You Picked berries"; // test text for now can update later
-      
-    } else if (this.randNum <= 4) {
-      this.actionText = "You Picked berries2"; // test text for now can update later
-      //add potions to database below 
-     
+      if(this.randNum === 8){
+        //add item to database
+        console.log(this.randNum)
+        this.actionText = "You found a Super Potion!"
+      } 
+      this.actionText = "You Picked rawst berries"; // test text for now can update later
 
+    } else if (this.randNum <= 4) {
+      if(this.randNum === 3){
+        //add potions to database below 
+        console.log(this.randNum)
+        this.actionText = "You found a Potion!"
+      }
+      this.actionText = "You Picked berries2"; // test text for now can update later
     } else {
       this.router.navigate(['/battles']);
     }

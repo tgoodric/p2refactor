@@ -12,6 +12,10 @@ export class CaveComponent implements OnInit {
   public actionText:String = ""
   public randNum:number = 0;
   public cookieValue:string;
+  public narratorText:String = "The air in the cave is thick and damp upon entering. A foul smell emanates from the depths that causes your stomach to turn. " +
+                               "Undeterred, you courageously step deeper into the cave. As the outside light fades behind you, a loud screech pierces the silence, and your heart beings to race. " + 
+                               "You feel as though you may be attacked at any moment. Venturing deeper a strange rock catches your eye with a tattered piece of cloth jumbled beneath it. " +
+                               "A vein of Armorite ore also shines along the wall as the flame of your torch flickers. Searching the depths of the cave could also reveal the rarest Pokémon of them all.";
 
   constructor(private router: Router,
     private cookieService: CookieService
