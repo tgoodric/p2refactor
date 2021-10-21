@@ -15,7 +15,6 @@ public class LoginController {
     public Handler loginHandler = (ctx) ->{
         String body = ctx.body();
         LoginDto ldto = gson.fromJson(body, LoginDto.class);
-        System.out.println(body);
         Trainer result = ls.login(ldto.getUsername(), ldto.getPassword());
         
         if(result != null) {
