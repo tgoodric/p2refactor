@@ -12,16 +12,13 @@ import com.revature.utils.HibernateUtil;
 
 public class InventoryService {
 	
-	Logger log = LogManager.getLogger(); //Logger object so that we can implement Logging
+	Logger log = LogManager.getLogger(); 
 	
-	//instantiate an InventoryDao to use its methods
 	InventoryDao iDao = new InventoryDao();
 	
 	public List<Inventory> getOneInventory(int trainerId) {
-		System.out.println("in the service layer");
 		return iDao.getOneInventory(trainerId);
 	}
-	
 	
 	public boolean useItem(int trainerId, String item) {
 	
@@ -53,10 +50,10 @@ public class InventoryService {
 		
 		boolean result = iDao.addInventory(inventory);
 		if(result) {
-			log.info("Trainer added an item");
+			log.info("Trainer added an inventory");
 		}
 		else {
-			log.info("Item add failed");
+			log.info("Inventory add failed");
 		}
 		
 		return result;
