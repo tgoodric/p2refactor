@@ -4,13 +4,6 @@ import com.revature.controllers.InventoryController;
 import com.revature.controllers.LoginController;
 import com.revature.controllers.PokemonController;
 import com.revature.controllers.TrainerController;
-import com.revature.daos.InventoryDao;
-import com.revature.daos.PokemonDao;
-import com.revature.daos.TrainerDao;
-import com.revature.models.Pokemon;
-import com.revature.models.Trainer;
-import com.revature.services.PokemonService;
-
 import io.javalin.Javalin;
 
 public class Launcher {
