@@ -3,12 +3,10 @@ package com.revature.tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,6 +15,7 @@ import com.revature.models.Inventory;
 import com.revature.models.Pokemon;
 import com.revature.models.Trainer;
 import com.revature.services.InventoryService;
+import com.revature.services.LoginService;
 import com.revature.services.PokemonService;
 import com.revature.services.TrainerService;
 
@@ -28,8 +27,9 @@ class UnitTesting {
 	public static InventoryService is;
 	public static Trainer t;
 	public static TrainerService ts;
-	public int trainerId = 1; 
-	public int level = 1;
+	public static LoginService ls;
+	public int trainerId = 34; 
+	public int level = 10;
 	public String itemType = "pokeballs";
 	public String username = "testuser";
 	public String password = "password";
@@ -56,7 +56,7 @@ class UnitTesting {
 	@Test
 	final void testGetPokemon() {
 		//System.out.println(trainerId);
-		System.out.println("Getting Pokemon without trainerId");
+		System.out.println("Getting Pokemon with trainerId");
 		try {
 			
 			List<Pokemon> result = ps.findAllPokemonByTrainer(trainerId);
@@ -125,7 +125,7 @@ class UnitTesting {
 		
 		try {
 			
-			result = is.useItem(trainerId, itemType);
+			result = is.useItem(33, itemType);
 					
 			
 			assertTrue(result);
@@ -153,24 +153,21 @@ class UnitTesting {
 		}
 	}
 
-//	@Test
-//	final void testAddInventory() {
-//		boolean result = true;
-//		try {
-//			i.setInventoryId(2);
-//			i.setPokeballs(1);
-//			i.setPotions(2);
-//			i.setSuperPotions(3);
-//			i.getTrainerIdFk().setUserId(trainerId);
-//			result = is.addInventory(i);	
-//			assertTrue(result);
-//		}catch(Exception e) {
-//			
-//			System.out.println(e);
-//			assertFalse(result);
-//			
-//		}
-//	}
+	@Test
+	final void testAddInventory() {
+		boolean result = true;
+		try {
+			t.setUserId(trainerId);
+			i = new Inventory(1, 2, 2, t);
+			result = is.addInventory(i);	
+			assertTrue(result);
+		}catch(Exception e) {
+			
+			System.out.println(e);
+			assertFalse(result);
+			
+		}
+	}
 	
 	/*
 	 * Testing for Trainers
@@ -225,6 +222,23 @@ class UnitTesting {
 			
 			System.out.println(e);
 			assertEquals(0, result);
+		}
+	}
+	
+	@Test
+	final void testLogin() {
+		
+		Trainer result = null;
+		
+		try {
+			
+			result = ls.login(username, password);
+			assertNotEquals(null, result);
+			
+		}catch(Exception e) {
+			
+			System.out.println(e);
+			assertEquals(null, result);
 		}
 	}
 
