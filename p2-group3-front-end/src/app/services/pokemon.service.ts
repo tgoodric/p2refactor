@@ -25,6 +25,14 @@ export class PokemonService {
     return this.http.get(this.url + "pokemon/" + id + "/") as Observable<Pokemon>;
   }
 
+  useItem(id:number, item:string):void{
+    this.http.patch(this.url + "inventory/" + id + "/useItem/" + item + "/", null);
+  }
+
+  addItem(id:number, item:string):void{
+    this.http.patch(this.url + "inventory/" + id + "/addItem/" + item + "/", null);
+  }
+
   userAttackFunc(user:Pokemon, oppDefense:number, oppHP:number, attackType:number):number{
     console.log("in thee attack func in pokemons service")
     console.log(user.attack)
