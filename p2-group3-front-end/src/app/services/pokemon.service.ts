@@ -25,40 +25,11 @@ export class PokemonService {
     return this.http.get(this.url + "pokemon/" + id + "/") as Observable<Pokemon>;
   }
 
-
-  // pokemonBattleTurn(attacker:Pokemon, defender:Pokemon, actionType:number, action:number):boolean{  //intent is to call the function
-  //   let escaped:boolean = false                                                                     //in the game loop.
-  //   switch(actionType){                                                                             //Each pass of the loop, the loop
-  //     case BattleActions.ActionType.ATTACK:{                                                        //checks 3 conditions:
-  //       this.attackFunc(attacker, defender, action);
-  //       break;                                                                                      //1. attacker hp > 0
-  //     }                                                                                             //2. defender hp > 0
-  //     case BattleActions.ActionType.ITEM:{                                                          //3. nobody has escaped
-  //       //call item function   
-  //       break;                                                                                      //To that end, the loop would
-  //     }                                                                                             //look like this: do{
-  //     case BattleActions.ActionType.RUN:{                                                           //pokemonBattleTurn()
-  //       //call run function or something                                                            //} while(conditions);
-  //       //for now it's a flat 75% chance to escape                                                  //Since we need user input
-  //       escaped = (Math.random() < .75)   
-  //       break;                                                                                      //we can't actually use a 
-  //     }                                                                                             //proper loop. Instead I think
-  //     default:{                                                                                     //we can use an *ngIf to dynamically
-  //       console.log("Error: unknown action selected");                                              //alter the game screen
-  //     }
-  //   }
-  //   console.log("attacker: " + attacker);
-  //   console.log("Defender: " + defender);
-  //   return (!escaped && (attacker.hitPoints > 0) && (defender.hitPoints > 0)); 
-
-  // } //end of pokemonBattleTurn
-
-
-  userAttackFunc(user:Pokemon, oppDefense:number, attackType:number, oppHP:number):number{
+  userAttackFunc(user:Pokemon, oppDefense:number, oppHP:number, attackType:number):number{
     console.log("in thee attack func in pokemons service")
     console.log(user.attack)
+    const NORMAL_ATTACK_POWER:number = 60;
     const SPECIAL_ATTACK_POWER:number = 80; //these values can be tweaked
-    const NORMAL_ATTACK_POWER:number = 600;
     let damage = 0;
     if(attackType==1){ //since Special is implicitly defined as 1, it's truthy
       damage = this.calculateDamage(user.attack, 
@@ -73,7 +44,6 @@ export class PokemonService {
                                                SPECIAL_ATTACK_POWER)
   }
 
-
   return damage; //returns the defender pokemon with the updated HP
 }
 
@@ -81,46 +51,27 @@ export class PokemonService {
 
     console.log("in thee OPPONENT attack func in pokemons service")
     console.log(user.attack)
-    const SPECIAL_ATTACK_POWER:number = 80; //these values can be tweaked
     const NORMAL_ATTACK_POWER:number = 60;
+    const SPECIAL_ATTACK_POWER:number = 80; //these values can be tweaked
     let damage = 0;
     if(attackType==1){ //since Special is implicitly defined as 1, it's truthy
        damage = this.calculateDamage(oppAttack, 
                                                  user.defense,
                                                  oppLevel,
-                                                 SPECIAL_ATTACK_POWER)
+                                                 NORMAL_ATTACK_POWER)
   }
   else{
     damage = this.calculateDamage(oppSpecialAttack, 
                                                user.defense,
                                                oppLevel,
-                                               NORMAL_ATTACK_POWER)
+                                               SPECIAL_ATTACK_POWER)
   }
 
   return damage; //returns the defender pokemon with the updated HP
   }
 
-
-  // attackFunc(attacker:Pokemon, defender:Pokemon, attackType:number):void{
-  //     const SPECIAL_ATTACK_POWER:number = 80; //these values can be tweaked
-  //     const NORMAL_ATTACK_POWER:number = 60;
-  //     if(attackType){ //since Special is implicitly defined as 1, it's truthy
-  //       defender.hitPoints -= this.calculateDamage(attacker.specialAttack, 
-  //                                                  defender.specialDefense,
-  //                                                  attacker.level,
-  //                                                  SPECIAL_ATTACK_POWER)
-  //   }
-  //   else{
-  //     defender.hitPoints -= this.calculateDamage(attacker.attack, 
-  //                                                defender.defense,
-  //                                                attacker.level,
-  //                                                NORMAL_ATTACK_POWER)
-  //   }
-  // }
-
-
   //formula for calculating move damage
-  calculateDamage(attack:number, defense:number, level:number, power:number){
+  calculateDamage(attack:number, defense:number, level:number, power:number):number{
     console.log("in the calculate damage function")
 
     let damage =  Math.ceil( (((((2 * level)/5) + 2) * power * (attack/defense)) / 50) + 2 );
@@ -129,7 +80,6 @@ export class PokemonService {
 
     return damage;
   }
-
 
   capturePokemon(pokemon:Pokemon, catchModifier:number):boolean {
     let probability:number = 1 - (pokemon.hitPoints/pokemon.maxHitPoints);
