@@ -27,7 +27,7 @@
                 <button class="btn btn-outline-dark" (click)="getPlayerPokemon()">View My Pokemon</button> <!--use getApi for testing-->
               </div>
               <div *ngIf="apiPokemon">
-                <img src={{apiPokemon.sprites.front_shiny}}>
+                <img src={{apiPokemon.sprites.front_default}}>
             </div>
             <div *ngIf="pokemonSelected">
                 <p> Level: {{pokemonSelected.level}}</p>
@@ -37,14 +37,14 @@
 
                 <!-- attack and inventory options -->
                 <div *ngIf="gameStart && !gameOver" class="btn-group-vertical" id="leftElement">
-                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "attackFunc()">Attack</button>
-                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "specialAttackFunc()">Special Attack</button>
+                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "attackFunc(1)">Attack</button>
+                    <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "attackFunc(2)">Special Attack</button>
                     <!--dropdown button-->
                     <div *ngIf="apiPokemon" ngbDropdown class="d-inline-block">
                             <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Use Item</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <!-- <button ngbDropdownItem (click) = "somefunc()">Potion1</button>
-                            <button ngbDropdownItem (click) = "somefunc()">Potion2</button> -->
+                            <button ngbDropdownItem (click) = "potionFunc(1)">Potion</button>
+                            <button ngbDropdownItem (click) = "potionFunc(2)">Super Potion</button>
                         </div>
                     </div>
                 </div>
@@ -58,10 +58,10 @@
         <div class="battleImgStack">
             <img id="baseImg" class="card-img-top" src="../../../assets/battleBackground.jpg" alt="Card image cap">
             <div id="pokemon" class="imgOverlay" *ngIf="apiPokemon">
-                <img id="pokemonLCorner" class="img-fluid" src="{{apiPokemon.sprites.back_shiny}}" alt=""> <!--{{playerPokemon}}-->
+                <img id="pokemonLCorner" class="img-fluid" src="{{apiPokemon.sprites.back_default}}" alt=""> <!--{{playerPokemon}}-->
             </div> <!--child div end-->
             <div id="enemy" class="imgOverlay" *ngIf="enemyPokemon">
-                <img id="pokemonRCorner" class="img-fluid" src="{{enemyPokemon.sprites.front_shiny}}" alt=""> <!--{{enemyPokemon}}-->
+                <img id="pokemonRCorner" class="img-fluid" src="{{enemyPokemon.sprites.front_default}}" alt=""> <!--{{enemyPokemon}}-->
             </div> <!--child div end-->
         </div> <!--parent div end-->
         <div class="card-body">
@@ -77,10 +77,8 @@
                 </div>
 
                 <!-- this text displays once the battle starts -->
-                <div *ngIf="firstMove">
-                    {{firstMove}} <br><br>
-                    {{secondMove}}<br><br>
-                </div>
+                <p *ngIf="firstMove">{{firstMove}}</p>
+                <p *ngIf="secondMove">{{secondMove}}</p>
 
                 <div *ngIf="myTurn && gameStart && !gameOver">
                     Your move...
@@ -88,7 +86,7 @@
 
                 <!-- display this text when the game is over -->
                 <div *ngIf="gameStart && gameOver">
-                    {{gameOverNar}}
+                    <strong>{{gameOverNar}}</strong>
                 </div>
           
                  <p >{{cookieValue}}</p>
