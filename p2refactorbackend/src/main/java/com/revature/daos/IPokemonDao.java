@@ -6,8 +6,6 @@ import com.revature.models.Pokemon;
 
 public interface IPokemonDao {
 	
-	//TODO: Flesh out this DAO interface better
-	
 	
 	//all pokemon for a trainer
 	public List<Pokemon> getPokemon(int trainerId);
@@ -15,7 +13,6 @@ public interface IPokemonDao {
 	public List<Pokemon> getPokemonUpToLevel(int trainerId, int level);
 	
 	//Boolean return type is for error catching
-	//TODO: add more variants of addPokemon()
 	public boolean addPokemon(int trainerId, int pokedexNumber);
 	public boolean addPokemon(int trainerId, int pokedexNumber, int level);
 	boolean insertPokemon(int trainerId, Pokemon pokemon);
