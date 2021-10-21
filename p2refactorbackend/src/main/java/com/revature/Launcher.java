@@ -15,14 +15,7 @@ import io.javalin.Javalin;
 
 public class Launcher {
 
-	public static void main(String[] args) {
-		
-		//to get access to the DAO methods
-		TrainerDao tDao = new TrainerDao();
-		PokemonDao pDao = new PokemonDao();
-		InventoryDao iDao = new InventoryDao();
-		
-		
+	public static void main(String[] args) {		
 		
 		//to get access to the HTTP handlers in the controller layer
 		TrainerController tc = new TrainerController();
@@ -30,21 +23,15 @@ public class Launcher {
 		InventoryController ic = new InventoryController();
 		LoginController lc = new LoginController();
 		
-		
 		///////////////////////////////////////
-		
-		//Set up connection to Postman server using Javalin
-		//.create() instantiates a Javalin object, and .start() starts the server (you can use any free port)
+
 		Javalin app = Javalin.create(
 				config -> {
 					config.enableCorsForAllOrigins(); //allows the server 
 				}
 				).start(8090);
 		
-		
-		
 		//HTTP Handlers below...
-		
 		
 		//Trainer requests 
 		app.post("/login", lc.loginHandler);

@@ -47,11 +47,10 @@ public class TrainerController {
 	
 	
 	public Handler addTrainerHandler = (ctx) -> {
-		System.out.println("in handler");
 		String tBody = ctx.body();
-		//try {
+
 		Trainer t = gson.fromJson(tBody, Trainer.class);
-		//System.out.println(t);
+
 		String hashedPassword = ar2.hash(4, 1024*1024, 8, t.getPassword());
 		t.setPassword(hashedPassword);
 		int trainerId = ts.addTrainer(t);
@@ -59,19 +58,23 @@ public class TrainerController {
 			ctx.status(400);
 			return; //exit if error occurs without creating inventory/starter pokemon
 		}
-		//System.out.println("Trainer Id : " + trainerId);
-		System.out.println("Hi");
-//		PokemonService ps = new PokemonService();
-//		InventoryService is = new InventoryService();
-//		ps.insertAllPokemon(trainerId, new Pokemon("nabin",1,1,45,45,49,65,49,65,0,
-//									ts.getTrainerByUsername(t.getUsername())));
-//		is.addInventory(new Inventory(5,5,5,ts.getTrainerByUsername(t.getUsername())));
+
+		
+		//Prepare starting inventory and pokemon
+		PokemonService ps = new PokemonService();
+		InventoryService is = new InventoryService();
+		//insert two leveled up starter pokemon
+		ps.insertAllPokemon(trainerId, new Pokemon("Bulbasaur",1,10,90,90,67,83,67,83,0,
+									ts.getTrainerByUsername(t.getUsername())));
+		ps.insertAllPokemon(trainerId, new Pokemon("Lucario",448,20,108,108,148,153,108,108,0, 
+									ts.getTrainerByUsername(t.getUsername())));
+		//add inventory with starting items
+		is.addInventory(new Inventory(5,5,5,ts.getTrainerByUsername(t.getUsername())));
+
 		String jwt = JwtUtil.generate(t.getUsername(), t.getPassword());
-		System.out.println("Hi contorller Mid");
 		ctx.cookie("userId", Integer.toString(trainerId));
 		ctx.header("JWT", jwt);
 		ctx.status(201);
-		System.out.println("Hi contorller end");
 	};
 	
 	

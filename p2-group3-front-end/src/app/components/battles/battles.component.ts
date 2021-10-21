@@ -13,9 +13,9 @@ export class BattlesComponent implements OnInit {
   //create class variables
 
   //Trainer and pokemon related variables
-  public apiPokemon:any = null;
-  public playerPokemon:any = null;
-  public pokemonSelected:any = null;
+  public apiPokemon:any = null; //this is the API data for the users pokemon
+  public playerPokemon:any = null;  //this is the database data for the user's list of pokemon
+  public pokemonSelected:any = null;  //this is the database data for the user's selected pokemon
   public trainerId:number = 1; //this needs to be changed to whatever user is logged in
   public pokedexNum = 0;
   public myHP:number = 0;
@@ -169,10 +169,10 @@ export class BattlesComponent implements OnInit {
 
         //narrate the result of the user move
         if(attackType==1){
-        this.firstMove = this.pokemonSelected.pokeName + " used attack (" + damage + " damage done)... " 
+        this.firstMove = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
           + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
         }else{
-          this.firstMove = this.pokemonSelected.pokeName + " used special attack (" + damage + " damage done)... " 
+          this.firstMove = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
           + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
         }
 
@@ -199,10 +199,10 @@ export class BattlesComponent implements OnInit {
         
           //narrate the result of the opponenet's move
           if(attackType==1){
-          this.secondMove=this.enemyPokemon.name + " used attack (" + this.enemyPokemon.stats[1].base_stat + " damage done)... " 
+          this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
             + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
           }else {
-            this.secondMove=this.enemyPokemon.name + " used attack (" + this.enemyPokemon.stats[1].base_stat + " damage done)... " 
+            this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
             + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
           }
         }
@@ -233,10 +233,10 @@ export class BattlesComponent implements OnInit {
         
           //narrate the result of the opponenet's move
           if(attackType==1){
-          this.firstMove=this.enemyPokemon.name + " used attack (" + this.enemyPokemon.stats[1].base_stat + " damage done)... " 
+          this.firstMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
             + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
           }else{
-            this.firstMove=this.enemyPokemon.name + " used special attack (" + this.enemyPokemon.stats[1].base_stat + " damage done)... " 
+            this.firstMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
             + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
           }
         }
