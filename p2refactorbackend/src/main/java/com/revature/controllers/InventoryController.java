@@ -1,12 +1,8 @@
 package com.revature.controllers;
 
-import java.util.Arrays;
 import java.util.List;
 
-import org.hibernate.internal.build.AllowSysOut;
-
 import com.google.gson.Gson;
-import com.revature.daos.InventoryDao;
 import com.revature.models.Inventory;
 import com.revature.services.InventoryService;
 
@@ -25,13 +21,9 @@ public class InventoryController {
 	
 	public Handler getInventory = (ctx) -> {
 		System.out.println("In the get inventory handler in controller layer");
-		
-//		if(ctx.req.getSession(false) != null){ //if a session exists
 			
 			//get the trainer id from the path parameter
 			int id = Integer.parseInt(ctx.pathParam("trainerId"));
-				
-			//we create an Array with reimbursements data (using the service to talk to the dao)
 			try {
 				List<Inventory> i = is.getOneInventory(id);
 				
@@ -40,9 +32,9 @@ public class InventoryController {
 				
 				String JSONinventory = gson.toJson(i); //convert our java object into a JSON String
 				
-				ctx.result(JSONinventory); //return our reimbursements
+				ctx.result(JSONinventory); //return our inventory
 				
-				ctx.status(200); //200 = OK (success)
+				ctx.status(200); 
 				
 				log.info("got a users inventory");
 			} catch (Exception e) {
@@ -56,17 +48,10 @@ public class InventoryController {
 		
 	
 	public Handler useItem = (ctx) -> {
-		System.out.println("In the use item handler");
-		System.out.println(ctx.pathParam("trainerId"));
-		System.out.println(ctx.pathParam("item"));
-		
-//		if(ctx.req.getSession(false) != null){ //if a session exists
-			
-			//get the trainer id from the path parameter
+
 			int id = Integer.parseInt(ctx.pathParam("trainerId"));
 			String item = ctx.pathParam("item");
-			
-			//we create an Array with reimbursements data (using the service to talk to the dao)
+
 			try {
 				boolean i = is.useItem(id, item);
 				
@@ -75,7 +60,7 @@ public class InventoryController {
 				
 				String JSONinventory = gson.toJson(i); //convert our java object into a JSON String
 				
-				ctx.result(JSONinventory); //return our reimbursements
+				ctx.result(JSONinventory); //return our inventory
 				
 				ctx.status(200); //200 = OK (success)
 			}catch(Exception e) {
@@ -87,24 +72,19 @@ public class InventoryController {
 			
 			
 	public Handler addItem = (ctx) -> {
-			System.out.println("In the add item handler");
-			
-//			if(ctx.req.getSession(false) != null){ //if a session exists
-				
-				//get the trainer id from the path parameter
+		
 				int id = Integer.parseInt(ctx.pathParam("trainerId"));
 				String item = ctx.pathParam("item");
 				
 				try {
-					//we create an Array with reimbursements data (using the service to talk to the dao)
+
 					boolean i = is.addItem(id, item);
-					
-					//instantiate a GSON object to make JSON <-> POJO conversions (Plain ol java object)
+
 					Gson gson =new Gson();
 					
 					String JSONinventory = gson.toJson(i); //convert our java object into a JSON String
 					
-					ctx.result(JSONinventory); //return our reimbursements
+					ctx.result(JSONinventory); 
 					
 					ctx.status(200); //200 = OK (success)
 				} catch (Exception e) {
@@ -116,22 +96,17 @@ public class InventoryController {
 			
 				
 	public Handler addInventory = (ctx) -> {
-			System.out.println("In the get inventory handler");
-			
-//			if(ctx.req.getSession(false) != null){ //if a session exists
-				
 				String body = ctx.body();
 				
 				//instantiate a GSON object to make JSON <-> POJO conversions (Plain ol java object)
 				Gson gson =new Gson();
 				
 				try {
-					Inventory i = gson.fromJson(body, Inventory.class); //turn that JSON String into a LoginDTO object
+					Inventory i = gson.fromJson(body, Inventory.class); 
 					
-					//we create an Array with reimbursements data (using the service to talk to the dao)
 					boolean newI = is.addInventory(i);
 					
-					ctx.result(body); //return our reimbursements
+					ctx.result(body); //return our inventory
 					
 					ctx.status(200); //200 = OK (success)
 				} catch (Exception e) {
