@@ -89,31 +89,9 @@ export class PokemonService {
     return damage;
   }
 
-  capturePokemon(pokemon:Pokemon, catchModifier:number):boolean {
-    let probability:number = 1 - (pokemon.hitPoints/pokemon.maxHitPoints);
-    return (Math.random() + catchModifier > probability);
+  capturePokemon(hp:number, maxHP:number):boolean {
+    let probability = 1 - (hp/maxHP);
+    return (probability > Math.random());
   }
 }
-
-export namespace BattleActions{
-
-  export enum AttackType{
-    NORMAL,       //0
-    SPECIAL       //1
-  };
-
-  export enum ItemType{
-    POTION,       //implicitly 0
-    SUPER_POTION, //1
-    POKE_BALL,    //2
-    GREAT_BALL,   //3
-    ULTRA_BALL,   //4
-  }
-
-  export enum ActionType{
-    ATTACK,       //0
-    ITEM,         //1
-    RUN           //2
-  }
   
-}

@@ -41,6 +41,55 @@
     top: 175px;
 }
 
+#catchPokemon {
+    position: fixed;
+    left: 265px;
+    top: 190px;
+    width: 40px;
+    height: 40px;
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    animation-iteration-count: 3;
+}
+@keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+
+#escapedPokemon {
+    position: fixed;
+    left: 265px;
+    top: 190px;
+    width: 40px;
+    height: 40px;
+    animation: escape 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    animation-iteration-count: 3;
+}
+@keyframes escape {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+    /* 100% { opacity: 0.0; } */
+  }
+
 #pokeLCorner {
     position: absolute;
     left: 400px;
@@ -59,6 +108,7 @@
 
 tr:hover{
     background-color: lightgreen;
+    content: "I choose you!";
 }
 
 #leftElement {
