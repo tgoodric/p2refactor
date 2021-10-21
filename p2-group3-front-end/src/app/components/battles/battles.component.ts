@@ -21,7 +21,7 @@ export class BattlesComponent implements OnInit {
   public myHP:number = 0;
 
   // opponent pokemon variables
-  public randPokeDex:number =  Math.floor(Math.random() * 898) + 1; //random pokedex
+  public randPokeDex:number =  Math.floor(Math.random() * 721) + 1; //random pokedex
   public enemyPokemon:any = null;
   public enemyHP:number = 0;
   public enemyLevel:number = Math.floor(Math.random() * 100) + 1; //randomly assign enemy pokemon level
@@ -39,6 +39,8 @@ export class BattlesComponent implements OnInit {
   public coinFlip:number = Math.random();
   public myTurn:boolean = false;
   public winner:any = null;
+  public catchingPokemon:boolean = false;
+  public caught:boolean = false;
 
   //cookie
   public cookieValue:string;
@@ -73,7 +75,7 @@ export class BattlesComponent implements OnInit {
 
   //randomly select an enemy pokemon from the poke API
   getEnemyPokemon():Pokemon{
-    
+    // 
     this.pokemonService.getPokemonFromApi(this.randPokeDex).subscribe( 
       (data:any) => {
         this.enemyPokemon = data;
@@ -159,7 +161,7 @@ export class BattlesComponent implements OnInit {
     //this code runs when its the user's turn
     if(this.myTurn){
 
-        //user attacks
+        //user's turn
         damage = this.pokemonService. userAttackFunc(this.pokemonSelected, this.enemyDefense, this.enemyHP, attackType) //last parameter is attack type, attack type 1 is a normal attack
         this.enemyHP = this.enemyHP - damage
 
@@ -185,7 +187,8 @@ export class BattlesComponent implements OnInit {
         }
 
 
-        //opponent goes if not already fainted
+        
+        //opponent turn if not already fainted
         if(this.gameOver==false){
           
           damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, Math.ceil(Math.random() * 1.8))
@@ -251,6 +254,10 @@ export class BattlesComponent implements OnInit {
         //make it the user's turn
         this.myTurn=true;
     }
+
+    if(this.gameOver){
+      this.updatePokemon();
+    }
   }
 
   //runs when the user selects a potion
@@ -269,7 +276,76 @@ export class BattlesComponent implements OnInit {
     }
   }
 
+  catchPokemon(){
+
+    this.catchingPokemon = true;
+
+    this.caught = this.pokemonService.capturePokemon(this.enemyHP, this.enemyPokemon.stats[0].base_stat);
+
+    this.firstMove = "You used a pokeball!"
+
+    if(this.caught){
+      this.secondMove = "Gotcha! " + this.enemyPokemon.name + " was caught!"
+      this.addNewPokemon();
+    } else{
+      this.secondMove =  "Oh no! " + this.enemyPokemon.name + " got away!"
+    }
+
+    this.gameOver=true;
+  }
+
+
+  //update the database with new values after battle ends
+  //uses fetch api for updating database
+  async updatePokemon(){
+    const url = "http://localhost:8090/" //putting in our base URL
+
+    //update pokemon info in database
+    //if they won the battle update experience and level if achieved a level up
+    if (this.winner==this.pokemonSelected){
+      this.pokemonSelected.experience+=1;
+      if(this.pokemonSelected.experience % 2 == 0){ //every two wins, level up the pokemon
+        this.pokemonSelected.level+=1;
+      }
+    }
+    
+    let response = await fetch(url + "pokemon/update", {
+      method: "PUT", //send a POST request
+      body: JSON.stringify(this.pokemonSelected), //turn our JS into JSON
+      credentials: "include"
+      //this last line will ensure that the cookie is captured
+    });
+  }
+
+  //add the caught pokemon to the database
+  async addNewPokemon(){
+    const url = "http://localhost:8090/" //putting in our base URL
+
+    console.log("about to complete add pokemon to db")
+    //add opponent pokemon to user pokemon collection
+
+    //first instantiate a new (database) Pokemon object with the necessary values from the caught pokemon
+    let newPokemon = { 
+                      pokeName : this.enemyPokemon.name,
+                      pokedexNumber : this.enemyPokemon.id,
+                      level : this.enemyLevel,
+                      maxHitPoints : this.enemyPokemon.stats[0].base_stat,
+                      hitPoints : this.enemyHP,
+                      attack : this.enemyAttack,
+                      defense : this.enemyDefense,
+                      specialDefense : 0,
+                      experience : this.enemyPokemon.base_experience,
+                      trainerIdFk : {userId : 1} //needs to change to cookie value
+    }
+    
+    console.log("about to do the await fetch")
+    let response = await fetch(url + "pokemon", {
+      method: "POST", //send a POST request
+      body: JSON.stringify(newPokemon), //turn our JS into JSON
+      credentials: "include"
+      //this last line will ensure that the cookie is captured
+    });
+    console.log("yerrr " + response)
+  }
+
 } //end component export
-
-
-
