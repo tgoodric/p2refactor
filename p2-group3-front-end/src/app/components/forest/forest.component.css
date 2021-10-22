@@ -10,6 +10,49 @@
     transform: translate(-50%,-50%);
 }
 ::ng-deep body{
-    background-image: url("../../../assets/ForestBackground.png");
+    /* background-image: url("../../../assets/ForestBackground.png"); */
+    background-image: url("../../../assets/gradient/gradient5.jpg");
     background-size: cover;
+}
+.btn-group-vertical {
+    margin-left: 8em;
+}
+/* Styling the button */
+.btn-group-vertical > button {
+    width: 150% !important;
+    margin-bottom: 5px;
+    border: none;
+    background: linear-gradient(45deg, #5cb85c, #f0ad4e);
+    border-radius: 0;
+    color: white;;
+}
+
+
+p.card-text.overflow-auto.action-text {
+    text-align: center;
+    /* background: linear-gradient(45deg, #ffc107, transparent); */
+    font-weight: 600;
+    color: #28a745;
+    font-size: 20px;
+}
+.card-body {
+    background: linear-gradient(45deg, #337ab7, #1e7e34);
+    color: white;
+}
+.card-body>p {
+    font-size: 18px;
+}
+.card-body.footer-card {
+    background: linear-gradient(153deg, #28a745, #f0ad4e);
+    text-align: center;
+}
+.btn-group-vertical>button:hover {
+    background: #007bff !important;
+}
+.card-body.footer-card>a {
+    color: aquamarine;
+}
+.card-body.footer-card > a:hover {
+    text-decoration: underline;
+    color: white !important;
 }

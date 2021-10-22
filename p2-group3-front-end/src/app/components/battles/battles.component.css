@@ -121,6 +121,100 @@ tr:hover{
     float: right;
 }
 ::ng-deep body{
-    background-image: url("../../../assets/pokeWar.jpg");
+    /* background-image: url("../../../assets/pokeWar.jpg"); */
+    background-image: url("../../../assets/gradient/gradient12.jpg");
     background-size: cover;
+}
+.card.border-dark.mb-3 {
+    border: none;
+    background: linear-gradient(50deg, #dc3545, #28a745);
+    color: white;
+    font-size: 18px;
+    font-style: italic;
+}
+div#selectButtons {
+    margin: 0 3em;
+}
+.card.border-dark.mb-4 {
+    /* background: linear-gradient(45deg, #0400ff42, rgb(0 123 255 / 31%)); */
+    background: linear-gradient(50deg, #dc3545, #28a745);
+    color: white;
+    border: none;
+    box-shadow: 5px 5px 20px red;
+}
+table#poketable {
+    background: linear-gradient(45deg, #dc3545, transparent);
+    color: white;
+}
+button.btn.btn-outline-dark {
+    background: linear-gradient(160deg, #ffc107, #dc3545);
+    color: white;
+    border: none;
+}
+div#leftElement button {
+    background: repeating-linear-gradient(137deg, #007bff, rgb(0 123 255 / 79%) 100px);
+    margin-bottom: 5px;
+    border-radius: 0;
+}
+div#cardheader {
+    text-align: center;
+    background: linear-gradient(45deg, #930000eb, transparent);
+    text-transform: uppercase;
+}
+.card-header {
+    text-transform: capitalize;
+    background: linear-gradient(45deg, #007bff, transparent);
+}
+
+h5.card-text.battle-header.overflow-auto {
+    text-align: center;
+    text-shadow: 3px 3px 3px #007bff;
+    color: red;
+    font-weight: 600;
+    font-size: 20px;
+    box-shadow: 5px 5px 15px red;
+    border-right: none;
+    background: radial-gradient(#28a745, transparent);
+    margin-bottom: 1em;
+}
+.card-body.footer-boxCard {
+    background: linear-gradient(133deg, #212529, transparent);
+    text-align: center;
+}
+.footer-boxCard > a.card-link {
+    color: wheat;
+    font-style: normal;
+    
+}
+.footer-boxCard > a.card-link:hover {
+    color: white;
+    background: #1e7e34;
+    padding: 8px 8px;
+    border-radius: 4px;
+}
+.battleImgStack > img {
+    border: none;
+    box-shadow: -5px 5px 15px red;
+}
+button.btn.btn-outline-dark:hover {
+    background: blue;
+}
+.card-header.enemy-card-header {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+button#dropdownBasic1:hover {
+    background: red !important;
+}
+.dropdown-menu.show>button:hover {
+    background: #dc3545 !important;
+    color: white;
+}
+#leftElement>button:hover {
+    background: red !important;
+}
+::ng-deep nav.navbar.navbar-expand-lg.fixed-top.navbar-light.bg-light {
+    background: linear-gradient(
+45deg, #dc3545, transparent);
 }
