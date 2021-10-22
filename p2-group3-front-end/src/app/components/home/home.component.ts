@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { Pokemon } from 'src/app/models/pokemon';
+import { PokemonService } from 'src/app/services/pokemon.service';
+
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,7 @@ export class HomeComponent implements OnInit {
 
   private url:string = "http://localhost:8090/"
 
-  constructor(private router: Router, private cs:CookieService, private http:HttpClient) { }
+  constructor(private router: Router, private cs:CookieService, private http:HttpClient, private ps:PokemonService) { }
 
   ngOnInit(): void {
   }
@@ -26,16 +28,16 @@ export class HomeComponent implements OnInit {
 
   getItemHandler(){   
     this.randNum = Math.floor(Math.random() * 10) + 1;
+    let userId = parseInt(this.cs.get("userId"));
     if(this.randNum >= 7){
-      this.actionText = "You Picked berries"; // test text for now can update later
-      //get pokeballs?
+      this.actionText = "You ask Professor Oak for some potions. He opens his bag and hands you a Super Potion."; 
+      this.ps.addItem(userId, "superpotions");
     } else if (this.randNum <= 4) {
-      this.actionText = "You Picked berries2"; // test text for now can update later
-      //add potions to database below 
-     
-
+      this.actionText = "You ask Professor Oak for some potions. He opens his bag and hands you two Potions."; 
+      this.ps.addItem(userId, "potions");
+      this.ps.addItem(userId, "potions");
     } else {
-      this.router.navigate(['/battles']);
+      this.actionText = "Professor Oak's lab is locked. A sign on the door reads \"Out to lunch, back soon\"";
     }
   }
 
@@ -70,6 +72,6 @@ export class HomeComponent implements OnInit {
       }// end if
     } //end for
 
-    this.actionText =  "You visit the Pokemon Center. The nurse smiles and heals your pokemon."
+    this.actionText = "You visit the Pokemon Center. The nurse smiles at you and heals your pokemon."
   }
 }
