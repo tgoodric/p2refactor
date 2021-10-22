@@ -1,5 +1,24 @@
-<nav class="navbar fixed-top navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
     <a class="navbar-brand" href="#">
     <img src="../../../assets/pokemonLogo.png" width="160" height="30" class="" alt="d-inline-block align-top">
     </a> 
+    
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a href="/home" class="nav-link">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li ngbDropdown class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+                  Travel to Area
+                </a>
+                <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a ngbDropdownItem class="dropdown-item" href="/forest">Viridian Forest</a>
+                  <a ngbDropdownItem class="dropdown-item" href="/cave">Cerulean Cave</a>   
+                  <a ngbDropdownItem class="dropdown-item" href="/river">Serenity River</a>
+                </div>
+              </li>
+
+        </ul>
+    </div>
 </nav>
