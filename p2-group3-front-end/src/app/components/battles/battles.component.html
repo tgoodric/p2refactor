@@ -68,7 +68,7 @@
             </div> <!--child div end-->
         </div> <!--parent div end-->
         <div class="card-body">
-            <h5 class="card-text overflow-auto">Battle!</h5>
+            <h5 class="card-text battle-header overflow-auto">Battle!</h5>
             <div class="card-text overflow-auto" style="height: 180px;">
 
                 <!-- this text only displays before either player makes a move-->
@@ -99,7 +99,7 @@
         </div>
         <div class="card-body">
         </div>
-        <div class="card-body" style="border: solid; border-width: 1px;">
+        <div class="card-body footer-boxCard">
             <a href="/forest" class="card-link">Travel to Haunted Forest</a>
             <a href="/cave" class="card-link">Travel to Caves of Despair</a>
           </div>
@@ -110,7 +110,7 @@
 <!-- opponent pokemon card -->
 <div id="tableCard2" *ngIf="gameStart">
     <div class="card border-dark mb-4">
-        <div class="card-header">{{enemyPokemon.name}}</div>
+        <div class="card-header enemy-card-header">{{enemyPokemon.name}}</div>
         
         <div class="card-body" id="pokeinfo">
             <div *ngIf="!pokemonSelected && !playerPokemon" class="row">

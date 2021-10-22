@@ -102,6 +102,21 @@ class UnitTesting {
 		}
 	}
 	
+	@Test
+	final void testUpdatePokemon() {
+		
+		boolean result = true;
+		try {
+			p.setAttack(65);
+			p.setPokemonId(65);
+			result = ps.updatePokemon(p);
+			assertTrue(result);
+		}catch(Exception e) {
+			e.printStackTrace();
+			assertFalse(result);
+		}
+	}
+	
 	/*
 	 * Testing for Inventory
 	 */
@@ -241,5 +256,7 @@ class UnitTesting {
 			assertEquals(null, result);
 		}
 	}
+	
+	
 
 }

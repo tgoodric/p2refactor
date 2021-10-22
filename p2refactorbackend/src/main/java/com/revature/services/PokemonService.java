@@ -13,7 +13,10 @@ public class PokemonService {
 	Logger log = LogManager.getLogger(); //Logger object so that we can implement Logging
 	
 	PokemonDao pd = new PokemonDao();
-
+	
+	/*
+	 * Handling Http post request to insert the Pokemon to a database that comes via controller
+	 */
 	public boolean insertAllPokemon(int trainerId, Pokemon pokemon) {
 		if(pd.insertPokemon(trainerId, pokemon)) {
 			log.info("Trainer caught (and inserted) a Pokemon");
@@ -22,17 +25,26 @@ public class PokemonService {
 		log.warn("Pokemon insert failed");
 		return false;
 	}
-
+	
+	/*
+	 * Handling Http get request to handle all the list of Pokemon of certain userId
+	 */
 	public List<Pokemon> findAllPokemonByTrainer(int trainerId) {
 		
 		return pd.getPokemon(trainerId);
 	}
-
+	
+	/*
+	 * Handling Http get request to handle all the list of pokemon with certain userId and pokemon level
+	 */
 	public List<Pokemon> getAllPokemonWithTrainerAndLevel(int trainerId, int level) {
 		
 		return pd.getPokemonUpToLevel(trainerId, level);
 	}
 
+	/*
+	 * Handling Http request on updating pokemon
+	 */
 	public boolean updatePokemon(Pokemon pokemon) {
 		return pd.updatePokemon(pokemon);		
 	}

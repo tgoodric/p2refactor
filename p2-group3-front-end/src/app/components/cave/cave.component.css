@@ -11,7 +11,51 @@
 }
 
 ::ng-deep body{
-    background-image: url("../../../assets/pokebattle.jpg");
+    background-image: url("../../../assets/gradient/gradient10.jpg");
     background-size: cover;
     
   }
+  .card-body {
+    background: linear-gradient(81deg, #dc3545, #28a745);
+    color: grey;
+}
+
+.card-body a {
+    color: aqua;
+}
+
+.card-body > h5 {
+    text-align: center;
+    color: white;
+}
+.card-body>p {
+    font-size: 18px;
+    color: white;
+}
+.btn-group-vertical>button:hover {background: red !important;
+}
+
+.btn-group-vertical>button {
+    background: linear-gradient(45deg, #5bc0de, #0072ff);
+    width: 150% !important;
+    margin-bottom: 5px;
+    margin-left: 8em;
+    border: none;
+    border-radius: 0;
+    color: white;
+}
+.card-body.footer-box-card {
+    background: radial-gradient(#54708b, #dc3545);
+    text-align: center;
+}
+.card-body.footer-box-card>a:hover {
+    color: white;
+    background: red;
+    padding: 8px 8px;
+    border-radius: 4px;
+}
+p.card-text.overflow-auto.action-tex {
+    text-align: center;
+    font-weight: 600;
+    color: aquamarine;
+}
