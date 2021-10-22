@@ -52,16 +52,12 @@
                     <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "attackFunc(1)">{{apiPokemon.moves[0].move.name}}</button>
                     <button *ngIf="pokemonSelected" class="btn btn-outline-dark" (click) = "attackFunc(2)">{{apiPokemon.moves[1].move.name}}</button>
                     <!--dropdown button-->
-                    <div *ngIf="apiPokemon" ngbDropdown class="d-inline-block" click="getInventory()">
+                    <div *ngIf="apiPokemon" ngbDropdown class="d-inline-block" (click) = "getInventory()">
                             <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Inventory</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem (click) = "potionFunc(1)">Potion (qty: )</button>
-                            <button ngbDropdownItem (click) = "potionFunc(2)">Super Potion (qty: )</button>
-                            <button ngbDropdownItem (click) = "catchPokemon()">Pokeball (qty: )</button>
-
-                            <!-- <button ngbDropdownItem (click) = "potionFunc(1)">Potion (qty: {{this.inventory.potions}})</button>
-                            <button ngbDropdownItem (click) = "potionFunc(2)">Super Potion (qty: {{this.inventory.superPotions}})</button>
-                            <button ngbDropdownItem (click) = "catchPokemon()">Pokeball (qty: {{this.inventory.pokeballs}})</button> -->
+                            <button ngbDropdownItem (click) = "potionFunc(1)">Potion (qty: {{potions}})</button>
+                            <button ngbDropdownItem (click) = "potionFunc(2)">Super Potion (qty: {{superPotions}})</button>
+                            <button ngbDropdownItem (click) = "catchPokemon()">Pokeball (qty: {{pokeballs}})</button>
                         </div>
                     </div>
                 </div>
