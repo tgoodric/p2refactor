@@ -45,6 +45,7 @@ public class Launcher {
         app.get("/pokemon/:trainerId/:level", pc.getPokemonByTrainerWithLevelHandler);
         app.put("/pokemon/update", pc.updatePokemonHandler);
         app.patch("/pokemon/update", pc.updatePokemonHandler);
+        
 
 	}
 }

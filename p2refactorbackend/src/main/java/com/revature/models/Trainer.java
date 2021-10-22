@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-
 @Entity
 @Table(name = "trainer")
 public class Trainer {	
@@ -23,10 +22,9 @@ public class Trainer {
 	@Column(name = "password")
 	private String password; 
 	
-	//constructors
 	public Trainer() {
 		super();
-		// Unused, no implementation
+		//no implementation, only used in unit testing
 	}
 
 	public Trainer(int userId, String username, String password) {

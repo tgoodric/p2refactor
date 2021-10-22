@@ -104,7 +104,7 @@ public class InventoryController {
 				try {
 					Inventory i = gson.fromJson(body, Inventory.class); 
 					
-					boolean newI = is.addInventory(i);
+					is.addInventory(i);
 					
 					ctx.result(body); //return our inventory
 					
