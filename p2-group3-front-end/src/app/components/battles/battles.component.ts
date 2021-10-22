@@ -301,11 +301,13 @@ export class BattlesComponent implements OnInit {
     if(type==1){
       this.pokemonSelected.hitPoints+=10;
       this.firstMove=this.pokemonSelected.pokeName + " used a potion... " + this.pokemonSelected.pokeName +"'s HP is now " + this.pokemonSelected.hitPoints
+      this.pokemonService.useItem(this.trainerId, "potions");
       // this.myTurn=false;
       // this.attackFunc( Math.ceil(Math.random() * 1.8));
     }else{
       this.pokemonSelected.hitPoints+=30
       this.firstMove=this.pokemonSelected.pokeName + " used a super potion... "  + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints
+      this.pokemonService.useItem(this.trainerId, "superpotions");
       // this.myTurn=false;
       // this.attackFunc( Math.ceil(Math.random() * 1.8));
     }
@@ -346,6 +348,8 @@ export class BattlesComponent implements OnInit {
 
   //runs when the user selects to use a pokeball
   catchPokemon(){
+
+    this.pokemonService.useItem(this.trainerId, "pokeballs");
 
     this.catchingPokemon = true;
 
