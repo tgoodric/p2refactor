@@ -11,10 +11,33 @@
 }
 
 .login-h1 {
-    font-weight: 100;
+    /* font-weight: 100; */
     font-size: 1.8em;
-    font-weight: 100;
+    /* font-weight: 100; */
     text-align: center;
     font-family: sans-serif;
     margin-bottom: 30px;
+    margin-top: 3em;
+    font-weight: 500 ;
+    text-shadow: 3px 4px 5px #5bc0de;
+    color: #f8f9fa;
+}
+
+
+::ng-deep body{
+    background-image: url("../../../assets/Pokemon-Background.webp");
+    background-size: cover;
+}
+
+.input-group-prepend.w-50.mx-auto {
+    width: 60% !important;
+    
+}
+#loginForm input {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+button#loginButton {
+    padding: 10px 50px;
 }

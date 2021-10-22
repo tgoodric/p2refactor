@@ -14,7 +14,10 @@ import com.revature.models.Trainer;
 import com.revature.utils.HibernateUtil;
 
 public class PokemonDao implements IPokemonDao {
-
+	
+	/*
+	 * Getting all pokemon of certain user
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Pokemon> getPokemon(int trainerId) {
@@ -36,7 +39,10 @@ public class PokemonDao implements IPokemonDao {
 		
 		
 	}
-
+	
+	/*
+	 * Getting All the pokemons from Pokemon database with userId and level
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Pokemon> getPokemonUpToLevel(int trainerId, int level) {
@@ -72,7 +78,9 @@ public class PokemonDao implements IPokemonDao {
 		return false;
 	}
 
-	
+	/**
+	 * Adding a new Pokemon to a Pokemon table in a database
+	 */
 	@Override
 	public boolean insertPokemon(int trainerId, Pokemon pokemon) {
 		
@@ -107,6 +115,10 @@ public class PokemonDao implements IPokemonDao {
 		
 	}
 	
+	
+	/*
+	 * Updating Pokemon with certain fields
+	 */
 	public boolean updatePokemon(Pokemon p) { //set all fields except trainer and ID with new values
 		String hql = "UPDATE Pokemon set attack = :newAttack, " + 
 					 					"defense = :newDefense, " + 

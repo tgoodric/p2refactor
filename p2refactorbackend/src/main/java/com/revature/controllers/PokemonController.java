@@ -39,7 +39,7 @@ public class PokemonController {
 			
 
 			ctx.status(400);
-			log.info("Pokemon inserted Failed");
+			log.warn("Pokemon inserted Failed" + username);
 
 		}
 		
@@ -72,7 +72,7 @@ public class PokemonController {
 			
 			ctx.status(403);
 			ctx.result("Failed to retreive info" + e);
-			log.info("Pokemon cannot be retrieved from database ");
+			log.warn("Pokemon cannot be retrieved from database ");
 		}
 	};
 
@@ -97,7 +97,7 @@ public class PokemonController {
 			
 			ctx.status(401);
 			ctx.result("Failed to retreive Pokemon "+ e);
-			log.info("Pokemon Failed to retreive from database, Error: " + e);
+			log.warn("Pokemon Failed to retreive from database, Error: " + e);
 		}
 		
 	};
@@ -109,12 +109,15 @@ public class PokemonController {
 		Gson gson = new Gson();
 		
 		Pokemon pokemon = gson.fromJson(body, Pokemon.class);
+		String user = pokemon.getPokeName();
 		
 		if(ps.updatePokemon(pokemon)) {
 			ctx.status(200);
+			log.info("Update Successful for " + user);
 		}
 		else {
 			ctx.status(400);
+			log.warn("Update Failed :" + user);
 		}
 		
 		
