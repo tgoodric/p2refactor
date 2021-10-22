@@ -19,6 +19,7 @@ export class BattlesComponent implements OnInit {
   public trainerId:number = 1; //this needs to be changed to whatever user is logged in
   public pokedexNum = 0;
   public myHP:number = 0;
+  public inventory:any = null;
 
   // opponent pokemon variables
   public randPokeDex:number =  Math.floor(Math.random() * 721) + 1; //random pokedex
@@ -49,8 +50,9 @@ export class BattlesComponent implements OnInit {
   constructor(private pokemonService:PokemonService,
     private cookieService: CookieService
     ) { 
-
       this.cookieValue = this.cookieService.get('userId');
+      this.trainerId = parseInt(this.cookieValue);
+      console.log("Trainer id is " + this.trainerId)
     }
 
   ngOnInit(): void {
@@ -117,6 +119,10 @@ export class BattlesComponent implements OnInit {
     return this.playerPokemon;
   } //end getPlayerPokemon
 
+  switchPokemon(){
+    this.pokemonSelected=null;
+    this.getPlayerPokemon;
+  }
   
   //set stage for battle and set values of user selected pokemon
   prepareBattle(d:Pokemon){
@@ -147,8 +153,9 @@ export class BattlesComponent implements OnInit {
     this.gameStart=true;
 
     //if the opponenent wins the coin flip then run their attack
+
     if(this.myTurn==false){
-      this.attackFunc(Math.ceil(Math.random() * 1.8)); //randomly select which attack the enemy uses, but favor normal attack
+      this.attackFunc(0); //we dont use the paramter here since opponent's attack type will be determined within the function
     }
   }
 
@@ -156,13 +163,11 @@ export class BattlesComponent implements OnInit {
   //runs each time the user hits an attack button, or if its the opponent's turn
   attackFunc(attackType:number){ //this function takes in the type of attack (attack=1, special=2)
 
-    let damage=0;
-
     //this code runs when its the user's turn
     if(this.myTurn){
 
         //user's turn
-        damage = this.pokemonService. userAttackFunc(this.pokemonSelected, this.enemyDefense, this.enemyHP, attackType) //last parameter is attack type, attack type 1 is a normal attack
+        let damage = this.pokemonService. userAttackFunc(this.pokemonSelected, this.enemyDefense, this.enemyHP, attackType) //last parameter is attack type, attack type 1 is a normal attack
         this.enemyHP = this.enemyHP - damage
 
         if(this.enemyHP<0){ //if the hp is less than 0, make it 0
@@ -191,7 +196,8 @@ export class BattlesComponent implements OnInit {
         //opponent turn if not already fainted
         if(this.gameOver==false){
           
-          damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, Math.ceil(Math.random() * 1.8))
+          let oppAttackType = Math.floor(Math.random() *1.8) //semi randomly select the user's attack type
+          damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, oppAttackType)
           this.pokemonSelected.hitPoints = this.pokemonSelected.hitPoints - damage
           console.log("yo"+ this.pokemonSelected.hitPoints)
           console.log("helllooo " + this.pokemonSelected.hitPoints)
@@ -219,13 +225,15 @@ export class BattlesComponent implements OnInit {
       
     }
     
-    //this code run if opponenet gets to go first
+    //this code run if opponent gets to go first
     else {
 
         //opponent goes
         if(this.gameOver==false){
           
-          damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, Math.ceil(Math.random() * 1.8))
+          let oppAttackType = Math.floor(Math.random() *1.8) //semi randomly select the user's attack type
+          //calculate damage using pokemon damage formula
+          let damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, oppAttackType)
           this.pokemonSelected.hitPoints = this.pokemonSelected.hitPoints - damage
           console.log("hiiii" + damage)
           console.log(this.pokemonSelected.hitPoints)
@@ -255,12 +263,20 @@ export class BattlesComponent implements OnInit {
         this.myTurn=true;
     }
 
+    //if the game is over, update the Pokemon's info in the database
     if(this.gameOver){
       this.updatePokemon();
     }
   }
 
-  //runs when the user selects a potion
+  //function to get a users inventory
+  getInventory(){
+
+    // this.inventory = this.pokemonService.getInventory();
+
+  }
+
+  //runs when the user selects to use a potion
   potionFunc(type:number){
 
     if(type==1){
@@ -270,12 +286,46 @@ export class BattlesComponent implements OnInit {
       // this.attackFunc( Math.ceil(Math.random() * 1.8));
     }else{
       this.pokemonSelected.hitPoints+=30
-      this.firstMove=this.pokemonSelected.pokeName + " used a special potion... "  + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints
+      this.firstMove=this.pokemonSelected.pokeName + " used a super potion... "  + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints
       // this.myTurn=false;
       // this.attackFunc( Math.ceil(Math.random() * 1.8));
     }
+
+    //after potion is used, opponent goes
+    if(this.gameOver==false){
+
+      let oppAttackType = Math.floor(Math.random() *1.8) //semi randomly select the user's attack type
+      let damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, oppAttackType)
+      this.pokemonSelected.hitPoints = this.pokemonSelected.hitPoints - damage
+      console.log("hiiii" + damage)
+      console.log(this.pokemonSelected.hitPoints)
+
+      if(this.pokemonSelected.hitPoints<0){ //if the hp is less than 0, make it 0
+        this.pokemonSelected.hitPoints=0
+      }
+    
+      //narrate the result of the opponenet's move
+      if(oppAttackType=1){
+      this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
+        + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+      }else{
+        this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
+        + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+      }
+    }
+
+    //if the user's hp is 0, end the battle
+    if(this.pokemonSelected.hitPoints==0){
+      this.gameOver = true;
+      this.gameOverNar = this.pokemonSelected.pokeName + " has fainted!"
+      this.winner = this.enemyPokemon
+    }
+
+    //make it the user's turn
+    this.myTurn=true;
   }
 
+  //runs when the user selects to use a pokeball
   catchPokemon(){
 
     this.catchingPokemon = true;
@@ -295,8 +345,7 @@ export class BattlesComponent implements OnInit {
   }
 
 
-  //update the database with new values after battle ends
-  //uses fetch api for updating database
+  //update the pokemon in the database with new values after battle ends -- uses fetch api for updating database
   async updatePokemon(){
     const url = "http://localhost:8090/" //putting in our base URL
 
