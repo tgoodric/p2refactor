@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -10,7 +11,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginComponent implements OnInit {
 
 
-  constructor(private ls:LoginService) { }
+  constructor(private ls:LoginService, private router:Router) { }
 
   public username:string = "";
   public password:string = "";
@@ -28,4 +29,7 @@ export class LoginComponent implements OnInit {
     
   }//end
   
+  register(){
+    this.router.navigate(['/register']);
+  }
 }
