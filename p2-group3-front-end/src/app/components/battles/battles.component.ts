@@ -3,6 +3,7 @@ import { Pokemon } from 'src/app/models/pokemon';
 import { PokemonSprite } from 'src/app/models/pokemon-sprite';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Inventory } from 'src/app/models/inventory';
 @Component({
   selector: 'app-battles',
   templateUrl: './battles.component.html',
@@ -16,10 +17,14 @@ export class BattlesComponent implements OnInit {
   public apiPokemon:any = null; //this is the API data for the users pokemon
   public playerPokemon:any = null;  //this is the database data for the user's list of pokemon
   public pokemonSelected:any = null;  //this is the database data for the user's selected pokemon
-  public trainerId:number = 1; //this needs to be changed to whatever user is logged in
+  public trainerId:number = 38; //this needs to be changed to whatever user is logged in
   public pokedexNum = 0;
   public myHP:number = 0;
   public inventory:any = null;
+  public pokeballs:number = 0;
+  public potions:number = 0;
+  public superPotions:number = 0;
+
 
   // opponent pokemon variables
   public randPokeDex:number =  Math.floor(Math.random() * 721) + 1; //random pokedex
@@ -270,11 +275,25 @@ export class BattlesComponent implements OnInit {
   }
 
   //function to get a users inventory
-  getInventory(){
-
-    // this.inventory = this.pokemonService.getInventory();
-
-  }
+  getInventory():Inventory {
+    this.trainerId = this.trainerId; // test getting the initial pokemon a new player gets when register
+    console.log(this.trainerId);
+    this.pokemonService.getInventoryFromDatabase(this.trainerId).subscribe( 
+      (data:any) => {
+        this.inventory = data;
+        this.pokeballs = this.inventory[0].pokeballs;
+        this.potions = this.inventory[0].potions;
+        this.superPotions = this.inventory[0].superPotions;
+        console.log(this.inventory);
+        console.log(this.inventory[0].potions);
+      },
+      () => { //set pokemon to null incase of error
+        this.inventory = null;
+        console.log("Error fetching player pokemon");
+      }
+    )
+    return this.inventory;
+  } // end of getInventory
 
   //runs when the user selects to use a potion
   potionFunc(type:number){
