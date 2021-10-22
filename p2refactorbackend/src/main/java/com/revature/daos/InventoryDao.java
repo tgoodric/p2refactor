@@ -33,10 +33,10 @@ public class InventoryDao implements IInventoryDao {
 	}
 
 	//method to get a particular trainers inventory
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Inventory> getOneInventory(int trainerId) {
-//		System.out.println("in the inventory dao");
-		
+
 		try(Session ses = HibernateUtil.getSession()) {
 			
 			String hql = "FROM Inventory where trainerIdFk = " + trainerId;
@@ -58,9 +58,7 @@ public class InventoryDao implements IInventoryDao {
 	//subtract one from whatever item the user used
 	@Override
 	public boolean useItem(int trainerId, String itemType) {
-		
-//		System.out.println("in inventory dao use item method");
-		
+
 		try(Session ses = HibernateUtil.getSession()) {
 			Transaction tran = ses.beginTransaction(); //update and delete must happen within a transaction
 			
@@ -71,8 +69,7 @@ public class InventoryDao implements IInventoryDao {
 				//get the current amount of pokeballs
 			    Query query = ses.createQuery("SELECT pokeballs FROM Inventory where trainerIdFk=" + trainerId);
 			    int pokeballs = (int) query.getSingleResult();
-			    System.out.println(pokeballs);
-				
+
 			    //add one pokeball to the respective trainers inventory of pokeballs
 				String hql = "UPDATE Inventory SET pokeballs = " +  (pokeballs-1) + " WHERE trainerIdFk = " + trainerId;
 				Query q = ses.createQuery(hql);
@@ -87,9 +84,8 @@ public class InventoryDao implements IInventoryDao {
 				//get the current amount of potions
 			    Query query2 = ses.createQuery("SELECT potions FROM Inventory where trainerIdFk=" + trainerId);
 			    int potions = (int) query2.getSingleResult();
-			    System.out.println(potions);
 				
-			    //add one pokeball to the respective trainers inventory of potions
+			    //add one potion to the respective trainers inventory of potions
 				String hql2 = "UPDATE Inventory SET potions = " +  (potions-1) + " WHERE trainerIdFk = " + trainerId;
 				Query q2 = ses.createQuery(hql2);
 				q2.executeUpdate();
@@ -105,7 +101,7 @@ public class InventoryDao implements IInventoryDao {
 			    Query query3 = ses.createQuery("SELECT superPotions FROM Inventory where trainerIdFk=" + trainerId);
 			    int spotions = (int) query3.getSingleResult();
 				
-			    //add one pokeball to the respective trainers inventory of super potions
+			    //add one potion to the respective trainers inventory of super potions
 				String hql3 = "UPDATE Inventory SET superPotions = " +  (spotions-1) + " WHERE trainerIdFk = " + trainerId;
 				Query q3 = ses.createQuery(hql3);
 				q3.executeUpdate();
@@ -115,7 +111,6 @@ public class InventoryDao implements IInventoryDao {
 				HibernateUtil.closeSession();
 				return true;
 			}else {
-				System.out.println("in the final else statement");
 				tran.commit();
 				HibernateUtil.closeSession();
 				return false;
@@ -125,12 +120,8 @@ public class InventoryDao implements IInventoryDao {
 			e.printStackTrace();
 			return false;
 		}
-	
-		
-		
 	}
 	
-
 	//add one to whatever item the user selects
 	@Override
 	public boolean addItem(int trainerId, String itemType) {
@@ -159,8 +150,8 @@ public class InventoryDao implements IInventoryDao {
 			    Query query2 = ses.createQuery("SELECT potions FROM Inventory where trainerIdFk=" + trainerId);
 			    int potions = (int) query2.getSingleResult();
 				
-			    //add one pokeball to the respective trainers inventory of potions
-				String hql2 = "UPDATE Inventory SET potions = " +  (potions-1) + " WHERE trainerIdFk = " + trainerId;
+			    //add one potion to the respective trainers inventory of potions
+				String hql2 = "UPDATE Inventory SET potions = " +  (potions+1) + " WHERE trainerIdFk = " + trainerId;
 				Query q2 = ses.createQuery(hql2);
 				q2.executeUpdate();
 					
@@ -175,8 +166,8 @@ public class InventoryDao implements IInventoryDao {
 			    Query query3 = ses.createQuery("SELECT superPotions FROM Inventory where trainerIdFk=" + trainerId);
 			    int spotions = (int) query3.getSingleResult();
 				
-			    //add one pokeball to the respective trainers inventory of super potions
-				String hql3 = "UPDATE Inventory SET superPotions = " +  (spotions-1) + " WHERE trainerIdFk = " + trainerId;
+			    //add one potion to the respective trainers inventory of super potions
+				String hql3 = "UPDATE Inventory SET superPotions = " +  (spotions+1) + " WHERE trainerIdFk = " + trainerId;
 				Query q3 = ses.createQuery(hql3);
 				q3.executeUpdate();
 					
@@ -190,7 +181,6 @@ public class InventoryDao implements IInventoryDao {
 				return false;
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}

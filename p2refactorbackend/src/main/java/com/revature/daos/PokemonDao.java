@@ -25,11 +25,13 @@ public class PokemonDao implements IPokemonDao {
 			List<Pokemon> allPokemon = ses.createQuery(HQL)
 					.setParameter("tID", trainerId)
 					.list();
-			HibernateUtil.closeSession();
+			
 			return allPokemon;
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			return (List<Pokemon>) e;
+		}finally {
+			HibernateUtil.closeSession();
 		}
 		
 		
@@ -44,13 +46,16 @@ public class PokemonDao implements IPokemonDao {
 					.setParameter("tID", trainerId)
 					.setParameter("lvl", level)
 					.list();
-			HibernateUtil.closeSession();
+			
 			return listPokeLevel;
 
 		}catch(HibernateException e) {
 			
 			e.printStackTrace();
 			return (List<Pokemon>) e;
+		}
+		finally {
+			HibernateUtil.closeSession();
 		}
 		
 }
@@ -86,13 +91,15 @@ public class PokemonDao implements IPokemonDao {
 			
 			ses.save(pokemon);
 			
-			HibernateUtil.closeSession();
+			
 			return true;
 			
 		}catch(HibernateException e) {
 			e.printStackTrace();
 			return false;
 			
+		}finally {
+			HibernateUtil.closeSession();
 		}
 		
 		

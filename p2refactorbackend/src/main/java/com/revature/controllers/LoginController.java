@@ -1,7 +1,5 @@
 package com.revature.controllers;
 
-import org.apache.logging.log4j.core.tools.Generate;
-
 import com.google.gson.Gson;
 import com.revature.models.LoginDto;
 import com.revature.models.Trainer;
@@ -17,24 +15,16 @@ public class LoginController {
     public Handler loginHandler = (ctx) ->{
         String body = ctx.body();
         LoginDto ldto = gson.fromJson(body, LoginDto.class);
-        System.out.println(body);
         Trainer result = ls.login(ldto.getUsername(), ldto.getPassword());
         
         if(result != null) {
-            //TODO: get the JWT and put it in the header
         	String jwt = JwtUtil.generate(ldto.getUsername(), ldto.getPassword());
-        	//
-        	//System.out.println("login fetch successful");
         	String resultJson = gson.toJson(result, Trainer.class);
-        	
         	ctx.req.getSession();
-        	
-        	//System.out.println("json serialized");
         	ctx.result(resultJson);
-        	ctx.header("JWT", jwt); //stores JWT in the header.
-        	//System.out.println(resultJson);
-        	ctx.cookie("userId", Integer.toString(result.getUserId())); //not sure why Java won't automatically 
-            ctx.status(200);											//convert ints to strings, but whatevs
+        	ctx.header("JWT", jwt); 
+        	ctx.cookie("userId", Integer.toString(result.getUserId()));  
+            ctx.status(200);											
             
         }
         else {

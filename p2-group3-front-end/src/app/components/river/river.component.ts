@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { PokemonService } from 'src/app/services/pokemon.service';
 
 @Component({
   selector: 'app-river',
@@ -13,7 +14,8 @@ export class RiverComponent implements OnInit {
   public randNum:number = 0;
   public cookieValue:string;
   constructor(private router: Router,
-    private cookieService: CookieService  
+    private cookieService: CookieService,
+    private pokemonService: PokemonService 
   ) { 
 
     this.cookieValue = this.cookieService.get('userId');
@@ -28,12 +30,12 @@ export class RiverComponent implements OnInit {
       this.actionText = "You fished"; // test text for now can update later
       
     } else if (this.randNum <= 4) {
-      this.actionText = "You fished2"; // test text for now can update later
+      this.actionText = "You got a potion!"; // test text for now can update later
       //add potions to database below 
-     
+      this.pokemonService.addItem(38, "superpotions")
 
     } else {
-      this.router.navigate(['/battles']);
+      //this.router.navigate(['/battles']);
     }
   }
 
