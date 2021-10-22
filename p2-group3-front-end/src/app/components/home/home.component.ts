@@ -63,12 +63,24 @@ export class HomeComponent implements OnInit {
 
   async pokemonCenter(){
     let userId:string = this.cs.get("userId");  //don't actually need to convert to number
-    let response = await fetch(this.url + "pokemon/" + userId, {
+    let response = await fetch(this.url + "pokemon/" + userId, { //TODO: use userId
       method: "GET",
       credentials:"include"
     });
-    let pokeList = await response.json(); //parse response into object
-    console.log(pokeList);
+    let pokeList:Pokemon[] = await response.json(); //parse response into object
+    console.log(pokeList); //TODO: delete debug print line
+    for (const pokemon of pokeList) {
+      if(pokemon.maxHitPoints !== pokemon.hitPoints){
+        pokemon.hitPoints = pokemon.maxHitPoints;
+        let data = JSON.stringify(pokemon);
+        await fetch(this.url + "pokemon/update", {
+          method:"PUT",
+          body:data,
+          credentials:"include"
+        }) //end fetch
+      }// end if
+    } //end for
 
+    //this.narratorText = this.narratorText + "\n \n You visit the Pokemon Center. The nurse smiles and heals your pokemon."
   }
 }
