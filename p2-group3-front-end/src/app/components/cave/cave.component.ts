@@ -90,7 +90,7 @@ export class CaveComponent implements OnInit {
   startBattleHandler(){
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "pokemon not found" //will update text later
+      this.actionText = "Despite all the evidence of pokemon living in this cave, none appear." //will update text later
 
       if(this.randNum === 10){
         //add item to database
@@ -101,7 +101,7 @@ export class CaveComponent implements OnInit {
       } 
       
     } else if (this.randNum <= 4){
-      this.actionText = "pokemon not found 2"
+      this.actionText = "What you thought was the cry of a wild pokemon turned out to have been the wind echoing in the cave."
     } else {
       this.router.navigate(['/battles']);
     }

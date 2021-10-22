@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
       this.actionText = "You Picked berries"; // test text for now can update later
-      
+      //get pokeballs?
     } else if (this.randNum <= 4) {
       this.actionText = "You Picked berries2"; // test text for now can update later
       //add potions to database below 
@@ -39,23 +39,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  searchCityHandler(){
-    this.randNum = Math.floor(Math.random() * 10) + 1;
-    if(this.randNum >= 7){
-      this.actionText = "chopping down tree" //will update text later
-    } else if (this.randNum <= 4){
-      this.actionText = "chopping down tree2"
-    } else {
-      this.router.navigate(['/battles']);
-    }
-  }
-
   startBattleHandler(){
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "pokemon not found" //will update text later
+      this.actionText = "You search for a pokemon to battle. No luck finding one, though." //will update text later
     } else if (this.randNum <= 4){
-      this.actionText = "pokemon not found 2"
+      this.actionText = "You don't see any pokemon around to battle."
     } else {
       this.router.navigate(['/battles']);
     }

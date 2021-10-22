@@ -65,25 +65,25 @@ export class ForestComponent implements OnInit {
   collectFirewoodHandler(){
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "chopping down tree" //will update text later
+      this.actionText = "Your Bulbasaur cuts down a tree. The two of you work together to cut it into firewood for the townspeople." 
 
       if(this.randNum === 10){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "pokeballs";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Pokeball!"
+        this.actionText = this.actionText + " While cutting the tree, you find a Pokeball!"
       } 
 
     } else if (this.randNum <= 4){
-      this.actionText = "chopping down tree2"
+      this.actionText = "You sweat as you chop logs into firewood."
 
       if(this.randNum === 1){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "potions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Potion!"
+        this.actionText = "As you sit down to rest, you find a Potion!"
       } 
     } else {
       this.router.navigate(['/battles']);
