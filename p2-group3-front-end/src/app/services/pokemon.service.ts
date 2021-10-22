@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Inventory } from '../models/inventory';
 import { Pokemon } from '../models/pokemon';
 
 @Injectable({
@@ -23,6 +24,10 @@ export class PokemonService {
   
   getPokemonFromDatabase(id:number):Observable<Pokemon>{ //maybe fetch as a Pokemon object from DB
     return this.http.get(this.url + "pokemon/" + id + "/") as Observable<Pokemon>;
+  }
+
+  getInventoryFromDatabase(id:number):Observable<Inventory>{
+    return this.http.get(this.url + "inventory/" + id + "/") as Observable<Inventory>;
   }
 
   useItem(id:number, item:string):void{
