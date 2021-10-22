@@ -81,6 +81,6 @@ export class HomeComponent implements OnInit {
       }// end if
     } //end for
 
-    //this.narratorText = this.narratorText + "\n \n You visit the Pokemon Center. The nurse smiles and heals your pokemon."
+    this.actionText = this.narratorText + "You visit the Pokemon Center. The nurse smiles and heals your pokemon."
   }
 }
