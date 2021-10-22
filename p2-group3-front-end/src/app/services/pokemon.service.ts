@@ -30,7 +30,16 @@ export class PokemonService {
   }
 
   addItem(id:number, item:string):void{
-    this.http.patch(this.url + "inventory/" + id + "/addItem/" + item + "/", null);
+    this.http.patch(this.url + "inventory/" + id + "/addItem/" + item + "/", {"trainerId":id, "itemType":item}).subscribe(
+      res => {
+        console.log("recieved ok response from patch request");
+      },
+      error => {
+        console.error("there was an error during patch request");
+        console.log(error);
+      }
+    );
+    console.log("request sent. waiting for response...");
   }
 
   userAttackFunc(user:Pokemon, oppDefense:number, oppHP:number, attackType:number):number{

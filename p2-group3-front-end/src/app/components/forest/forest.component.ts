@@ -2,6 +2,7 @@ import { ɵparseCookieValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { PokemonService } from 'src/app/services/pokemon.service';
 
 @Component({
   selector: 'app-forest',
@@ -22,8 +23,9 @@ export class ForestComponent implements OnInit {
   public backgroundUrl:any = "../assets/"
   public cookieValue:string;
   public trainer_id:number = 0;
+  public itemString:string = "";
 
-  constructor(private router: Router,
+  constructor(private pokemonService: PokemonService,private router: Router,
     private cookieService: CookieService
     ) { 
       this.cookieValue = this.cookieService.get('userId');
@@ -31,16 +33,22 @@ export class ForestComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
   pickBerriesHandler(){   
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      if(this.randNum === 8){
-        //add item to database
-        console.log(this.randNum)
-        this.actionText = "You found a Super Potion!"
-      } 
       this.actionText = "You Picked rawst berries"; // test text for now can update later
+      
+      if(this.randNum === 10){
+        //add item to database
+        console.log(this.randNum);
+        this.trainer_id = parseInt(this.cookieValue);
+        this.itemString = "potions";
+        console.log(this.trainer_id);
+        console.log(this.itemString);
+        this.pokemonService.addItem(this.trainer_id, this.itemString);
+        this.actionText = "You found a Potion!"
+      } 
 
     } else if (this.randNum <= 4) {
       if(this.randNum === 3){
@@ -50,7 +58,7 @@ export class ForestComponent implements OnInit {
       }
       this.actionText = "You Picked berries2"; // test text for now can update later
     } else {
-      this.router.navigate(['/battles']);
+      //this.router.navigate(['/battles']);
     }
   }
 
