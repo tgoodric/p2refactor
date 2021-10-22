@@ -33,6 +33,7 @@ public class InventoryDao implements IInventoryDao {
 	}
 
 	//method to get a particular trainers inventory
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Inventory> getOneInventory(int trainerId) {
 

@@ -14,7 +14,7 @@ public class TrainerService {
 
 	Logger log = LogManager.getLogger(); //Logger object so that we can implement Logging
 
-	
+	//instantiate DAO
 	private static TrainerDao tDao = TrainerDao.getTrainerDao();
 
 	public int addTrainer(Trainer t) {
@@ -22,9 +22,8 @@ public class TrainerService {
 		try {
 			tDao.addTrainer(t);
 			Trainer result = tDao.getTrainers(t.getUsername()).get(0);
-			System.out.println("Hi i am at serive now "+ result.getUserId());
 			log.info("Created a new user");
-			return result.getUserId();
+			return result.getUserId(); //if successful, return ID to controller layer
 		}
 		catch (ConstraintViolationException e) {
 			log.warn("User entered duplicate username");
