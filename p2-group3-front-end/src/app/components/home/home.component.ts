@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
+import { Pokemon } from 'src/app/models/pokemon';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   private url:string = "http://localhost:8090/"
 
-  constructor(private router: Router, private cs:CookieService) { }
+  constructor(private router: Router, private cs:CookieService, private http:HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -58,10 +61,14 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  pokemonCenter(){
-    let userIdString:string = this.cs.get("userId");
-    let userId:number = parseInt(userIdString);
-
+  async pokemonCenter(){
+    let userId:string = this.cs.get("userId");  //don't actually need to convert to number
+    let response = await fetch(this.url + "pokemon/" + userId, {
+      method: "GET",
+      credentials:"include"
+    });
+    let pokeList = await response.json(); //parse response into object
+    console.log(pokeList);
 
   }
 }

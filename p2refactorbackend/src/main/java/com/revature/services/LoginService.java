@@ -14,8 +14,8 @@ import de.mkammerer.argon2.Argon2Factory;
 
 public class LoginService {
 
-	Logger log = LogManager.getLogger(); //Logger object so that we can implement Logging
-	private Argon2 ar2 = Argon2Factory.create(); 
+	Logger log = LogManager.getLogger(); 			//Logger object so that we can implement Logging
+	private Argon2 ar2 = Argon2Factory.create(); 	//Argon2 object for checking password hashes
 
 	private static LoginService ls = null;
 
@@ -28,7 +28,7 @@ public class LoginService {
 		List<Trainer> result = tDao.getTrainers(username);
 		if(result != null && result.size() == 1) { 				//guard against null pointer exceptions
 			String hashedPassword = result.get(0).getPassword();
-			if (ar2.verify(hashedPassword, password)) {
+			if (ar2.verify(hashedPassword, password)) {			//compare hashes
 				log.info("User " + username + " logged in successfully");
 				return result.get(0);
 			}

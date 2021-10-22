@@ -189,6 +189,7 @@ class UnitTesting {
 
 	
 
+	@SuppressWarnings("unchecked")
 	@Test
 	final void testGetForLogin() {
 			List<Trainer> result = null;
