@@ -1,0 +1,48 @@
+::ng-deep body{
+    /* background-image: url("../../../assets/ForestBackground.png"); */
+    background-image: url("../../../assets/gradient/gradient3.jpg");
+    background-size: cover;
+  
+}
+.btn-group-vertical {
+    margin-left: 8em;
+}
+.btn-group-vertical>button {
+    background: linear-gradient(305deg, #ffc107, #1e7e34);
+    border: none;
+    border-radius: 0;
+    margin-bottom: 5px;
+    color: white;
+    width: 150% !important;
+}
+.card-body {
+    background: linear-gradient(45deg, #007bffc9, #dc3545);
+    color: azure;
+}
+.btn-group-vertical>button:hover {
+    background: #28a745 !important;
+}
+.card-body.footer-card-box {
+    background: radial-gradient(#ffc107, transparent);
+    text-align: center;
+}
+.card-body.footer-card-box>a:hover {
+    color: white;
+    background: #dc3545;
+    padding: 8px 8px;
+    border-radius: 4px;
+}
+
+p.card-text.overflow-auto.action-text {
+    text-align: center;
+    font-weight: 600;
+    color: aqua;
+    text-transform: capitalize;
+}
+.card-body>p {
+    font-size: 18px;
+    
+}
+.card-body>h5 {
+    text-align: center;
+}
