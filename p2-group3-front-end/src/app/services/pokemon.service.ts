@@ -113,7 +113,7 @@ export class PokemonService {
   }
 
   capturePokemon(hp:number, maxHP:number):boolean {
-    let probability = 1 - (hp/maxHP);
+    let probability = 1.2 - (hp/maxHP);
     return (probability > Math.random());
   }
 }

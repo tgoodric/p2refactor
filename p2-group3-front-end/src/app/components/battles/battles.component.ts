@@ -11,7 +11,8 @@ import { Inventory } from 'src/app/models/inventory';
 })
 export class BattlesComponent implements OnInit {
 
-  //create class variables
+  //cookie value for trainer ID
+  public cookieValue:string;
 
   //Trainer and pokemon related variables
   public apiPokemon:any = null; //this is the API data for the users pokemon
@@ -25,7 +26,6 @@ export class BattlesComponent implements OnInit {
   public potions:number = 0;
   public superPotions:number = 0;
 
-
   // opponent pokemon variables
   public randPokeDex:number =  Math.floor(Math.random() * 721) + 1; //random pokedex
   public enemyPokemon:any = null;
@@ -35,9 +35,8 @@ export class BattlesComponent implements OnInit {
   public enemyDefense:number = 0;
   public enemySpecialAttack:number = 0;
 
-
-  //game control variables
-  public gameStart:boolean = false;
+  //game control variables used for determing what elements to display
+  public gameStart:boolean = false; 
   public battleStart:boolean = false
   public gameOver:boolean = false;
   public gameOverNar:string = "";
@@ -48,26 +47,43 @@ export class BattlesComponent implements OnInit {
   public caught:boolean = false;
   public narration:any[] = [];
 
-  //cookie
-  public cookieValue:string;
-
 
   constructor(private pokemonService:PokemonService,
     private cookieService: CookieService
     ) { 
+      // Get the trainer ID from the cookie value
       this.cookieValue = this.cookieService.get('userId');
       this.trainerId = parseInt(this.cookieValue);
-      console.log("Trainer id is " + this.trainerId)
     }
 
   ngOnInit(): void {
     this.getEnemyPokemon()
   }
 
-  
+  //randomly select an enemy pokemon from the poke API
+  getEnemyPokemon(){
+    // 
+    this.pokemonService.getPokemonFromApi(this.randPokeDex).subscribe( 
+      (data:any) => {
+        this.enemyPokemon = data;
+
+        //set the enemy HP, attack, defense and special attack values from the base API values
+        this.enemyHP = this.enemyPokemon.stats[0].base_stat
+        this.enemyAttack = this.enemyPokemon.stats[1].base_stat
+        this.enemyDefense = this.enemyPokemon.stats[2].base_stat
+        this.enemySpecialAttack = this.enemyPokemon.stats[3].base_stat
+
+      },
+      () => { //set pokemon to null incase of error
+        this.enemyPokemon = null;
+        console.log("Error fetching api pokemon");
+      }
+    )
+  }
+
   //Get your selected pokemon API infor as well as a random enemy pokemon
-  getApiPokemon():Pokemon {
-    
+  getApiPokemon() {
+  
     this.pokemonService.getPokemonFromApi(this.pokedexNum).subscribe( 
       (data:any) => {
         this.apiPokemon = data;
@@ -77,39 +93,13 @@ export class BattlesComponent implements OnInit {
         console.log("Error fetching api pokemon");
       }
     )
-    return this.apiPokemon;
   } //end getApiPokemon
-
-  //randomly select an enemy pokemon from the poke API
-  getEnemyPokemon():Pokemon{
-    // 
-    this.pokemonService.getPokemonFromApi(this.randPokeDex).subscribe( 
-      (data:any) => {
-        this.enemyPokemon = data;
-        console.log(this.enemyPokemon);
-
-        //set the enemy HP, attack, defense and special attack values from the base API values
-        this.enemyHP = this.enemyPokemon.stats[0].base_stat
-        this.enemyAttack = this.enemyPokemon.stats[1].base_stat
-        this.enemyDefense = this.enemyPokemon.stats[2].base_stat
-        this.enemySpecialAttack = this.enemyPokemon.stats[3].base_stat
-        console.log(this.enemySpecialAttack)
-
-      },
-      () => { //set pokemon to null incase of error
-        this.enemyPokemon = null;
-        console.log("Error fetching api pokemon");
-      }
-    )
-    return this.enemyPokemon;
-  }
 
 
   //get the player's pokemon database info
-  getPlayerPokemon():Pokemon {
-    //need some input from player for pokemon id, use temp int for test
-    this.trainerId = this.trainerId; // test getting the initial pokemon a new player gets when register
-    console.log(this.trainerId);
+  getPlayerPokemon() {
+
+    //use the function from the pokemon service to get the player's pokemon list
     this.pokemonService.getPokemonFromDatabase(this.trainerId).subscribe( 
       (data:any) => {
         this.playerPokemon = data;
@@ -121,12 +111,30 @@ export class BattlesComponent implements OnInit {
         console.log("Error fetching player pokemon");
       }
     )
-    return this.playerPokemon;
+    // return this.playerPokemon;
   } //end getPlayerPokemon
 
+  //function to get a users inventory
+  getInventory() {
+
+    this.pokemonService.getInventoryFromDatabase(this.trainerId).subscribe( 
+      (data:any) => {
+        this.inventory = data;
+        this.pokeballs = this.inventory[0].pokeballs;
+        this.potions = this.inventory[0].potions;
+        this.superPotions = this.inventory[0].superPotions;
+      },
+      () => { //set pokemon to null incase of error
+        this.inventory = null;
+        console.log("Error fetching player pokemon");
+      }
+    )
+  } // end of getInventory
+
+  // runs when player clicks 
   switchPokemon(){
     this.pokemonSelected=null;
-    this.getPlayerPokemon;
+    this.getPlayerPokemon();
   }
   
   //set stage for battle and set values of user selected pokemon
@@ -147,7 +155,6 @@ export class BattlesComponent implements OnInit {
       console.log("their turn")
       this.myTurn=false
     }
-
   }
 
   //battle functionality
@@ -158,12 +165,10 @@ export class BattlesComponent implements OnInit {
     this.gameStart=true;
 
     //if the opponenent wins the coin flip then run their attack
-
     if(this.myTurn==false){
       this.attackFunc(0); //we dont use the paramter here since opponent's attack type will be determined within the function
     }
   }
-
 
   //runs each time the user hits an attack button, or if its the opponent's turn
   async attackFunc(attackType:number){ //this function takes in the type of attack (attack=1, special=2)
@@ -171,12 +176,13 @@ export class BattlesComponent implements OnInit {
     this.battleStart = true;
     this.narration = []
 
+    // pause the function so the new narration doesn't appear right away
     await this.delay(500);
 
     //this code runs when its the user's turn
     if(this.myTurn){
 
-        //user's turn
+        // calculate the damage done using the damage formula in the pokemon service
         let damage = this.pokemonService. userAttackFunc(this.pokemonSelected, this.enemyDefense, this.enemyHP, attackType) //last parameter is attack type, attack type 1 is a normal attack
         this.enemyHP = this.enemyHP - damage
 
@@ -187,14 +193,10 @@ export class BattlesComponent implements OnInit {
         //narrate the result of the user move
         if(attackType==1){
           this.narration[0] = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
-          + this.enemyPokemon.name + "'s HP is now " + this.enemyHP;
-        // this.firstMove = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
-        //   + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
+          + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
         }else{
           this.narration[0] = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
-          + this.enemyPokemon.name + "'s HP is now " + this.enemyHP;
-          // this.firstMove = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
-          // + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
+          + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
         }
 
         //if the oponent's hp is 0, end the battle
@@ -205,16 +207,20 @@ export class BattlesComponent implements OnInit {
           // this.narration[2]=""
         }
 
-
+        this.myTurn=false;
         
         //opponent turn if not already fainted
         if(this.gameOver==false){
-          await this.delay(1000);
+          
+          // pause the function so the new narration doesn't appear right away
+          await this.delay(1500);
+
           let oppAttackType = Math.floor(Math.random() *1.8) //semi randomly select the user's attack type
+
+          // calculate the damage done using the damage formula in the pokemon service
           damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, oppAttackType)
           this.pokemonSelected.hitPoints = this.pokemonSelected.hitPoints - damage
-          console.log("yo"+ this.pokemonSelected.hitPoints)
-          console.log("helllooo " + this.pokemonSelected.hitPoints)
+
 
           if(this.pokemonSelected.hitPoints<0){ //if the hp is less than 0, make it 0
             this.pokemonSelected.hitPoints=0
@@ -223,39 +229,36 @@ export class BattlesComponent implements OnInit {
           //narrate the result of the opponenet's move
           if(attackType==1){
             this.narration[1]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
-            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
-          // this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
-          //   + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
           }else {
             this.narration[1]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
-            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
-            // this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
-            // + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
           }
         }
 
         //if the user's hp is 0, end the battle
         if(this.pokemonSelected.hitPoints==0){
+          await this.delay(500)
           this.gameOver = true;
           this.narration[2] = " " + this.pokemonSelected.pokeName + " has fainted!"
           this.winner = this.enemyPokemon
         }
       
-        console.log("this is the narr: " + this.narration)
+        await this.delay(1000)
+        this.myTurn=true; //end opponent's turn
     }
     
     //this code run if opponent gets to go first
     else {
-
+      
         //opponent goes
         if(this.gameOver==false){
-          
+
           let oppAttackType = Math.floor(Math.random() *1.8) //semi randomly select the user's attack type
+
           //calculate damage using pokemon damage formula
           let damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, oppAttackType)
           this.pokemonSelected.hitPoints = this.pokemonSelected.hitPoints - damage
-          console.log("hiiii" + damage)
-          console.log(this.pokemonSelected.hitPoints)
 
           if(this.pokemonSelected.hitPoints<0){ //if the hp is less than 0, make it 0
             this.pokemonSelected.hitPoints=0
@@ -264,19 +267,16 @@ export class BattlesComponent implements OnInit {
           //narrate the result of the opponenet's move
           if(attackType==1){
             this.narration[0]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
-            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
-          // this.firstMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
-          //   + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints+ "...";
           }else{
             this.narration[0]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
-            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
-            // this.firstMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
-            // + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints+ "...";
           }
         }
 
         //if the user's hp is 0, end the battle
         if(this.pokemonSelected.hitPoints==0){
+          await this.delay(500)
           this.gameOver = true;
           this.narration[1] = " " + this.pokemonSelected.pokeName + " has fainted!"
           this.winner = this.enemyPokemon
@@ -285,64 +285,42 @@ export class BattlesComponent implements OnInit {
         //make it the user's turn
         await this.delay(1000);
         this.myTurn=true;
-    }
-
-    //if the game is over, update the Pokemon's info in the database
-    if(this.gameOver){
-      this.updatePokemon();
-    }
-  }
-
-  //function to get a users inventory
-  getInventory():Inventory {
-    this.trainerId = this.trainerId; // test getting the initial pokemon a new player gets when register
-    console.log(this.trainerId);
-    this.pokemonService.getInventoryFromDatabase(this.trainerId).subscribe( 
-      (data:any) => {
-        this.inventory = data;
-        this.pokeballs = this.inventory[0].pokeballs;
-        this.potions = this.inventory[0].potions;
-        this.superPotions = this.inventory[0].superPotions;
-        console.log(this.potions)
-        console.log("inventory is " + this.inventory);
-      },
-      () => { //set pokemon to null incase of error
-        this.inventory = null;
-        console.log("Error fetching player pokemon");
       }
-    )
-    return this.inventory;
-  } // end of getInventory
+
+      //if the game is over, update the Pokemon's info in the database
+      if(this.gameOver){
+        this.updatePokemon();
+      }
+  }
 
   //runs when the user selects to use a potion
   async potionFunc(type:number){
 
-    this.narration=[]
+    this.narration=[] //clear the narration
 
-    await this.delay(1500);
+    await this.delay(500);
 
-    if(type==1){
+    if(type==1){ //if normal attack is used (normal attack = 1)
       this.pokemonSelected.hitPoints+=20;
-      this.narration[0]=this.pokemonSelected.pokeName + " used a potion... " + this.pokemonSelected.pokeName +"'s HP is now " + this.pokemonSelected.hitPoints;
+      this.narration[0]=this.pokemonSelected.pokeName + " used a potion... " + this.pokemonSelected.pokeName +"'s HP is now " + this.pokemonSelected.hitPoints + "...";
       this.pokemonService.useItem(this.trainerId, "potions");
-      // this.myTurn=false;
-      // this.attackFunc( Math.ceil(Math.random() * 1.8));
     }else{
       this.pokemonSelected.hitPoints+=30
-      this.narration[0]=this.pokemonSelected.pokeName + " used a super potion... "  + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
+      this.narration[0]=this.pokemonSelected.pokeName + " used a super potion... "  + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
       this.pokemonService.useItem(this.trainerId, "superpotions");
-      // this.myTurn=false;
-      // this.attackFunc( Math.ceil(Math.random() * 1.8));
     }
 
     //after potion is used, opponent goes
     if(this.gameOver==false){
 
+      this.myTurn = false //game control
+      await this.delay(1000);
+
       let oppAttackType = Math.floor(Math.random() *1.8) //semi randomly select the user's attack type
+
+      //calculate damage using pokemon damage formula
       let damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, oppAttackType)
       this.pokemonSelected.hitPoints = this.pokemonSelected.hitPoints - damage
-      console.log("hiiii" + damage)
-      console.log(this.pokemonSelected.hitPoints)
 
       if(this.pokemonSelected.hitPoints<0){ //if the hp is less than 0, make it 0
         this.pokemonSelected.hitPoints=0
@@ -351,10 +329,10 @@ export class BattlesComponent implements OnInit {
       //narrate the result of the opponenet's move
       if(oppAttackType=1){
       this.narration[1]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done) " 
-        + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
+        + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
       }else{
         this.narration[1]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done) " 
-        + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
+        + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
       }
     }
 
@@ -373,23 +351,29 @@ export class BattlesComponent implements OnInit {
   //runs when the user selects to use a pokeball
   async catchPokemon(){
 
+    // game control variable used for determing what elements to display
     this.catchingPokemon = true;
 
-    this.narration = []
+    this.narration = [] //clear narration
+
     this.narration[0] = "You used a pokeball!";
 
+    //update inventory in database 
     this.pokemonService.useItem(this.trainerId, "pokeballs");
 
+    //use catch rate formula from pokemon service to determine if pokemon is caught
     this.caught = this.pokemonService.capturePokemon(this.enemyHP, this.enemyPokemon.stats[0].base_stat);
 
-    await this.delay(4000)
+    await this.delay(4000) //delay four second so css animation runs before catch result is displayed
+
     if(this.caught){
       this.narration[0] = " gotcha! " + this.enemyPokemon.name + " was caught!"
-      this.addNewPokemon();
+      this.addNewPokemon(); //add new pokemon to the pokemon table in database
     } else{
       this.narration[0] =  "Oh no! " + this.enemyPokemon.name + " got away!"
     }
 
+    //update game control variables
     this.catchingPokemon=false;
     this.gameOver=true;
   }
@@ -397,9 +381,9 @@ export class BattlesComponent implements OnInit {
 
   //update the pokemon in the database with new values after battle ends -- uses fetch api for updating database
   async updatePokemon(){
+
     const url = "http://localhost:8090/" //putting in our base URL
 
-    //update pokemon info in database
     //if they won the battle update experience and level if achieved a level up
     if (this.winner==this.pokemonSelected){
       this.pokemonSelected.experience+=1;
@@ -408,16 +392,17 @@ export class BattlesComponent implements OnInit {
       }
     }
     
+    //update pokemon info in database using fetch API
     let response = await fetch(url + "pokemon/update", {
       method: "PUT", //send a POST request
       body: JSON.stringify(this.pokemonSelected), //turn our JS into JSON
-      credentials: "include"
-      //this last line will ensure that the cookie is captured
+      credentials: "include" //this last line will ensure that the cookie is captured
     });
   }
 
   //add the caught pokemon to the database
   async addNewPokemon(){
+
     const url = "http://localhost:8090/" //putting in our base URL
 
     console.log("about to complete add pokemon to db")
@@ -432,21 +417,22 @@ export class BattlesComponent implements OnInit {
                       hitPoints : this.enemyHP,
                       attack : this.enemyAttack,
                       defense : this.enemyDefense,
-                      specialDefense : 0,
+                      specialAttack : this.enemyPokemon.stats[3].base_stat,
+                      specialDefense : this.enemyPokemon.stats[4].base_stat,
                       experience : this.enemyPokemon.base_experience,
-                      trainerIdFk : {userId : this.trainerId} //needs to change to cookie value
+                      trainerIdFk : {userId : this.trainerId} 
     }
     
-    console.log("about to do the await fetch")
+    //add the new pokemon to the pokemon table
     let response = await fetch(url + "pokemon", {
       method: "POST", //send a POST request
       body: JSON.stringify(newPokemon), //turn our JS into JSON
       credentials: "include"
       //this last line will ensure that the cookie is captured
     });
-    console.log("yerrr " + response)
   }
 
+  //function for pausing functions 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
 }
