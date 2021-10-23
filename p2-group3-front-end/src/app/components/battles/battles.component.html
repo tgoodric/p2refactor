@@ -1,12 +1,18 @@
 <!-- Player pokemon selections and card -->
 <div id="tableCard">
     <div class="card border-dark mb-4">
-        <!-- <div class="card-header" id="cardheader">Select Your Pokemon!</div> -->
+
+        <!-- This button appears when page loads -->
+        <button  *ngIf="!pokemonSelected && !playerPokemon" id="viewPokemon" class="btn btn-secondary btn-lg" (click)="getPlayerPokemon()">
+            View My Pokemon
+        </button> <!--use getApi for testing-->
+
+        <!-- Pokemon name in card header -->
         <div *ngIf="pokemonSelected" class="card-header" id="cardheader">
             <strong>{{pokemonSelected.pokeName}}</strong>
         </div>
 
-
+        <!-- table of player's pokemon -->
         <table id="poketable" class="table table-light" *ngIf="playerPokemon && !pokemonSelected">
             <thead>
                 <th scope="col">Name</th>
@@ -22,13 +28,8 @@
                 </tr>
             </tbody>
         </table> <!--end table-->
-
-        <button  *ngIf="!pokemonSelected && !playerPokemon" class="btn btn-secondary btn-lg" (click)="getPlayerPokemon()">
-            View My Pokemon
-        </button> <!--use getApi for testing-->
-
-
         
+        <!-- Body of the pokemon card -->
         <div class="card-body" id="pokeinfo" *ngIf="pokemonSelected">
               <div *ngIf="apiPokemon">
                 <img src={{apiPokemon.sprites.front_default}}>
@@ -40,10 +41,8 @@
                     <p> {{apiPokemon.moves[0].move.name}}: {{pokemonSelected.attack}} </p>
                     <p> {{apiPokemon.moves[1].move.name}}: {{pokemonSelected.specialAttack}} </p>
                 </div>
-                <!-- <ng-template #alt>
-                    <p> Attack: {{pokemonSelected.attack}} </p>
-                    <p> Special Attack: {{pokemonSelected.specialAttack}} </p>
-                </ng-template> -->
+
+                <!-- Buttons for after picking pokemon but before battle start -->
                 <button *ngIf="!gameStart" class = "btn btn-outline-dark" (click)="switchPokemon()">Switch pokemon</button>
                 <button *ngIf="!gameStart" class = "btn btn-outline-dark" (click)="battle()">Start Battle!</button>
 
@@ -70,6 +69,7 @@
 <!-- Battle ground and narration -->
 <div class="card-centered">
     <div class="card border-dark mb-3 narration">
+        <!-- battle ground div -->
         <div class="battleImgStack">
             <img id="baseImg" class="card-img-top" src="../../../assets/battleBackground.jpg" alt="Card image cap">
             <div id="pokemon" class="imgOverlay" *ngIf="apiPokemon && !gameOver && !catchPokemon">
@@ -78,8 +78,8 @@
             <div id="enemy" class="imgOverlay" *ngIf="enemyPokemon && !gameOver &&!catchingPokemon">
                 <img id="pokemonRCorner" class="img-fluid" src="{{enemyPokemon.sprites.front_default}}" alt=""> <!--{{enemyPokemon}}-->
             </div> <!--child div end-->
-            <img *ngIf="catchingPokemon" id="escapedPokemon" class="imgOverlay" src="../../../assets/Poke_Ball.png">
-            <img *ngIf="caught" id="catchPokemon" class="imgOverlay" src="../../../assets/Poke_Ball.png">
+            <img *ngIf="catchingPokemon" id="escapedPokemon"  src="../../../assets/Poke_Ball.png">
+            <img *ngIf="caught" id="catchPokemon" src="../../../assets/Poke_Ball.png">
 
         </div> <!--parent div end-->
         <div class="card-body">
@@ -88,9 +88,9 @@
 
                 <!-- this text only displays before either player makes a move-->
                 <div *ngIf="!narration[0] && !catchingPokemon && !battleStart">
-                <div *ngIf="enemyPokemon" class="typewriter">You encountered a wild {{enemyPokemon.name}}!</div>
-                <div *ngIf="apiPokemon" class="typewriter">You chose {{apiPokemon.name}}!</div>
-                <div *ngIf="gameStart && myTurn">Your turn...</div>
+                <p *ngIf="enemyPokemon" class="typewriter">You encountered a wild {{enemyPokemon.name}}!</p>
+                <p *ngIf="apiPokemon" class="typewriter">You chose {{apiPokemon.name}}!</p>
+                <!-- <div *ngIf="gameStart && myTurn">Your turn...</div> -->
                 </div>
 
                 <!-- this text displays once the battle starts -->
@@ -99,11 +99,15 @@
                     <p *ngIf="narration[1]">{{narration[1]}}</p>
                 </div>
 
-                <!-- <div *ngIf="gameStart && myTurn && !gameOver && narration[0] && !catchingPokemon">Your turn... </div> -->
+                <div *ngIf="gameStart && !gameOver && myTurn && !catchingPokemon" class="typewriter">
+                    <p>Your turn...</p>
+                </div>
 
                 <!-- display this text when the game is over -->
                 <div *ngIf="gameStart && gameOver" class="typewriter">
-                    <strong>{{narration}}</strong>
+                    <p>{{narration[0]}}</p>
+                    <p>{{narration[1]}}</p>
+                    <strong>{{narration[2]}}</strong>
                 </div>
 
             </div>
@@ -115,8 +119,9 @@
 <!-- opponent pokemon card -->
 <div id="tableCard2" *ngIf="playerPokemon">
     <div class="card border-dark mb-4">
-        <div class="card-header"><strong>{{enemyPokemon.name}}</strong></div>
-        
+        <!-- Enemy pokemon name in card header -->
+        <div class="card-header"><strong>{{enemyPokemon.name}}</strong></div> 
+        <!-- Opponent pokemon card body -->
         <div class="card-body" id="pokeinfo">
             <div *ngIf="!pokemonSelected && !playerPokemon" class="row">
               </div>
@@ -130,10 +135,6 @@
                     <p> {{enemyPokemon.moves[0].move.name}}: {{enemyAttack}} </p>
                     <p> {{enemyPokemon.moves[1].move.name}}: {{enemySpecialAttack}} </p>
                 </div>
-                <!-- <ng-template #alt2> -->
-                    <!-- <p> Attack: {{enemyAttack}} </p>
-                    <p> Special Attack: {{enemySpecialAttack}} </p>
-                </ng-template> -->
             </div>
         </div>
     </div>
