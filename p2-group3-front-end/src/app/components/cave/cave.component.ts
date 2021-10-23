@@ -20,9 +20,7 @@ export class CaveComponent implements OnInit {
   public trainer_id:number = 0;
   public itemString:string = "";
 
-  constructor(private pokemonService: PokemonService,private router: Router,
-    private cookieService: CookieService
-    ) { 
+  constructor(private pokemonService:PokemonService, private router: Router, private cookieService: CookieService) { 
       this.cookieValue = this.cookieService.get('userId');
     }
 
@@ -74,7 +72,7 @@ export class CaveComponent implements OnInit {
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "superpotions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "you find a Super Potion!"
+        this.actionText += "you find a Super Potion!"
       } 
       else{
         this.actionText += "you find half an old sandwich and an apple core."
@@ -88,7 +86,7 @@ export class CaveComponent implements OnInit {
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "potions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "you find a buried Potion!"
+        this.actionText += "you find a buried Potion!"
       } 
       else{
         this.actionText += "you find mud and not much else."
