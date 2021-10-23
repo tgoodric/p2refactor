@@ -32,26 +32,32 @@ export class CaveComponent implements OnInit {
   rockHandler(){   
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "You looked under rock"; // test text for now can update later
+      this.actionText = "You look under the rock. The tattered cloth unfolds."; // test text for now can update later
 
       if(this.randNum === 10){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "potions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Potion!"
+        this.actionText = this.actionText + "You found a Potion!"
       } 
+      else{
+        this.actionText += " You find a handful of coins, but not much else."
+      }
       
     } else if (this.randNum <= 4) {
-      this.actionText = "You looked under rock2"; // test text for now can update later
+      this.actionText = "You look under the rock."; // test text for now can update later
       
       if(this.randNum === 1){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "pokeballs";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Pokeball!"
+        this.actionText += "You found a Pokeball!"
       } 
+      else{
+        this.actionText += " There's nothing there but dirt."
+      }
      
     } else {
       this.router.navigate(['/battles']);
@@ -61,26 +67,32 @@ export class CaveComponent implements OnInit {
   mineHandler(){
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "mined ore" //will update text later
+      this.actionText = "As you mine ore, a small box covered in mud catches your eye. As you open it, " //will update text later
 
       if(this.randNum === 10){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "superpotions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Super Potion!"
+        this.actionText = "you find a Super Potion!"
       } 
+      else{
+        this.actionText += "you find half an old sandwich and an apple core."
+      }
 
     } else if (this.randNum <= 4){
-      this.actionText = "mined ore2"
+      this.actionText = "Your swing misses its mark, gouging a hole in the cave floor. Looking inside, "
 
       if(this.randNum === 1){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "potions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Potion!"
+        this.actionText = "you find a buried Potion!"
       } 
+      else{
+        this.actionText += "you find mud and not much else."
+      }
 
     } else {
       this.router.navigate(['/battles']);
@@ -90,18 +102,18 @@ export class CaveComponent implements OnInit {
   startBattleHandler(){
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "pokemon not found" //will update text later
+      this.actionText = "Despite all the evidence of pokemon living in this cave, none appear." //will update text later
 
       if(this.randNum === 10){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "potions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Potion!"
+        this.actionText += " However, you do find a Potion!"
       } 
       
     } else if (this.randNum <= 4){
-      this.actionText = "pokemon not found 2"
+      this.actionText = "What you thought was the cry of a wild pokemon turned out to have been the wind echoing in the cave."
     } else {
       this.router.navigate(['/battles']);
     }

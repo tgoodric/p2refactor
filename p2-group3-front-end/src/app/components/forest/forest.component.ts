@@ -15,7 +15,7 @@ export class ForestComponent implements OnInit {
   public narratorText:String = "As you enter the forest canopy, a sense of dread overcomes you. " +
                                "The eyes of many Pokémon peer at you from the distant bushes. " +
                                "The trees creak eerily as the wind whips through the branches above. Fallen leaves at your feet swirl as you move deep into the forest as if blown by some unknown force. " +
-                               "Far off, you can see many of the coveted Enigma berries ripe for picking. Professor Oak also requested you collect firewood to help the townspeople. " +
+                               "Far off, you can see many of the coveted Oran berries ripe for picking. Professor Oak also requested you collect firewood to help the townspeople. " +
                                "You also see the tracks of a rare Pokémon leading deeper into the woods.";
 
   public actionText:String = ""
@@ -37,26 +37,32 @@ export class ForestComponent implements OnInit {
   pickBerriesHandler(){   
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "You Picked the Rawst berries"; // test text for now can update later
+      this.actionText = "You pick the Oran berries, feeding a few to your Lucario. As it eats, "; // test text for now can update later
       
       if(this.randNum === 10){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "potions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Potion!"
-      } 
+        this.actionText = "you find a Potion!"
+      }
+      else{
+        this.actionText += "you watch the wind blow the leaves around the forest floor."
+      }
 
     } else if (this.randNum <= 4) {
-      this.actionText = "You Picked berries2"; // test text for now can update later
+      this.actionText = "You reach into the oran berry bushes and "; // test text for now can update later
 
       if(this.randNum === 1){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "superpotions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Super Potion!"
+        this.actionText = "find a Super Potion!"
       } 
+      else{
+        this.actionText += "scratch your arm on the branches."
+      }
     } else {
       this.router.navigate(['/battles']);
     }
@@ -65,25 +71,25 @@ export class ForestComponent implements OnInit {
   collectFirewoodHandler(){
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "chopping down tree" //will update text later
+      this.actionText = "Your Bulbasaur cuts down a tree. The two of you work together to cut it into firewood for the townspeople." 
 
       if(this.randNum === 10){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "pokeballs";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Pokeball!"
+        this.actionText += " While cutting the tree, you find a Pokeball!"
       } 
 
     } else if (this.randNum <= 4){
-      this.actionText = "chopping down tree2"
+      this.actionText = "You sweat as you chop logs into firewood. "
 
       if(this.randNum === 1){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "potions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Potion!"
+        this.actionText += "As you sit down to rest, you find a Potion!"
       } 
     } else {
       this.router.navigate(['/battles']);
@@ -93,17 +99,17 @@ export class ForestComponent implements OnInit {
   startBattleHandler(){
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "The rare Pokemon spotted you and ran away" //will update text later
+      this.actionText = "The rare Pokemon spotted you and ran away." //will update text later
 
       if(this.randNum === 10){
         //add item to database
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "pokeballs";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "You found a Pokeball!"
+        this.actionText = " As you watch it escape, you spot a Pokeball."
       } 
     } else if (this.randNum <= 4){
-      this.actionText = "A rare Pokemon can be seen high up in the trees"
+      this.actionText = "A rare Pokemon can be seen high up in the trees."
     } else {
       this.router.navigate(['/battles']);
     }
