@@ -8,6 +8,7 @@ import { PokemonService } from 'src/app/services/pokemon.service';
   templateUrl: './cave.component.html',
   styleUrls: ['./cave.component.css']
 })
+
 export class CaveComponent implements OnInit {
 
   public actionText:String = ""
