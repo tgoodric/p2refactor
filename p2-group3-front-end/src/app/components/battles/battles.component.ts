@@ -38,15 +38,15 @@ export class BattlesComponent implements OnInit {
 
   //game control variables
   public gameStart:boolean = false;
+  public battleStart:boolean = false
   public gameOver:boolean = false;
-  public firstMove:string = "";
-  public secondMove:string = "";
   public gameOverNar:string = "";
   public coinFlip:number = Math.random();
   public myTurn:boolean = false;
   public winner:any = null;
   public catchingPokemon:boolean = false;
   public caught:boolean = false;
+  public narration:any[] = [];
 
   //cookie
   public cookieValue:string;
@@ -166,7 +166,12 @@ export class BattlesComponent implements OnInit {
 
 
   //runs each time the user hits an attack button, or if its the opponent's turn
-  attackFunc(attackType:number){ //this function takes in the type of attack (attack=1, special=2)
+  async attackFunc(attackType:number){ //this function takes in the type of attack (attack=1, special=2)
+
+    this.battleStart = true;
+    this.narration = []
+
+    await this.delay(500);
 
     //this code runs when its the user's turn
     if(this.myTurn){
@@ -181,26 +186,30 @@ export class BattlesComponent implements OnInit {
 
         //narrate the result of the user move
         if(attackType==1){
-        this.firstMove = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
-          + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
+          this.narration[0] = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
+          + this.enemyPokemon.name + "'s HP is now " + this.enemyHP;
+        // this.firstMove = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
+        //   + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
         }else{
-          this.firstMove = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
-          + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
+          this.narration[0] = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
+          + this.enemyPokemon.name + "'s HP is now " + this.enemyHP;
+          // this.firstMove = this.pokemonSelected.pokeName + " used " + this.apiPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
+          // + this.enemyPokemon.name + "'s HP is now " + this.enemyHP + "...";
         }
 
         //if the oponent's hp is 0, end the battle
         if(this.enemyHP==0){
           this.gameOver = true;
-          this.gameOverNar = this.enemyPokemon.name + " has fainted!"
+          this.narration[1] = " " + this.enemyPokemon.name + " has fainted!"
           this.winner = this.pokemonSelected
-          this.secondMove=""
+          // this.narration[2]=""
         }
 
 
         
         //opponent turn if not already fainted
         if(this.gameOver==false){
-          
+          await this.delay(1000);
           let oppAttackType = Math.floor(Math.random() *1.8) //semi randomly select the user's attack type
           damage = this.pokemonService.enemyAttackFunc(this.pokemonSelected, this.enemyAttack, this.enemySpecialAttack, this.enemyLevel, oppAttackType)
           this.pokemonSelected.hitPoints = this.pokemonSelected.hitPoints - damage
@@ -213,21 +222,26 @@ export class BattlesComponent implements OnInit {
         
           //narrate the result of the opponenet's move
           if(attackType==1){
-          this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
-            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+            this.narration[1]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
+            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
+          // this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
+          //   + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
           }else {
-            this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
-            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+            this.narration[1]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
+            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
+            // this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
+            // + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
           }
         }
 
         //if the user's hp is 0, end the battle
         if(this.pokemonSelected.hitPoints==0){
           this.gameOver = true;
-          this.gameOverNar = this.pokemonSelected.pokeName + " has fainted!"
+          this.narration[2] = " " + this.pokemonSelected.pokeName + " has fainted!"
           this.winner = this.enemyPokemon
         }
       
+        console.log("this is the narr: " + this.narration)
     }
     
     //this code run if opponent gets to go first
@@ -249,22 +263,27 @@ export class BattlesComponent implements OnInit {
         
           //narrate the result of the opponenet's move
           if(attackType==1){
-          this.firstMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
-            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+            this.narration[0]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
+            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
+          // this.firstMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
+          //   + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
           }else{
-            this.firstMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
-            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+            this.narration[0]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
+            + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
+            // this.firstMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
+            // + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
           }
         }
 
         //if the user's hp is 0, end the battle
         if(this.pokemonSelected.hitPoints==0){
           this.gameOver = true;
-          this.gameOverNar = this.pokemonSelected.pokeName + " has fainted!"
+          this.narration[1] = " " + this.pokemonSelected.pokeName + " has fainted!"
           this.winner = this.enemyPokemon
         }
 
         //make it the user's turn
+        await this.delay(1000);
         this.myTurn=true;
     }
 
@@ -284,8 +303,8 @@ export class BattlesComponent implements OnInit {
         this.pokeballs = this.inventory[0].pokeballs;
         this.potions = this.inventory[0].potions;
         this.superPotions = this.inventory[0].superPotions;
-        console.log(this.inventory);
-        console.log(this.inventory[0].potions);
+        console.log(this.potions)
+        console.log("inventory is " + this.inventory);
       },
       () => { //set pokemon to null incase of error
         this.inventory = null;
@@ -296,17 +315,21 @@ export class BattlesComponent implements OnInit {
   } // end of getInventory
 
   //runs when the user selects to use a potion
-  potionFunc(type:number){
+  async potionFunc(type:number){
+
+    this.narration=[]
+
+    await this.delay(1500);
 
     if(type==1){
-      this.pokemonSelected.hitPoints+=10;
-      this.firstMove=this.pokemonSelected.pokeName + " used a potion... " + this.pokemonSelected.pokeName +"'s HP is now " + this.pokemonSelected.hitPoints
+      this.pokemonSelected.hitPoints+=20;
+      this.narration[0]=this.pokemonSelected.pokeName + " used a potion... " + this.pokemonSelected.pokeName +"'s HP is now " + this.pokemonSelected.hitPoints;
       this.pokemonService.useItem(this.trainerId, "potions");
       // this.myTurn=false;
       // this.attackFunc( Math.ceil(Math.random() * 1.8));
     }else{
       this.pokemonSelected.hitPoints+=30
-      this.firstMove=this.pokemonSelected.pokeName + " used a super potion... "  + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints
+      this.narration[0]=this.pokemonSelected.pokeName + " used a super potion... "  + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
       this.pokemonService.useItem(this.trainerId, "superpotions");
       // this.myTurn=false;
       // this.attackFunc( Math.ceil(Math.random() * 1.8));
@@ -327,43 +350,47 @@ export class BattlesComponent implements OnInit {
     
       //narrate the result of the opponenet's move
       if(oppAttackType=1){
-      this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done)... " 
-        + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+      this.narration[1]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[0].move.name + " (" + damage + " damage done) " 
+        + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
       }else{
-        this.secondMove=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done)... " 
-        + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints + "...";
+        this.narration[1]=this.enemyPokemon.name + " used " + this.enemyPokemon.moves[1].move.name + " (" + damage + " damage done) " 
+        + this.pokemonSelected.pokeName + "'s HP is now " + this.pokemonSelected.hitPoints;
       }
     }
 
     //if the user's hp is 0, end the battle
     if(this.pokemonSelected.hitPoints==0){
       this.gameOver = true;
-      this.gameOverNar = this.pokemonSelected.pokeName + " has fainted!"
+      this.narration[2] = " " + this.pokemonSelected.pokeName + " has fainted!"
       this.winner = this.enemyPokemon
     }
 
     //make it the user's turn
+    await this.delay(1000);
     this.myTurn=true;
   }
 
   //runs when the user selects to use a pokeball
-  catchPokemon(){
-
-    this.pokemonService.useItem(this.trainerId, "pokeballs");
+  async catchPokemon(){
 
     this.catchingPokemon = true;
 
+    this.narration = []
+    this.narration[0] = "You used a pokeball!";
+
+    this.pokemonService.useItem(this.trainerId, "pokeballs");
+
     this.caught = this.pokemonService.capturePokemon(this.enemyHP, this.enemyPokemon.stats[0].base_stat);
 
-    this.firstMove = "You used a pokeball!"
-
+    await this.delay(4000)
     if(this.caught){
-      this.secondMove = "Gotcha! " + this.enemyPokemon.name + " was caught!"
+      this.narration[0] = " gotcha! " + this.enemyPokemon.name + " was caught!"
       this.addNewPokemon();
     } else{
-      this.secondMove =  "Oh no! " + this.enemyPokemon.name + " got away!"
+      this.narration[0] =  "Oh no! " + this.enemyPokemon.name + " got away!"
     }
 
+    this.catchingPokemon=false;
     this.gameOver=true;
   }
 
@@ -407,7 +434,7 @@ export class BattlesComponent implements OnInit {
                       defense : this.enemyDefense,
                       specialDefense : 0,
                       experience : this.enemyPokemon.base_experience,
-                      trainerIdFk : {userId : 1} //needs to change to cookie value
+                      trainerIdFk : {userId : this.trainerId} //needs to change to cookie value
     }
     
     console.log("about to do the await fetch")
@@ -419,5 +446,9 @@ export class BattlesComponent implements OnInit {
     });
     console.log("yerrr " + response)
   }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
 } //end component export

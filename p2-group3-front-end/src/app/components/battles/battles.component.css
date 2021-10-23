@@ -48,7 +48,7 @@
     width: 40px;
     height: 40px;
     animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-    animation-iteration-count: 3;
+    animation-iteration-count: 4;
 }
 @keyframes shake {
     10%, 90% {
@@ -125,6 +125,10 @@ tr:hover{
     background-image: url("../../../assets/gradient/gradient12.jpg");
     background-size: cover;
 }
+
+.narration {
+    transition-delay: 5s;
+
 .card.border-dark.mb-3 {
     border: none;
     background: linear-gradient(50deg, #dc3545, #28a745);
