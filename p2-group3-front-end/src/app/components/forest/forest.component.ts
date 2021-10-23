@@ -44,7 +44,7 @@ export class ForestComponent implements OnInit {
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "potions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "you find a Potion!"
+        this.actionText += "you find a Potion!"
       }
       else{
         this.actionText += "you watch the wind blow the leaves around the forest floor."
@@ -58,7 +58,7 @@ export class ForestComponent implements OnInit {
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "superpotions";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = "find a Super Potion!"
+        this.actionText += "find a Super Potion!"
       } 
       else{
         this.actionText += "scratch your arm on the branches."
@@ -106,7 +106,7 @@ export class ForestComponent implements OnInit {
         this.trainer_id = parseInt(this.cookieValue);
         this.itemString = "pokeballs";
         this.pokemonService.addItem(this.trainer_id, this.itemString);
-        this.actionText = " As you watch it escape, you spot a Pokeball."
+        this.actionText += " As you watch it escape, you spot a Pokeball."
       } 
     } else if (this.randNum <= 4){
       this.actionText = "A rare Pokemon can be seen high up in the trees."
