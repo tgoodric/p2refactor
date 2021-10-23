@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { Pokemon } from 'src/app/models/pokemon';
+import { PokemonService } from 'src/app/services/pokemon.service';
+
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,7 @@ export class HomeComponent implements OnInit {
 
   private url:string = "http://localhost:8090/"
 
-  constructor(private router: Router, private cs:CookieService, private http:HttpClient) { }
+  constructor(private router: Router, private cs:CookieService, private http:HttpClient, private ps:PokemonService) { }
 
   ngOnInit(): void {
   }
@@ -26,36 +28,25 @@ export class HomeComponent implements OnInit {
 
   getItemHandler(){   
     this.randNum = Math.floor(Math.random() * 10) + 1;
+    let userId = parseInt(this.cs.get("userId"));
     if(this.randNum >= 7){
-      this.actionText = "You Picked berries"; // test text for now can update later
-      
+      this.actionText = "You ask Professor Oak for some potions. He opens his bag and hands you a Super Potion."; 
+      this.ps.addItem(userId, "superpotions");
     } else if (this.randNum <= 4) {
-      this.actionText = "You Picked berries2"; // test text for now can update later
-      //add potions to database below 
-     
-
+      this.actionText = "You ask Professor Oak for some potions. He opens his bag and hands you two Potions."; 
+      this.ps.addItem(userId, "potions");
+      this.ps.addItem(userId, "potions");
     } else {
-      this.router.navigate(['/battles']);
-    }
-  }
-
-  searchCityHandler(){
-    this.randNum = Math.floor(Math.random() * 10) + 1;
-    if(this.randNum >= 7){
-      this.actionText = "chopping down tree" //will update text later
-    } else if (this.randNum <= 4){
-      this.actionText = "chopping down tree2"
-    } else {
-      this.router.navigate(['/battles']);
+      this.actionText = "Professor Oak's lab is locked. A sign on the door reads \"Out to lunch, back soon\"";
     }
   }
 
   startBattleHandler(){
     this.randNum = Math.floor(Math.random() * 10) + 1;
     if(this.randNum >= 7){
-      this.actionText = "pokemon not found" //will update text later
+      this.actionText = "You search for a pokemon to battle. No luck finding one, though." //will update text later
     } else if (this.randNum <= 4){
-      this.actionText = "pokemon not found 2"
+      this.actionText = "You don't see any pokemon around to battle."
     } else {
       this.router.navigate(['/battles']);
     }
@@ -63,12 +54,11 @@ export class HomeComponent implements OnInit {
 
   async pokemonCenter(){
     let userId:string = this.cs.get("userId");  //don't actually need to convert to number
-    let response = await fetch(this.url + "pokemon/" + userId, { //TODO: use userId
+    let response = await fetch(this.url + "pokemon/" + userId, { 
       method: "GET",
       credentials:"include"
     });
     let pokeList:Pokemon[] = await response.json(); //parse response into object
-    console.log(pokeList); //TODO: delete debug print line
     for (const pokemon of pokeList) {
       if(pokemon.maxHitPoints !== pokemon.hitPoints){
         pokemon.hitPoints = pokemon.maxHitPoints;
@@ -81,6 +71,6 @@ export class HomeComponent implements OnInit {
       }// end if
     } //end for
 
-    this.actionText =  "You visit the Pokemon Center. The nurse smiles and heals your pokemon."
+    this.actionText = "You visit the Pokemon Center. The nurse smiles at you and heals your pokemon."
   }
 }
