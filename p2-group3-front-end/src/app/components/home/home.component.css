@@ -1,4 +1,41 @@
 ::ng-deep body{
-    background-image: url("../../../assets/city.jpg");
+    background-image: url("../../../assets/gradient/gradient13.jpg");
     background-size: cover;
+}
+.card-body {
+    background: rebeccapurple;
+    color: #84bcf9;
+}
+.btn-group-vertical {
+    margin-left: 8em;
+}
+.btn-group-vertical>button {
+    border: none;
+    border-radius: 0;
+    margin: 5px;
+    background: radial-gradient(#dc3545, #54708b);
+    width: 150% !important;
+    color: white;
+}
+.btn-group-vertical>button:hover {
+    background: #f0ad4e !important;
+}
+.card-body.footer-card-box {
+    background: radial-gradient(rgb(0 123 255 / 50%), transparent);
+    text-align: center;
+}
+.card-body.footer-card-box > a:hover {
+    color: white;
+    background: red;
+    padding: 8px 8px;
+    border-radius: 4px;
+}
+.card-body>h5 {
+    text-align: center;
+    color: aliceblue;
+    text-shadow: 2px 2px 6px #007bff;
+}
+.card-body>p {
+    font-size: 18px;
+    color: white;
 }
