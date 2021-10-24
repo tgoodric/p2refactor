@@ -56,3 +56,9 @@ p.card-text.overflow-auto.action-text {
     text-decoration: underline;
     color: white !important;
 }
+::ng-deep nav.navbar.navbar-expand-lg.fixed-top.navbar-light.bg-light {
+    background: linear-gradient( 45deg, #dc3545, transparent);
+}
+::ng-deep a.nav-link {
+    color: white !important;
+}

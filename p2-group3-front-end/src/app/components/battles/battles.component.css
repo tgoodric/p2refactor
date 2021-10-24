@@ -231,3 +231,6 @@ button#dropdownBasic1:hover {
 button#dropdownBasic1 {
     width: 252%;
 }
+::ng-deep a.nav-link {
+    color: white !important;
+}
