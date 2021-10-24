@@ -227,3 +227,10 @@ button#dropdownBasic1:hover {
 #viewPokemon{
     background: #007bff;
 }
+
+button#dropdownBasic1 {
+    width: 252%;
+}
+::ng-deep a.nav-link {
+    color: white !important;
+}
