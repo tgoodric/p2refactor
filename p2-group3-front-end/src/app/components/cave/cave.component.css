@@ -55,7 +55,8 @@
     border-radius: 4px;
 }
 p.card-text.overflow-auto.action-tex {
-    text-align: center;
+    /* text-align: center; */
     font-weight: 600;
-    color: aquamarine;
+    font-size: 18px;
+    /* color: aquamarine; */
 }

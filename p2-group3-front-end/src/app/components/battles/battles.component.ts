@@ -391,6 +391,8 @@ export class BattlesComponent implements OnInit {
       this.pokemonSelected.experience+=1;
       if(this.pokemonSelected.experience % 2 == 0){ //every two wins, level up the pokemon
         this.pokemonSelected.level+=1;
+        this.narration[3] = this.pokemonSelected.pokeName + " leveled up! " + this.pokemonSelected.pokeName + " is now level " +
+          this.pokemonSelected.level + ".";
       }
     }
     

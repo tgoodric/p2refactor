@@ -4,7 +4,7 @@
     <div class="card-body" style="border: solid; border-width: 1px;">
       <h5 class="card-title overflow-auto">Cerulean Cave</h5>
       <p class="card-text overflow-auto" style="height: 80px;">{{narratorText}}</p>
-      <p class="card-text overflow-auto action-tex" style="height: 30px;">{{actionText}}</p>
+      <p *ngIf="actionText" class="card-text overflow-auto action-tex" style="height: 50px;">{{actionText}}</p>
     </div>
     <div class="card-body" style="border: solid; border-width: 1px;">
         <div class="btn-group-vertical" style="width: 200px;">
