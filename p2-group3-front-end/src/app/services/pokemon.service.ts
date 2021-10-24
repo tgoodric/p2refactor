@@ -30,6 +30,7 @@ export class PokemonService {
     return this.http.get(this.url + "inventory/" + id + "/") as Observable<Inventory>;
   }
 
+  //Updates inventory in the database when a user uses an item
   useItem(id:number, item:string):void{
     this.http.patch(this.url + "inventory/" + id + "/useItem/" + item + "/", {"trainerId":id, "itemType":item}).subscribe(
       res => {
@@ -43,6 +44,7 @@ export class PokemonService {
     console.log("request sent. waiting for response...");
   }
 
+  //Updates inventory in the database when a user adds an item
   addItem(id:number, item:string):void{
     this.http.patch(this.url + "inventory/" + id + "/addItem/" + item + "/", {"trainerId":id, "itemType":item}).subscribe(
       res => {

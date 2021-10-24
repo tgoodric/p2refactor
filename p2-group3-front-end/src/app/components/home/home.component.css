@@ -39,7 +39,14 @@
     font-size: 18px;
     color: white;
 }
+::ng-deep nav.navbar.navbar-expand-lg.fixed-top.navbar-light.bg-light {
+    background: linear-gradient( 45deg, #dc3545, transparent);
+}
+::ng-deep a.nav-link {
+    color: white !important;
+}
 #action{
     font-weight: 600;
     font-size: 18px;
 }
+
