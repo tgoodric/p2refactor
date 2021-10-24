@@ -2,6 +2,7 @@ import { ɵparseCookieValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { NavbarService } from 'src/app/services/navbar.service';
 import { PokemonService } from 'src/app/services/pokemon.service';
 
 @Component({
@@ -25,13 +26,14 @@ export class ForestComponent implements OnInit {
   public trainer_id:number = 0;
   public itemString:string = "";
 
-  constructor(private pokemonService: PokemonService,private router: Router,
+  constructor(private nav: NavbarService,private pokemonService: PokemonService,private router: Router,
     private cookieService: CookieService
     ) { 
       this.cookieValue = this.cookieService.get('userId');
     }
 
   ngOnInit(): void {
+    this.nav.show();
   }
   
   pickBerriesHandler(){   
