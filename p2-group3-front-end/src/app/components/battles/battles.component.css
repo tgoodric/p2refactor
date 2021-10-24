@@ -161,7 +161,7 @@ div#leftElement button {
     margin-bottom: 5px;
     border-radius: 0;
 }
-div#cardheader {
+div.card-header {
     text-align: center;
     background: linear-gradient(45deg, #930000eb, transparent);
     text-transform: uppercase;
@@ -197,10 +197,10 @@ h5.card-text.battle-header.overflow-auto {
     padding: 8px 8px;
     border-radius: 4px;
 }
-.battleImgStack > img {
+/* .battleImgStack > img {
     border: none;
     box-shadow: -5px 5px 15px red;
-}
+} */
 button.btn.btn-outline-dark:hover {
     background: blue;
 }
@@ -222,4 +222,8 @@ button#dropdownBasic1:hover {
 ::ng-deep nav.navbar.navbar-expand-lg.fixed-top.navbar-light.bg-light {
     background: linear-gradient(
 45deg, #dc3545, transparent);
+}
+
+#viewPokemon{
+    background: #007bff;
 }
