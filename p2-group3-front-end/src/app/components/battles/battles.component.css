@@ -227,3 +227,7 @@ button#dropdownBasic1:hover {
 #viewPokemon{
     background: #007bff;
 }
+
+button#dropdownBasic1 {
+    width: 252%;
+}

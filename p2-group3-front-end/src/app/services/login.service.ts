@@ -32,7 +32,7 @@ export class LoginService {
     if (response.status == 200){
       console.log("login successful");
       
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home'])
     }
     else{
       console.log("Username or password not found");
