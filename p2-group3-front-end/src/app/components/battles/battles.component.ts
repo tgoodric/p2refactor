@@ -4,6 +4,7 @@ import { PokemonSprite } from 'src/app/models/pokemon-sprite';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Inventory } from 'src/app/models/inventory';
+import { NavbarService } from 'src/app/services/navbar.service';
 @Component({
   selector: 'app-battles',
   templateUrl: './battles.component.html',
@@ -48,7 +49,7 @@ export class BattlesComponent implements OnInit {
   public narration:any[] = [];
 
 
-  constructor(private pokemonService:PokemonService,
+  constructor(private nav: NavbarService,private pokemonService:PokemonService,
     private cookieService: CookieService
     ) { 
       // Get the trainer ID from the cookie value
@@ -57,6 +58,7 @@ export class BattlesComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.nav.show();
     this.getEnemyPokemon()
   }
 

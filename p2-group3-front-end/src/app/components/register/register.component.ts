@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from 'src/app/services/registration.service';
 import { UserDto } from 'src/app/models/user-dto';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-register',
@@ -12,9 +13,10 @@ export class RegisterComponent implements OnInit {
   public username:string = "";
   public password:string = "";
 
-  constructor(private rs:RegistrationService) { }
+  constructor(private nav: NavbarService,private rs:RegistrationService) { }
 
   ngOnInit(): void {
+    this.nav.hide();
   }
 
   register():void{

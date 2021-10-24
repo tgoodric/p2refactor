@@ -97,6 +97,7 @@ public class PokemonDao implements IPokemonDao {
 		}catch(HibernateException e) {
 			e.printStackTrace();
 			return false;
+			
 		}finally {
 			HibernateUtil.closeSession();
 		}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { NavbarService } from 'src/app/services/navbar.service';
 import { PokemonService } from 'src/app/services/pokemon.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class RiverComponent implements OnInit {
                                "A shimmering light can also be seen deep in the water. The area would also be perfect for searching for rare water-type Pokémon.";
 
                                
-  constructor(private router: Router,
+  constructor(private nav: NavbarService,private router: Router,
     private cookieService: CookieService,
     private pokemonService: PokemonService 
   ) { 
@@ -30,6 +31,7 @@ export class RiverComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.nav.show();
   }
 
   fishHandler(){   

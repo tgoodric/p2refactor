@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { Pokemon } from 'src/app/models/pokemon';
+import { NavbarService } from 'src/app/services/navbar.service';
 import { PokemonService } from 'src/app/services/pokemon.service';
 
 
@@ -16,9 +17,10 @@ export class HomeComponent implements OnInit {
 
   private url:string = "http://localhost:8090/"
 
-  constructor(private router: Router, private cs:CookieService, private http:HttpClient, private ps:PokemonService) { }
+  constructor(public nav: NavbarService,private router: Router, private cs:CookieService, private http:HttpClient, private ps:PokemonService) { }
 
   ngOnInit(): void {
+    this.nav.show();
   }
 
   public narratorText:String = "I am Professor Oak, and this is my Pokémon research laboratory. The Pokémon of the Kanto region have been very active in recent months, causing havoc amongst the townsfolk. The mayor has put out a call for help to Pokémon trainers from across Sinnoh. To attract Pokémon trainers such as yourself, the town will soon be hosting a tournament of champions. You must train and prepare for the upcoming challenge if you wish to win the grand prize!"
