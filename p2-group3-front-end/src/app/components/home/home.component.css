@@ -45,3 +45,8 @@
 ::ng-deep a.nav-link {
     color: white !important;
 }
+#action{
+    font-weight: 600;
+    font-size: 18px;
+}
+
