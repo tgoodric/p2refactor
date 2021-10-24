@@ -126,9 +126,9 @@ export class BattlesComponent implements OnInit {
         this.potions = this.inventory[0].potions;
         this.superPotions = this.inventory[0].superPotions;
       },
-      () => { //set pokemon to null incase of error
+      () => { //set inventory to null incase of error
         this.inventory = null;
-        console.log("Error fetching player pokemon");
+        console.log("Error fetching player inventory");
       }
     )
   } // end of getInventory
