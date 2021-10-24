@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
     this.nav.show();
   }
 
-  public narratorText:String = "I am Professor Oak, and this is my Pokémon research laboratory. The Pokémon of the Kanto region have been very active in recent months, causing havoc amongst the townsfolk. The mayor has put out a call for help to Pokémon trainers from across Sinnoh. To attract Pokémon trainers such as yourself, the town will soon be hosting a tournament of champions. You must train and prepare for the upcoming challenge if you wish to win the grand prize!"
-                              + " The random encounters outside of town are dangerous to those unprepared. Use caution when venturing beyond the town gates. However, exploring the areas around town will allow a young trainer like you to capture rare and powerful Pokémon for the upcoming tournament. Good luck in your journey adventurer...you will need it. If you need to restock items to heal your Pokémon, return and speak with me.";
+  public narratorText:String = "I am Professor Oak, and this is my Pokémon research laboratory. The Pokémon of the Kanto region have been very active in recent months, causing havoc amongst the townsfolk. The mayor has put out a call for help to Pokémon trainers from across Sinnoh."
+                              + " The random encounters outside of town are dangerous to those unprepared. Use caution when venturing beyond the town gates. However, exploring the areas around town will allow a young trainer like you to capture rare and powerful Pokémon. Good luck in your journey adventurer...you will need it. If you need to restock items to heal your Pokémon, return and speak with me.";
   public actionText:String = "";
   public randNum:number = 0;
 
