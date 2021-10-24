@@ -55,9 +55,10 @@
     border-radius: 4px;
 }
 p.card-text.overflow-auto.action-tex {
-    text-align: center;
+    /* text-align: center; */
     font-weight: 600;
-    color: aquamarine;
+    font-size: 18px;
+    /* color: aquamarine; */
 }
 ::ng-deep nav.navbar.navbar-expand-lg.fixed-top.navbar-light.bg-light {
     background: linear-gradient( 45deg, #dc3545, transparent);
