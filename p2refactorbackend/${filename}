@@ -4,3 +4,4 @@
 2021-10-24 19:51:52 INFO  LoginService:32 - User collinf logged in successfully
 2021-10-24 19:52:13 INFO  InventoryService:37 - Trainer added an item
 2021-10-24 19:52:15 INFO  PokemonController:67 - Pokemon is Successfully retrieved from database by 42
+2021-10-24 20:56:10 INFO  LoginService:32 - User subme logged in successfully
