@@ -25,6 +25,12 @@ export class LoginComponent implements OnInit {
   
   login():void{
     console.log(this.username + this.password);
+    if(this.username==""){
+      alert('Username is Empty');
+    }
+    if(this.password==""){
+      alert('Password is Empty');
+    }
     this.ls.login(this.username,this.password);
 
     
