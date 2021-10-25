@@ -72,10 +72,10 @@
         <!-- battle ground div -->
         <div class="battleImgStack">
             <img id="baseImg" class="card-img-top" src="../../../assets/battleBackground.jpg" alt="Card image cap">
-            <div id="pokemon" class="imgOverlay" *ngIf="apiPokemon && !gameOver && !catchPokemon">
+            <div id="pokemon" class="imgOverlay"*ngIf="gameStart && !gameOver && !catchingPokemon">
                 <img id="pokemonLCorner" class="img-fluid" src="{{apiPokemon.sprites.back_default}}" alt=""> <!--{{playerPokemon}}-->
             </div> <!--child div end-->
-            <div id="enemy" class="imgOverlay" *ngIf="enemyPokemon && !gameOver &&!catchingPokemon">
+            <div id="enemy" class="imgOverlay" *ngIf="enemyPokemon && !gameOver && !catchingPokemon">
                 <img id="pokemonRCorner" class="img-fluid" src="{{enemyPokemon.sprites.front_default}}" alt=""> <!--{{enemyPokemon}}-->
             </div> <!--child div end-->
             <img *ngIf="catchingPokemon" id="escapedPokemon"  src="../../../assets/Poke_Ball.png">
