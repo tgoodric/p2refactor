@@ -28,10 +28,10 @@ class UnitTesting {
 	public static Trainer t;
 	public static TrainerService ts;
 	public static LoginService ls;
-	public int trainerId = 34; 
-	public int level = 10;
+	public int trainerId = 38; 
+	public int level = 20;
 	public String itemType = "pokeballs";
-	public String username = "testuser";
+	public String username = "brett2";
 	public String password = "password";
 
 	@BeforeAll
@@ -70,22 +70,7 @@ class UnitTesting {
 		
 	}
 
-	@Test
-	final void testGetPokemonUpToLevel() {
-		try {
-			
-			List<Pokemon> result = ps.getAllPokemonWithTrainerAndLevel(trainerId, level);
-					
-			assertNotEquals(null, result);
-			
-		}catch(NullPointerException e) {
-			
-			System.out.println(e);
-			assertNull(e);
-		}
-		
-		
-	}
+
 
 	
 	@Test
@@ -152,7 +137,7 @@ class UnitTesting {
 			assertFalse(result);
 		}
 	}
-
+/*
 	@Test
 	final void testAddInventory() {
 		boolean result = true;
@@ -168,7 +153,7 @@ class UnitTesting {
 			
 		}
 	}
-	
+*/	
 	/*
 	 * Testing for Trainers
 	 */

@@ -35,8 +35,7 @@ export class HomeComponent implements OnInit {
       this.actionText = "You ask Professor Oak for some potions. He opens his bag and hands you a Super Potion."; 
       this.ps.addItem(userId, "superpotions");
     } else if (this.randNum <= 4) {
-      this.actionText = "You ask Professor Oak for some potions. He opens his bag and hands you two Potions."; 
-      this.ps.addItem(userId, "potions");
+      this.actionText = "You ask Professor Oak for some potions. He opens his bag and hands you a Potion."; 
       this.ps.addItem(userId, "potions");
     } else {
       this.actionText = "Professor Oak's lab is locked. A sign on the door reads \"Out to lunch, back soon\"";
