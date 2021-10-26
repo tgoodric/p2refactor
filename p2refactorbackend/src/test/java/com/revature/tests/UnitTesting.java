@@ -28,10 +28,10 @@ class UnitTesting {
 	public static Trainer t;
 	public static TrainerService ts;
 	public static LoginService ls;
-	public int trainerId = 38; 
+	public int trainerId = 17; 
 	public int level = 20;
 	public String itemType = "pokeballs";
-	public String username = "brett2";
+	public String username = "testhashing";
 	public String password = "password";
 
 	@BeforeAll

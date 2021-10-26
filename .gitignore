@@ -1,3 +1,4 @@
 /.metadata/
 ${filename}
 logs.txt
+log4j2.properties

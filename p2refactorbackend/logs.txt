@@ -1,0 +1,12 @@
+2021-10-26 14:51:12 INFO  InventoryService:37 - Trainer added an item
+2021-10-26 14:51:12 INFO  InventoryService:24 - Trainer used an item
+2021-10-26 14:51:13 WARN  TrainerService:33 - User attempted to use null or empty username or password
+2021-10-26 14:51:13 INFO  PokemonService:19 - Trainer caught (and inserted) a Pokemon
+2021-10-26 14:54:00 INFO  InventoryService:37 - Trainer added an item
+2021-10-26 14:54:00 INFO  InventoryService:24 - Trainer used an item
+2021-10-26 14:54:00 WARN  TrainerService:33 - User attempted to use null or empty username or password
+2021-10-26 14:54:00 INFO  PokemonService:19 - Trainer caught (and inserted) a Pokemon
+2021-10-26 14:54:27 INFO  InventoryService:37 - Trainer added an item
+2021-10-26 14:54:28 INFO  InventoryService:24 - Trainer used an item
+2021-10-26 14:54:28 WARN  TrainerService:33 - User attempted to use null or empty username or password
+2021-10-26 14:54:28 INFO  PokemonService:19 - Trainer caught (and inserted) a Pokemon
